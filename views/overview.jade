@@ -1,0 +1,45 @@
+extends situation
+
+block situation-nav
+  ul.nav.nav-pills.nav-justified
+    li.active
+      a Situation
+    li
+      a(href='/situation/'+ situation._id +'/causes', data-instant) Causes&nbsp;
+        span.badge #{ situation.total_causes }
+
+    li
+      a(href='/situation/'+ situation._id +'/effects', data-instant) Effects&nbsp;
+        span.badge #{ situation.total_effects }
+
+block situation-content
+  .row
+    .col-md-12
+      .situation-description.page-container(ng-bind='situation.description') #{ situation.description }
+
+  .row
+    .col-md-6
+      h3 Causes
+      ol.list-unstyled.situations
+        - each relationship in situation.causes
+          - var relationship_situation = relationship.cause
+            li.situation.relationship-situation
+              .situation-section
+                h4.situation-name
+                  if relationship_situation.location
+                    span.small #{ relationship_situation.location }
+                    br
+                  a(href='/situation/'+ relationship_situation._id) #{ relationship_situation.name }
+
+    .col-md-6
+      h3 Effects
+      ol.list-unstyled.situations
+        - each relationship in situation.effects
+          - var relationship_situation = relationship.effect
+            li.situation.relationship-situation
+              .situation-section
+                h4.situation-name
+                  if relationship_situation.location
+                    span.small #{ relationship_situation.location }
+                    br
+                  a(href='/situation/'+ relationship_situation._id) #{ relationship_situation.name }

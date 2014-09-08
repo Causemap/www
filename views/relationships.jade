@@ -1,0 +1,62 @@
+extends situation
+
+block situation-nav
+  ul.nav.nav-pills.nav-justified
+    li
+      a(href='/situation/'+ situation._id, data-instant) Situation
+    if rel_type == 'causes'
+      li.active
+        a Causes&nbsp;
+          span.badge #{ situation.total_causes }
+    else
+      li
+        a(href='/situation/'+ situation._id +'/causes', data-instant) Causes&nbsp;
+          span.badge #{ situation.total_causes }
+
+
+    if rel_type == 'effects'
+      li.active
+        a Effects&nbsp;
+          span.badge #{ situation.total_effects }
+    else
+      li
+        a(href='/situation/'+ situation._id +'/effects', data-instant) Effects&nbsp;
+          span.badge #{ situation.total_effects }
+
+block situation-content
+  .row
+    .col-md-12
+      form.form-inline
+        if rel_type == 'effects'
+          button.btn.btn-primary.pull-right(data-toggle='modal', data-target='#add-relationship') Add an Effect
+        else
+          button.btn.btn-primary.pull-right(data-toggle='modal', data-target='#add-relationship') Add a Cause
+
+      ol.list-unstyled
+        - each hit in result.hits.hits
+          - var situation = rel_type == 'causes' ? hit._source.cause : hit._source.effect
+            li
+              h4
+                a(href="/situation/"+ situation._id, data-instant) #{ situation.name }
+              p #{ situation.period } &dash; #{ situation.location }
+
+  #add-relationship.modal.fade(ng-controller='RelationshipCtrl')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal') &times;
+          if rel_type == 'effects'
+            h4 Add an Effect
+          else
+            h4 Add a Cause
+        .modal-body
+          .form-group
+            label Type the name of a situation
+            input.form-control.input-lg(ng-model='suggestion_query', type='search', placeholder='eg. Germany Won the 2014 World Cup', ng-change='suggestSituations(suggestion_query)')
+        form
+          ul.suggestions
+            li(ng-repeat='suggestion in situationSuggestions.hits.hits')
+              h4(
+                ng-click='createRelationship("'+ rel_type +'", suggestion._source._id)'
+              ) {{ suggestion._source.name }}
+

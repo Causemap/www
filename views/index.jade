@@ -1,5 +1,21 @@
 extends base
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .container
+    .row
+      .col-md-12
+        ol.situations.list-unstyled
+          - each hit in result.hits.hits
+            - var situation = hit._source
+              li.situation
+                if situation.display_image
+                  - var img_url = 'http://couchdb-jeffmarshall.alpha.tutum.io:49192/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
+                    a(href='/situation/'+ situation._id).display-image
+                      img.loading.img-responsive(src=img_url)
+
+                .situation-section
+                  h4.situation-name
+                    if situation.location
+                      span.small #{ situation.location }
+                      br
+                    a(href='/situation/'+ situation._id) #{ situation.name }

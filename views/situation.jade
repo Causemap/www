@@ -1,0 +1,115 @@
+extends base
+
+block content
+  script#situation-json(type='application/json')
+    | !{ JSON.stringify(situation) }
+
+  #situation.container(
+    data-situation-id=situation._id,
+    ng-controller='SituationCtrl'
+  )
+
+    .row
+      .col-md-4
+        #situation-context
+          if situation.display_image
+            img.display-image.img-responsive(src='http://couchdb-jeffmarshall.alpha.tutum.io:49192/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename)
+          h4.situation-context--section
+            if situation.location
+              small.situation-location #{ situation.location }
+              br
+            | #{ situation.name }
+          if situation.period
+            small.situation-context--section.period #{ situation.period }
+          .situation-context--section.btn-toolbar(role='toolbar')
+            .btn-group
+              button.btn.btn-primary.btn-block.dropdown-toggle(
+                data-toggle='dropdown'
+              )
+                span.glyphicon.glyphicon-edit &nbsp;
+                | Edit this situation&nbsp;
+                span.caret
+              ul.dropdown-menu
+                li
+                  a(data-toggle='modal', data-target='#edit-name') Name
+                li
+                  a(data-toggle='modal', data-target='#edit-location') Location
+                li
+                  a(data-toggle='modal', data-target='#edit-period') Period
+                li
+                  a(data-toggle='modal', data-target='#edit-description') Description
+                li
+                  a(data-toggle='modal', data-target='#edit-display-image') Display Image
+
+      .col-md-8
+        .situation-nav
+          block situation-nav
+
+        block situation-content
+
+    #edit-name.modal.fade
+      .modal-dialog
+          .modal-content
+            form(ng-submit='createChange("name", situation_draft.name)')
+              .modal-body
+                .form-group
+                  label Name
+                  input.form-control(
+                    placeholder='eg. 2014 FIFA World Cup',
+                    ng-model='situation_draft.name'
+                  )
+              .modal-footer
+                a.btn.btn-default(data-dismiss='modal') Cancel
+                button.btn.btn-primary(type='submit') Save
+
+    #edit-location.modal.fade
+      .modal-dialog
+          .modal-content
+            form(ng-submit='createChange("location", situation_draft.location)')
+              .modal-body
+                .form-group
+                  label Location
+                  input.form-control(placeholder='eg. Montreal, Quebec', ng-model='situation_draft.location')
+              .modal-footer
+                a.btn.btn-default(data-dismiss='modal') Cancel
+                button.btn.btn-primary(type='submit') Save
+
+    #edit-period.modal.fade
+      .modal-dialog
+          .modal-content
+            form(ng-submit='createChange("period", situation_draft.period)')
+              .modal-body
+                .form-group
+                  label Period
+                  input.form-control(placeholder='eg. Summer 2014', ng-model='situation_draft.period')
+              .modal-footer
+                a.btn.btn-default(data-dismiss='modal') Cancel
+                button.btn.btn-primary(type='submit') Save
+
+    #edit-description.modal.fade
+      .modal-dialog
+          .modal-content
+            form(ng-submit='createChange("description", situation_draft.description)')
+              .modal-body
+                .form-group
+                  label Description
+                  textarea.form-control(
+                    placeholder='Describe the situation',
+                    ng-model='situation_draft.description',
+                    rows='8'
+                  )
+              .modal-footer
+                a.btn.btn-default(data-dismiss='modal') Cancel
+                button.btn.btn-primary(type='submit') Save
+
+    #edit-display-image.modal.fade
+      .modal-dialog
+          .modal-content
+            form(ng-submit='createChange("display_image", new_display_image)')
+              .modal-body
+                .form-group
+                  label Display Image
+                  input#new-display-image-input.form-control(type='file')
+              .modal-footer
+                a.btn.btn-default(data-dismiss='modal') Cancel
+                button.btn.btn-primary(type='submit') Save

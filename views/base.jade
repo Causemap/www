@@ -1,7 +1,159 @@
 doctype html
-html
+html(lang='en')
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title Causemap
+
+    link(
+      href='http://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic'
+      rel='stylesheet'
+    )
+    link(href='https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
+
+    // Bootstrap
+    link(href='/stylesheets/site.css', rel='stylesheet')
+
+    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    // queries WARNING: Respond.js doesn't work if you view the page via
+    // file://
+    //if lt IE 9
+       script(src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
+       script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
+
+    script(src='/lib/pouchdb/dist/pouchdb.min.js')
+    script(src='/javascripts/pouchdb-update.min.js')
+    script(src='/lib/pouchdb-authentication/dist/pouchdb.authentication.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js')
+    script(src='/lib/lodash/dist/lodash.min.js')
+    script(src='/lib/elasticsearch/elasticsearch.angular.min.js')
+    script(src='/javascripts/site.js')
+
+  body(ng-app='causemap')
+    .navbar.navbar-default.navbar-static-top(role='navigation')
+      .container
+        .row
+          .navbar-header.col-sm-2
+            button.navbar-toggle(
+              type='button'
+            )
+              span.sr-only Toggle Navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+
+            .navbar-brand
+              a(href='/') CAUSEMAP
+
+          #navbar-collapse.col-sm-10
+            ul.nav.navbar-nav.pull-right
+              li(ng-controller='AuthCtrl')
+                a(
+                  data-toggle='modal',
+                  data-target='#login-signup-modal',
+                  href='',
+                  ng-if='!session.userCtx.name'
+                )
+                  | Login or Sign-Up
+
+                a(
+                  ng-if='session.userCtx.name', ng-cloak
+                ) {{ session.userCtx.name }}
+
+              li(ng-controller='SituationsCtrl')
+                a(
+                  data-toggle='modal',
+                  data-target='#add-situation-modal'
+                ) Add a Situation
+
+
     block content
+
+    #add-situation-modal.modal.fade
+      .modal-dialog
+        .modal-content
+          form(ng-submit='add_situation()')
+            .modal-body
+              // h3 What's the situation?
+              .form-group
+                label What's the situation?
+                input.form-control(
+                  ng-model='new_situation_name',
+                  placeholder='eg. Germany won the 2014 World Cup'
+                )
+            .modal-footer
+              a.btn.btn-default(data-dismiss='modal') Cancel
+              button.btn.btn-primary(type='submit') Add
+
+    #login-signup-modal.modal.fade
+      .modal-dialog.modal-sm
+        .modal-content
+          form(ng-submit='loginSignup()')
+            .modal-body
+              .form-group
+                .input-group
+                  span.input-group-addon
+                    i.fa.fa-user.fa-fw
+                  input.form-control(
+                    type='text',
+                    placeholder='Username',
+                    ng-model='auth.username'
+                  )
+
+              .form-group
+                .input-group
+                  span.input-group-addon
+                    i.fa.fa-key.fa-fw
+                  input.form-control(
+                    type='password',
+                    placeholder='Password',
+                    ng-model='auth.password'
+                  )
+
+              .form-group
+                .radio
+                  label
+                    input#returning-user(
+                      type='radio',
+                      name='user_has_account',
+                      ng-value='true',
+                      ng-model='auth.user_has_account'
+                    )
+                    | I am a returning user
+                .radio
+                  label
+                    input#new-user(
+                      type='radio',
+                      name='user_has_account',
+                      ng-value='false',
+                      ng-model='auth.user_has_account'
+                    )
+                    | I am a new user
+
+            .modal-footer
+              button.btn.btn-primary.btn-block(type='submit') Login
+
+    // jQuery (necessary for Bootstrap's JavaScript plugins)
+    script(
+      src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+    script(src='/lib/masonry/dist/masonry.pkgd.min.js')
+    script(src='/lib/imagesloaded/imagesloaded.js')
+    script.
+      var masonry_opts = {
+        itemSelector: '.situation',
+        gutter: 15
+      }
+
+      var $container = $('.situations').masonry(masonry_opts);
+
+      $container.imagesLoaded(function(){
+        $container.masonry(masonry_opts)
+      }).progress(function(instance, image){
+        $(image.img).removeClass('loading');
+        $container.masonry('layout');
+      })
+
+    // Include all compiled plugins (below), or include individual files as
+    // needed
+    script(src='/lib/bootstrap/dist/js/bootstrap.min.js')

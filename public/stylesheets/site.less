@@ -1,8 +1,103 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+@import "variables";
+@icon-font-path: "../lib/bootstrap/fonts/";
+@import "../lib/bootstrap/less/bootstrap";
+
+// @container-desktop: @container-tablet;
+// @container-large-desktop: @container-tablet;
+
+
+ol.situations {
+  .situation {
+    background-color: white;
+    box-shadow: 0 1px 2px darken(@body-bg, 10);
+    margin-bottom: 1em;
+
+    &.relationship-situation {
+      width: 100%;
+    }
+
+    @media (min-width: @screen-lg){
+      width: ~"calc(25% - 11.25px)";
+    }
+
+    @media (max-width: @screen-lg){
+      width: ~"calc(25% - 11.25px)";
+    }
+
+    @media (max-width: @screen-md){
+      width: ~"calc(33.33% - 10px)";
+    }
+
+    @media (max-width: @screen-sm){
+      width: ~"calc(50% - 7.5px)";
+    }
+
+    @media (max-width: @screen-xs){
+      width: 100%;
+    }
+
+    .display-image {
+      display: block;
+      position: relative;
+
+      &:before {
+        background-color: rgba(0,0,0,0.1);
+        content: '';
+        position: absolute;
+        top: 0;
+        height: 1px;
+        width: 100%;
+      }
+
+      > img {
+        transition: all 1s ease-in-out;
+
+        &.loading {
+          opacity: 0;
+        }
+      }
+    }
+
+    .situation-section {
+      padding: 16px 20px;
+    }
+
+    .situation-name {
+      margin: 0;
+    }
+  }
 }
 
-a {
-  color: #00B7FF;
+.page-container {
+}
+
+.situation-description {
+  font-size: @font-size-large;
+  font-weight: 200;
+  margin: @padding-large-horizontal 0;
+}
+
+#situation-context {
+  background-color: @gray-darker;
+  color: white;
+
+  h4 {
+    margin: 0;
+  }
+
+  .situation-context--section {
+    padding: 16px 20px;
+  }
+}
+
+@media (max-width: @screen-sm-min){
+  #situation-context {
+    top: 0;
+  }
+}
+
+#situation {
+  .nav-pills {
+    margin-bottom: @padding-large-vertical;
+  }
 }
