@@ -160,8 +160,10 @@ causemap.controller('SituationsCtrl', [
                 // reset the new_situation_name
                 $scope.new_situation_name = null;
 
-                // send the user to the new situation url
-                window.location = '/situation/'+ situation_id;
+                setTimeout(function(){
+                  // send the user to the new situation url
+                  window.location = '/situation/'+ situation_id;
+                }, 500)
               });
             }
           )
