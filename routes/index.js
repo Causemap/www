@@ -36,17 +36,20 @@ router.get('/', function(req, res) {
   });
 
   var query = {
-    size: 25,
     sort: { creation_date: { order: 'desc' } }
   }
 
   elasticsearch_client.search({
     index: 'situations',
     type: 'situation',
+    size: req.query.size || 25,
+    from: req.query.from || 0,
     body: query
   }).then(function(result){
     res.render('index', {
-      result: result
+      result: result,
+      size: parseInt(req.query.size) || 25,
+      from: parseInt(req.query.from) || 0
     });
 
   }, function(error){

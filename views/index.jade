@@ -19,3 +19,15 @@ block content
                       span.small #{ situation.location }
                       br
                     a(href='/situation/'+ situation._id) #{ situation.name }
+
+        ul.pagination
+          - var total_pages = Math.ceil(result.hits.total / size)
+          - var n = 0
+          while n < total_pages
+            - n++
+              if ((n-1)*size == from)
+                li.active
+                  a= n
+              else
+                li
+                  a(href='/?size='+ size +'&from='+ (n-1)*size)= n
