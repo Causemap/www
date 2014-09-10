@@ -1,0 +1,29 @@
+{
+  "name": "causemap-web",
+  "version": "0.0.0",
+  "authors": [
+    "Jeff Marshall <jeff@classy.co>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angularjs": "~1.2.23",
+    "bootstrap": "~3.2.0",
+    "angular": "~1",
+    "instantclick": "~3.0.1",
+    "lodash": "~2.4.1",
+    "masonry": "~3.1.5",
+    "pouchdb": "~3.0.2",
+    "pouchdb-authentication": "~0.3.3",
+    "elasticsearch": "~2.4.0",
+    "imagesloaded": "~3.1.8"
+  }
+}
