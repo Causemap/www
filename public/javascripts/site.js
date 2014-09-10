@@ -2,12 +2,12 @@ angular.module('db', [])
 
   .value(
     'causemap_couchdb_url',
-    'http://couchdb-jeffmarshall.alpha.tutum.io:49192/causemap'
+    'http://api.causemap.org:5984/causemap'
   )
 
   .value(
     'user_couchdb_url',
-    'http://couchdb-jeffmarshall.alpha.tutum.io:49192/_users'
+    'http://api.causemap.org:5984/_users'
   )
 
   .factory('causemap_db', [
@@ -34,7 +34,7 @@ angular.module('search', ['elasticsearch'])
 
   .value(
     'elasticsearch_url',
-    'http://elasticsearch-jeffmarshall.beta.tutum.io:49153'
+    'http://api.causemap.org:9200'
   )
 
   .service('elasticsearch_client', [

@@ -9,7 +9,7 @@ block content
             - var situation = hit._source
               li.situation
                 if situation.display_image
-                  - var img_url = 'http://couchdb-jeffmarshall.alpha.tutum.io:49192/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
+                  - var img_url = 'http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
                     a(href='/situation/'+ situation._id).display-image
                       img.loading.img-responsive(src=img_url)
 

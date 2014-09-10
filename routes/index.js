@@ -4,12 +4,14 @@ var express = require('express');
 var router = express.Router();
 var elasticsearch = require('elasticsearch');
 
+var ES_URL = 'http://api.causemap.org:9200'
+
 
 var get_situation = function(req, res, next, id){
   console.log('getting sit')
 
   var elasticsearch_client = new elasticsearch.Client({
-    host: 'http://elasticsearch-jeffmarshall.beta.tutum.io:49153'
+    host: ES_URL
   });
 
   elasticsearch_client.get({
@@ -30,7 +32,7 @@ router.param('situation_id', get_situation)
 /* GET home page. */
 router.get('/', function(req, res) {
   var elasticsearch_client = new elasticsearch.Client({
-    host: 'http://elasticsearch-jeffmarshall.beta.tutum.io:49153'
+    host: ES_URL
   });
 
   var query = {
@@ -54,7 +56,7 @@ router.get('/', function(req, res) {
 
 router.get('/situation/:situation_id', function(req, res, next){
   var elasticsearch_client = new elasticsearch.Client({
-    host: 'http://elasticsearch-jeffmarshall.beta.tutum.io:49153'
+    host: ES_URL
   });
 
   var situation = req.situation;
@@ -113,7 +115,7 @@ router.get('/situation/:situation_id/:relationship_type', function(
   next
 ){
   var elasticsearch_client = new elasticsearch.Client({
-    host: 'http://elasticsearch-jeffmarshall.beta.tutum.io:49153'
+    host: ES_URL
   });
 
   var situation = req.situation;

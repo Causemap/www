@@ -13,7 +13,7 @@ block content
       .col-md-4
         #situation-context
           if situation.display_image
-            img.display-image.img-responsive(src='http://couchdb-jeffmarshall.alpha.tutum.io:49192/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename)
+            img.display-image.img-responsive(src='http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename)
           h4.situation-context--section
             if situation.location
               small.situation-location #{ situation.location }
