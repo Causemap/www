@@ -8,8 +8,6 @@ var ES_URL = 'http://api.causemap.org:9200'
 
 
 var get_situation = function(req, res, next, id){
-  console.log('getting sit')
-
   var elasticsearch_client = new elasticsearch.Client({
     host: ES_URL
   });
@@ -59,7 +57,8 @@ router.get('/', function(req, res) {
 
 router.get('/situation/:situation_id', function(req, res, next){
   var elasticsearch_client = new elasticsearch.Client({
-    host: ES_URL
+    host: ES_URL,
+    log: 'trace'
   });
 
   var situation = req.situation;

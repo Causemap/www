@@ -223,8 +223,6 @@ causemap.controller('SituationCtrl', [
       '#situation'
     ).dataset.situationId
 
-    // getSituation($scope.situation_id)
-
     $scope.createChange = function createChange(field_name, field_value){
       console.log(arguments)
 
@@ -283,6 +281,33 @@ causemap.controller('SituationCtrl', [
         field_name: field_name,
         field_value: field_value
       })
+    }
+
+    $scope.markForDeletion = function(id){
+      causemap_db.update(
+        'action/mark_for_deletion/'+ id,
+        function(error, result){
+          if (error) return console.error(error);
+          $scope.situation.marked_for_deletion = true;
+          $scope.$apply();
+          getSituation($scope.situation_id);
+          console.log('marked for deletion:', id)
+        }
+      )
+    }
+
+    $scope.unmarkForDeletion = function(id){
+      causemap_db.update(
+        'action/unmark_for_deletion/'+ id,
+        function(error, result){
+          if (error) return console.error(error);
+          delete $scope.situation.marked_for_deletion;
+          $scope.situation.unmarked_for_deletion = true;
+          $scope.$apply();
+          getSituation($scope.situation_id);
+          console.log('unmarked for deletion:', id)
+        }
+      )
     }
   }
 ])

@@ -1,6 +1,10 @@
 extends base
 
+block title
+  | #{ situation.name } |&nbsp;
+
 block content
+  include ./partials/situation.jade
   script#situation-json(type='application/json')
     | !{ JSON.stringify(situation) }
 
@@ -10,41 +14,40 @@ block content
   )
 
     .row
-      .col-md-4
-        #situation-context
-          if situation.display_image
-            img.display-image.img-responsive(src='http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename)
-          h4.situation-context--section
-            if situation.location
-              small.situation-location #{ situation.location }
-              br
-            | #{ situation.name }
+      .col-md-6.col-md-push-3.col-sm-9.col-xs-12
+        h1
+          if situation.location
+            small.location(ng-bind='situation.location')= situation.location
+          else
+            small.location(
+              ng-if='situation.location',
+              ng-bind='situation.location'
+            )
+            small.location.default.subdued(
+              ng-if='!situation.location'
+            ) Everywhere
+
+          small &mdash;&nbsp;
+
           if situation.period
-            small.situation-context--section.period #{ situation.period }
-          .situation-context--section.btn-toolbar(role='toolbar')
-            .btn-group
-              button.btn.btn-primary.btn-block.dropdown-toggle(
-                data-toggle='dropdown'
-              )
-                span.glyphicon.glyphicon-edit &nbsp;
-                | Edit this situation&nbsp;
-                span.caret
-              ul.dropdown-menu
-                li
-                  a(data-toggle='modal', data-target='#edit-name') Name
-                li
-                  a(data-toggle='modal', data-target='#edit-location') Location
-                li
-                  a(data-toggle='modal', data-target='#edit-period') Period
-                li
-                  a(data-toggle='modal', data-target='#edit-description') Description
-                li
-                  a(data-toggle='modal', data-target='#edit-display-image') Display Image
+            small.period(ng-bind='situation.period')= situation.period
+          else
+            small.period(
+              ng-if='situation.period',
+              ng-bind='situation.period'
+            )
+            small.period.default.subdued(
+              ng-if='!situation.period'
+            ) Always
 
-      .col-md-8
-        .situation-nav
-          block situation-nav
+          br
+          a.name(
+            href='/situation/'+ situation._id,
+            ng-bind='situation.name'
+          )= situation.name
 
+    .row
+      .col-md-6.col-md-push-3
         block situation-content
 
     #edit-name.modal.fade
@@ -113,3 +116,78 @@ block content
               .modal-footer
                 a.btn.btn-default(data-dismiss='modal') Cancel
                 button.btn.btn-primary(type='submit') Save
+
+    #add-relationship.modal.fade(ng-controller='RelationshipCtrl')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal') &times;
+            h4(ng-if='rel_type=="effects"') Add an Effect
+            h4(ng-if='rel_type=="causes"') Add a Cause
+          .modal-body
+            .form-group
+              label Type the name of a situation
+              input.form-control.input-lg(ng-model='suggestion_query', type='search', placeholder='eg. Germany Won the 2014 World Cup', ng-change='suggestSituations(suggestion_query)')
+          form
+            ol.suggestions.situations.list-unstyled
+              li.situation.situation-landscape.relationship-situation(
+                ng-repeat='suggestion in situationSuggestions.hits.hits',
+                ng-init='situation = suggestion._source; img_url = "http://api.causemap.org:5984/causemap/{{ situation.display_image.change_id }}/{{ situation.display_image.filename }}"',
+                ng-click='createRelationship(rel_type, situation._id)'
+              )
+                a.display-image.loading(
+                  ng-if='suggestion.display_image',
+                  ng-style='{background-image: url("{{ img_url }}");}'
+                )
+                  img.img-responsive(ng-src='{{ img_url }}')
+
+                .situation-section
+                  h4.situation-name
+                    small.location(
+                      ng-if='situation.location',
+                      ng-bind='situation.location'
+                    )
+                    small.location.default.subdued(
+                      ng-if='!situation.location'
+                    ) Everywhere
+
+                    small &nbsp;&nbsp;&nbsp;
+
+                    small.period(
+                      ng-if='situation.period',
+                      ng-bind='situation.period'
+                    )
+                    small.period.default.subdued(
+                      ng-if='!situation.period'
+                    ) Always
+
+                    br
+                    span.name(ng-bind='situation.name')
+
+    #mark-for-deletion.modal.fade
+      .modal-dialog.modal-sm
+        .modal-content
+          .modal-body
+            | Are you sure you want to mark this situation for deletion?
+          .modal-footer
+            p
+              button.btn.btn-block.btn-primary(
+                type='button',
+                ng-click='markForDeletion(situation_id)',
+                data-dismiss='modal'
+              ) Yes, mark this situation for deletion
+            button.btn.btn-block.btn-default(type='button', data-dismiss='modal') Cancel
+
+    #unmark-for-deletion.modal.fade
+      .modal-dialog.modal-sm
+        .modal-content
+          .modal-body
+            | Are you sure you want to unmark this situation for deletion?
+          .modal-footer
+            p
+              button.btn.btn-block.btn-primary(
+                type='button',
+                ng-click='unmarkForDeletion(situation_id)',
+                data-dismiss='modal'
+              ) Yes, unmark this situation for deletion
+            button.btn.btn-block.btn-default(type='button', data-dismiss='modal') Cancel

@@ -36,30 +36,8 @@ ol.situations {
       width: 100%;
     }
 
-    .display-image {
-      display: block;
-      position: relative;
-
-      &:before {
-        background-color: rgba(0,0,0,0.1);
-        content: '';
-        position: absolute;
-        top: 0;
-        height: 1px;
-        width: 100%;
-      }
-
-      > img {
-        transition: all 1s ease-in-out;
-
-        &.loading {
-          opacity: 0;
-        }
-      }
-    }
-
     .situation-section {
-      padding: 16px 20px;
+      padding: 14px 20px 16px;
     }
 
     .situation-name {
@@ -68,26 +46,34 @@ ol.situations {
   }
 }
 
-.page-container {
+.display-image {
+  display: block;
+  position: relative;
+  transition: all 1s ease-in-out;
+
+  &:before {
+    background-color: rgba(0,0,0,0.1);
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 1px;
+    width: 100%;
+  }
+
+  > img {
+    width: 100%;
+  }
+}
+
+.loading {
+  opacity: 0;
 }
 
 .situation-description {
-  font-size: @font-size-large;
+  font-size: 20px;
   font-weight: 200;
+  line-height: 30px;
   margin: @padding-large-horizontal 0;
-}
-
-#situation-context {
-  background-color: @gray-darker;
-  color: white;
-
-  h4 {
-    margin: 0;
-  }
-
-  .situation-context--section {
-    padding: 16px 20px;
-  }
 }
 
 @media (max-width: @screen-sm-min){
@@ -99,5 +85,54 @@ ol.situations {
 #situation {
   .nav-pills {
     margin-bottom: @padding-large-vertical;
+  }
+}
+
+.padded-tb {
+  padding-top: @padding-large-vertical;
+  padding-bottom: @padding-large-vertical;
+}
+
+.subdued {
+  color: fadeout(@text-color, 50%);
+}
+
+.centered {
+  text-align: center;
+}
+
+.toolbar-text {
+  .button-size(@padding-base-vertical; @padding-base-horizontal; @font-size-base; @line-height-base; @border-radius-base);
+}
+
+.situation-landscape {
+
+  & > .display-image,
+  & > .situation-section {
+    display: table-cell;
+  }
+
+  .display-image {
+    background-size: cover;
+    background-position: center;
+    width: 8em;
+
+    img {
+      display: none;
+    }
+  }
+}
+
+ol.situations .situation-landscape {
+  margin-bottom: 1px;
+}
+
+#overview {
+  & > .display-image {
+    box-shadow: 0 1px 3px #C1C7CE;
+
+    &:before {
+      background-color: transparent;
+    }
   }
 }

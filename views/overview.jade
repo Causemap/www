@@ -1,45 +1,92 @@
 extends situation
 
-block situation-nav
-  ul.nav.nav-pills.nav-justified
-    li.active
-      a Situation
-    li
-      a(href='/situation/'+ situation._id +'/causes', data-instant) Causes&nbsp;
-        span.badge #{ situation.total_causes }
-
-    li
-      a(href='/situation/'+ situation._id +'/effects', data-instant) Effects&nbsp;
-        span.badge #{ situation.total_effects }
-
 block situation-content
-  .row
-    .col-md-12
-      .situation-description.page-container(ng-bind='situation.description') #{ situation.description }
+  #overview
+    if situation.display_image
+      .display-image.loading
+        img.img-responsive(src='http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename)
+    .toolbar.btn-toolbar.padded-tb
+      .toolbar-text.pull-left.subdued
+        em
+          time.from-now(datetime=(new Date(situation.creation_date)))
+      .btn-group.pull-right
+        button.btn.btn-link.btn-block.dropdown-toggle(
+          data-toggle='dropdown'
+        )
+          span.glyphicon.glyphicon-edit &nbsp;
+          | Edit
+        ul.dropdown-menu
+          li
+            a(data-toggle='modal', data-target='#edit-name') Name
+          li
+            a(data-toggle='modal', data-target='#edit-location') Location
+          li
+            a(data-toggle='modal', data-target='#edit-period') Period
+          li
+            a(data-toggle='modal', data-target='#edit-description') Description
+          li
+            a(data-toggle='modal', data-target='#edit-display-image') Display Image
+          li(ng-if='!situation.marked_for_deletion')
+            a(data-toggle='modal', data-target='#mark-for-deletion') Mark for Deletion
+          li(ng-if='situation.marked_for_deletion')
+            a(data-toggle='modal', data-target='#unmark-for-deletion')
+              | Unmark for Deletion
 
-  .row
-    .col-md-6
-      h3 Causes
-      ol.list-unstyled.situations
-        - each relationship in situation.causes
-          - var relationship_situation = relationship.cause
-            li.situation.relationship-situation
-              .situation-section
-                h4.situation-name
-                  if relationship_situation.location
-                    span.small #{ relationship_situation.location }
-                    br
-                  a(href='/situation/'+ relationship_situation._id) #{ relationship_situation.name }
+    .row
+      .col-md-12
+        .situation-description(
+          ng-bind='situation.description'
+        ) #{ situation.description }
 
-    .col-md-6
-      h3 Effects
-      ol.list-unstyled.situations
-        - each relationship in situation.effects
-          - var relationship_situation = relationship.effect
-            li.situation.relationship-situation
-              .situation-section
-                h4.situation-name
-                  if relationship_situation.location
-                    span.small #{ relationship_situation.location }
-                    br
-                  a(href='/situation/'+ relationship_situation._id) #{ relationship_situation.name }
+    .row
+      .col-md-12
+        if situation.total_causes == 0
+          h3.subdued No Causes
+          p.subdued Do you know what caused this?
+        else
+          h3 Causes
+          ol.list-unstyled.situations
+            - each relationship in situation.causes
+              - var relationship_situation = relationship.cause
+                li.situation.relationship-situation.situation-landscape
+                  +situation_item(relationship_situation)
+
+        .btn-toolbar
+          button.btn.btn-link.pull-right(
+            data-toggle='modal',
+            data-target='#add-relationship',
+            ng-click='rel_type = "causes"'
+          ) Add a Cause
+          a.btn.btn-link.pull-right(
+            href='/situation/'+ situation._id +'/causes',
+            ng-disabled='!situation.total_causes'
+          )
+            | View causes
+
+
+    .row
+      .col-md-12
+        if situation.total_effects == 0
+          h3.subdued No Effects
+          p.subdued
+            | Apparently, this situation hasn't effected the universe in any
+            | way. Unless it actually has...
+        else
+          h3 Effects
+          ol.list-unstyled.situations
+            - each relationship in situation.effects
+              - var relationship_situation = relationship.effect
+                li.situation.relationship-situation.situation-landscape
+                  +situation_item(relationship_situation)
+
+        .btn-toolbar
+          button.btn.btn-link.pull-right(
+            data-toggle='modal',
+            data-target='#add-relationship'
+            ng-click='rel_type = "effects"'
+          ) Add an Effect
+          a.btn.btn-link.pull-right(
+            href='/situation/'+ situation._id +'/effects',
+            ng-disabled='!situation.total_effects'
+          )
+            | View effects

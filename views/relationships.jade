@@ -1,62 +1,66 @@
 extends situation
 
-block situation-nav
-  ul.nav.nav-pills.nav-justified
-    li
-      a(href='/situation/'+ situation._id, data-instant) Situation
-    if rel_type == 'causes'
-      li.active
-        a Causes&nbsp;
-          span.badge #{ situation.total_causes }
-    else
-      li
-        a(href='/situation/'+ situation._id +'/causes', data-instant) Causes&nbsp;
-          span.badge #{ situation.total_causes }
-
-
-    if rel_type == 'effects'
-      li.active
-        a Effects&nbsp;
-          span.badge #{ situation.total_effects }
-    else
-      li
-        a(href='/situation/'+ situation._id +'/effects', data-instant) Effects&nbsp;
-          span.badge #{ situation.total_effects }
+block title
+  if rel_type == 'effects'
+    | Effects of "#{ situation.name }"
+  else
+    | Causes of "#{ situation.name }"
 
 block situation-content
   .row
     .col-md-12
-      form.form-inline
+      .btn-toolbar.padded-tb
         if rel_type == 'effects'
-          button.btn.btn-primary.pull-right(data-toggle='modal', data-target='#add-relationship') Add an Effect
+          .toolbar-text.pull-left
+            strong Effects
+          button.btn.btn-primary.pull-right(
+            data-toggle='modal',
+            data-target='#add-relationship',
+            ng-click='rel_type = "effects"'
+          ) Add an Effect
         else
-          button.btn.btn-primary.pull-right(data-toggle='modal', data-target='#add-relationship') Add a Cause
+          .toolbar-text.pull-left
+            strong Causes
+          button.btn.btn-primary.pull-right(
+            data-toggle='modal',
+            data-target='#add-relationship',
+            ng-click='rel_type = "causes"'
+          ) Add a Cause
 
-      ol.list-unstyled
-        - each hit in result.hits.hits
-          - var situation = rel_type == 'causes' ? hit._source.cause : hit._source.effect
-            li
-              h4
-                a(href="/situation/"+ situation._id, data-instant) #{ situation.name }
-              p #{ situation.period } &dash; #{ situation.location }
+      if rel_type == 'effects'
+        if situation.total_effects == 0
+          h3.subdued No Effects
+          p.subdued
+            | Apparently, this situation hasn't effected the universe in any
+            | way. Unless it actually has...
 
-  #add-relationship.modal.fade(ng-controller='RelationshipCtrl')
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button.close(type='button', data-dismiss='modal') &times;
-          if rel_type == 'effects'
-            h4 Add an Effect
-          else
-            h4 Add a Cause
-        .modal-body
-          .form-group
-            label Type the name of a situation
-            input.form-control.input-lg(ng-model='suggestion_query', type='search', placeholder='eg. Germany Won the 2014 World Cup', ng-change='suggestSituations(suggestion_query)')
-        form
-          ul.suggestions
-            li(ng-repeat='suggestion in situationSuggestions.hits.hits')
-              h4(
-                ng-click='createRelationship("'+ rel_type +'", suggestion._source._id)'
-              ) {{ suggestion._source.name }}
+          .btn-toolbar
+            button.btn.btn-link.btn-block(
+              data-toggle='modal',
+              data-target='#add-relationship'
+              ng-click='rel_type = "effects"'
+            ) Add an Effect
+        else
+          ol.list-unstyled.situations
+            - each hit in result.hits.hits
+              - var situation = rel_type == 'causes' ? hit._source.cause : hit._source.effect
+                li.situation.situation-landscape.relationship-situation
+                  +situation_item(situation)
 
+      if rel_type == 'causes'
+        if situation.total_causes == 0
+          h3.subdued No Causes
+          p.subdued Do you know what caused this?
+
+          .btn-toolbar
+            button.btn.btn-link.btn-block(
+              data-toggle='modal',
+              data-target='#add-relationship',
+              ng-click='rel_type = "causes"'
+            ) Add a Cause
+        else
+          ol.list-unstyled.situations
+            - each relationship in situation.causes
+              - var relationship_situation = relationship.cause
+                li.situation.relationship-situation.situation-landscape
+                  +situation_item(relationship_situation)

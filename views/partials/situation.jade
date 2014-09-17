@@ -1,0 +1,25 @@
+mixin situation_item(situation)
+  if situation.display_image
+    - var img_url = 'http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
+      a.display-image.loading(
+        href='/situation/'+ situation._id,
+        style='background-image: url("'+ img_url +'");'
+      )
+        img.img-responsive(src=img_url)
+
+  .situation-section
+    h4.situation-name
+      if situation.location
+        small.location= situation.location
+      else
+        small.location.default.subdued Everywhere
+
+      small &nbsp;&nbsp;&nbsp;
+
+      if situation.period
+        small.period= situation.period
+      else
+        small.period.default.subdued Always
+
+      br
+      a.name(href='/situation/'+ situation._id)= situation.name

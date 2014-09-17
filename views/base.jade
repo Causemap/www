@@ -4,7 +4,10 @@ html(lang='en')
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    title Causemap
+    title
+      block title
+        | Cause &amp; Effect |&nbsp;
+      | Causemap
 
     link(
       href='http://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic'
@@ -22,6 +25,7 @@ html(lang='en')
        script(src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
        script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
 
+    script(src='/lib/moment/min/moment.min.js')
     script(src='/lib/pouchdb/dist/pouchdb.min.js')
     script(src='/javascripts/pouchdb-update.min.js')
     script(src='/lib/pouchdb-authentication/dist/pouchdb.authentication.min.js')
@@ -140,20 +144,20 @@ html(lang='en')
     script(src='/lib/masonry/dist/masonry.pkgd.min.js')
     script(src='/lib/imagesloaded/imagesloaded.js')
     script.
-      var masonry_opts = {
-        itemSelector: '.situation',
-        gutter: 15
-      }
+      $('.display-image.loading').imagesLoaded().progress(function(
+        instance,
+        image
+      ){
+        $(image.img).parent().removeClass('loading');
+      })
 
-      var $container = $('.situations').masonry(masonry_opts);
-
-      $container.imagesLoaded(function(){
-        $container.masonry(masonry_opts)
-      }).progress(function(instance, image){
-        $(image.img).removeClass('loading');
-        $container.masonry('layout');
+      $('time.from-now').each(function(){
+        this.innerHTML = 'Created ';
+        this.innerHTML += moment(this.getAttribute('datetime')).fromNow()
       })
 
     // Include all compiled plugins (below), or include individual files as
     // needed
     script(src='/lib/bootstrap/dist/js/bootstrap.min.js')
+
+    block body-js

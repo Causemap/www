@@ -1,6 +1,7 @@
 extends base
 
 block content
+  include ./partials/situation
   .container
     .row
       .col-md-12
@@ -8,17 +9,7 @@ block content
           - each hit in result.hits.hits
             - var situation = hit._source
               li.situation
-                if situation.display_image
-                  - var img_url = 'http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
-                    a(href='/situation/'+ situation._id).display-image
-                      img.loading.img-responsive(src=img_url)
-
-                .situation-section
-                  h4.situation-name
-                    if situation.location
-                      span.small #{ situation.location }
-                      br
-                    a(href='/situation/'+ situation._id) #{ situation.name }
+                +situation_item(situation)
 
         ul.pagination
           - var total_pages = Math.ceil(result.hits.total / size)
@@ -31,3 +22,21 @@ block content
               else
                 li
                   a(href='/?size='+ size +'&from='+ (n-1)*size)= n
+
+block body-js
+  script.
+    var masonry_opts = {
+      itemSelector: '.situation',
+      gutter: 15
+    }
+
+    var $container = $('.situations').masonry(masonry_opts);
+
+    $container.imagesLoaded(function(){
+      $container.masonry(masonry_opts)
+    }).progress(function(instance, image){
+      $(image.img).parent().removeClass('loading');
+      $container.masonry('layout');
+    })
+
+
