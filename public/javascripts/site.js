@@ -341,7 +341,7 @@ causemap.controller('RelationshipCtrl', [
       var query = {
         query: {
           query_string: {
-            query: query_text
+            query: query_text +'*'
           }
         }
       }
