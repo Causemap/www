@@ -238,6 +238,14 @@ causemap.controller('SituationCtrl', [
 
             // set the situation name to whatever
             $scope.situation[field_name] = field_value;
+
+            if (field_name == 'description'){
+              $scope.situation.html_description = marked(field_value, {
+                gfm: true
+              })
+              return $scope.$apply();
+            }
+
             $scope.$apply();
           }
         )

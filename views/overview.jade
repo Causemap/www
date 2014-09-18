@@ -35,8 +35,8 @@ block situation-content
     .row
       .col-md-12
         .situation-description(
-          ng-bind='situation.description'
-        ) #{ situation.description }
+          ng-bind-html-unsafe='situation.html_description'
+        ) !{ situation.html_description }
 
     .row
       .col-md-12

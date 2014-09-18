@@ -3,6 +3,7 @@ var async = require('async');
 var express = require('express');
 var router = express.Router();
 var elasticsearch = require('elasticsearch');
+var marked = require('marked');
 
 var ES_URL = 'http://api.causemap.org:9200'
 
@@ -17,6 +18,13 @@ var get_situation = function(req, res, next, id){
     type: 'situation',
     id: req.params.situation_id
   }).then(function(result){
+    if (result._source.description){
+      result._source.html_description = marked(result._source.description, {
+        gfm: true
+      })
+      console.log(result._source.html_description)
+    }
+
     req.situation = res.locals.situation = result._source;
     return next();
   }, function(error){
