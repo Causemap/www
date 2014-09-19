@@ -31,8 +31,7 @@ block situation-content
         if situation.total_effects == 0
           h3.subdued No Effects
           p.subdued
-            | Apparently, this situation hasn't effected the universe in any
-            | way. Unless it actually has...
+            | How has this situation effected things?
 
           .btn-toolbar
             button.btn.btn-link.btn-block(
@@ -60,7 +59,7 @@ block situation-content
             ) Add a Cause
         else
           ol.list-unstyled.situations
-            - each relationship in situation.causes
-              - var relationship_situation = relationship.cause
+            - each hit in result.hits.hits
+              - var situation = hit._source.cause
                 li.situation.relationship-situation.situation-landscape
-                  +situation_item(relationship_situation)
+                  +situation_item(situation)

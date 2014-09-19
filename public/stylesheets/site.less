@@ -5,6 +5,14 @@
 // @container-desktop: @container-tablet;
 // @container-large-desktop: @container-tablet;
 
+a:hover {
+  text-decoration: none;
+}
+
+.branding {
+  font-weight: 900;
+  text-transform: uppercase;
+}
 
 ol.situations {
   .situation {
@@ -132,10 +140,13 @@ ol.situations .situation-landscape {
 #overview {
   & > .display-image {
     box-shadow: 0 1px 3px #C1C7CE;
-    margin-top: 1em;
 
     &:before {
       background-color: transparent;
     }
   }
+}
+
+#situation-header {
+  margin-bottom: 20px;
 }

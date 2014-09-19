@@ -14,8 +14,8 @@ block content
   )
 
     .row
-      .col-md-6.col-md-push-3.col-sm-9.col-xs-12
-        h1
+      .col-md-8.col-md-push-2
+        h1#situation-header
           if situation.location
             small.location(ng-bind='situation.location')= situation.location
           else
@@ -47,7 +47,7 @@ block content
           )= situation.name
 
     .row
-      .col-md-6.col-md-push-3
+      .col-md-8.col-md-push-2
         block situation-content
 
     #edit-name.modal.fade
