@@ -6,4 +6,4 @@ WORKDIR /usr/src/causemap-api
 RUN npm install
 EXPOSE 3000
 
-CMD npm run
+CMD npm start
