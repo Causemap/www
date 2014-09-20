@@ -1,4 +1,4 @@
-FROM node
+FROM dockerfile/nodejs-bower-grunt-runtime
 
 ADD . /usr/src/causemap-api
 WORKDIR /usr/src/causemap-api
