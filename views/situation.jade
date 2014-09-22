@@ -15,6 +15,13 @@ block content
 
     .row
       .col-md-8.col-md-push-2
+        if situation.marked_for_deletion
+          .alert.alert-danger(ng-if='situation.marked_for_deletion')
+            p This situation has been marked for deletion.
+        else
+          .alert.alert-danger(ng-if='situation.marked_for_deletion')
+            p This situation has been marked for deletion.
+
         h1#situation-header
           if situation.location
             small.location(ng-bind='situation.location')= situation.location
@@ -43,6 +50,7 @@ block content
           br
           a.name(
             href='/situation/'+ situation._id,
+            ng-class='{ danger: situation.marked_for_deletion }',
             ng-bind='situation.name'
           )= situation.name
 

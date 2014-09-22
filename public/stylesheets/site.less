@@ -51,6 +51,31 @@ ol.situations {
     .situation-name {
       margin: 0;
     }
+
+    &.situation-landscape {
+      background-color: #FAFAFA;
+      display: table;
+
+      & > .situation-section {
+        background-color: white;
+        margin-left: 8em;
+      }
+
+      & > .display-image {
+        background-size: cover;
+        background-position: center;
+        display: table-cell;
+        width: 8em;
+
+        img {
+          display: none;
+        }
+
+        & + .situation-section {
+          display: table-cell;
+        }
+      }
+    }
   }
 }
 
@@ -74,6 +99,8 @@ ol.situations {
 }
 
 .loading {
+  background-image: url('throbber.svg');
+  background-repeat: no-repeat;
   opacity: 0;
 }
 
@@ -113,30 +140,6 @@ ol.situations {
 
 .toolbar-text {
   .button-size(@padding-base-vertical; @padding-base-horizontal; @font-size-base; @line-height-base; @border-radius-base);
-}
-
-.situation-landscape {
-  background-color: #f8f8f8;
-
-  & > .situation-section {
-    background-color: white;
-    margin-left: 8em;
-  }
-
-  & > .display-image {
-    background-size: cover;
-    background-position: center;
-    display: table-cell;
-    width: 8em;
-
-    img {
-      display: none;
-    }
-
-    & + .situation-section {
-      display: table-cell;
-    }
-  }
 }
 
 ol.situations .situation-landscape {
