@@ -1,6 +1,8 @@
 extends situation
 
 block situation-content
+  script.
+    mixpanel.track("situation viewed");
   #overview
     if situation.display_image
       .display-image.loading

@@ -7,6 +7,14 @@ block title
     | Causes of "#{ situation.name }"
 
 block situation-content
+  if rel_type == 'effects'
+    script.
+      mixpanel.track("situation effects viewed");
+
+  if rel_type == 'causes'
+    script.
+      mixpanel.track("situation causes viewed");
+
   .row
     .col-md-12
       .btn-toolbar.padded-tb

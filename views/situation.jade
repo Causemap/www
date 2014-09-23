@@ -138,7 +138,7 @@ block content
               input.form-control.input-lg(ng-model='suggestion_query', type='search', placeholder='eg. Germany Won the 2014 World Cup', ng-change='suggestSituations(suggestion_query)')
           form
             ol.suggestions.situations.list-unstyled
-              li.situation.situation-landscape.relationship-situation(
+              li.situation.situation-landscape.relationship-situation.suggestion(
                 ng-repeat='suggestion in situationSuggestions.hits.hits',
                 ng-init='situation = suggestion._source; img_url = "http://api.causemap.org:5984/causemap/{{ situation.display_image.change_id }}/{{ situation.display_image.filename }}"',
                 ng-click='createRelationship(rel_type, situation._id)'
