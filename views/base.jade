@@ -10,6 +10,7 @@ html(lang='en')
       | Causemap
 
     link(href='https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
+    link(href='http://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.4/toaster.css', rel='stylesheet')
 
     // Bootstrap
     link(href='/stylesheets/site.css', rel='stylesheet')
@@ -26,6 +27,7 @@ html(lang='en')
     script(src='/javascripts/pouchdb-update.min.js')
     script(src='/lib/pouchdb-authentication/dist/pouchdb.authentication.min.js')
     script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js')
+    script(src='http://code.angularjs.org/1.2.0/angular-animate.min.js')
     script(src='/lib/lodash/dist/lodash.min.js')
     script(src='/lib/elasticsearch/elasticsearch.angular.min.js')
     script(src='/javascripts/site.js')
@@ -34,7 +36,7 @@ html(lang='en')
     .navbar.navbar-default.navbar-static-top(role='navigation')
       .container
         .row
-          .navbar-header.col-sm-2
+          .navbar-header.col-md-2
             button.navbar-toggle.collapsed(
               type='button',
               data-toggle='collapse',
@@ -49,28 +51,35 @@ html(lang='en')
               a(href='/').branding Causemap
 
           #navbar-collapse.collapse.navbar-collapse
-            .col-sm-10
-              ul.nav.navbar-nav.pull-right
-                li(ng-controller='AuthCtrl')
-                  a(
-                    data-toggle='modal',
-                    data-target='#login-signup-modal',
-                    href='',
-                    ng-if='!session.userCtx.name'
-                  )
-                    | Login or Sign-Up
+            ul.nav.navbar-nav.pull-right
+              li(ng-controller='SituationsCtrl')
+                a(
+                  data-toggle='modal',
+                  data-target='#add-situation-modal'
+                ) Add a Situation
 
-                  a(
-                    ng-if='session.userCtx.name', ng-cloak
-                  ) {{ session.userCtx.name }}
+              li(
+                ng-controller='AuthCtrl',
+                ng-if='!session.userCtx.name',
+                ng-cloak
+              )
+                a(
+                  data-toggle='modal',
+                  data-target='#login-signup-modal',
+                  href=''
+                )
+                  | Login or Sign-Up
 
-                li(ng-controller='SituationsCtrl')
-                  a(
-                    data-toggle='modal',
-                    data-target='#add-situation-modal'
-                  ) Add a Situation
+              li.dropdown.pull-right(ng-if='session.userCtx.name', ng-cloak)
+                a(data-toggle='dropdown')
+                  | {{ session.userCtx.name }}
+                  span.caret
+                ul.dropdown-menu(role='menu')
+                  li
+                    a(ng-click='logout()') Logout
 
 
+    toaster-container(toaster-options="{'position-class': 'toast-bottom-right'}")
     block content
 
     #add-situation-modal.modal.fade
@@ -135,11 +144,15 @@ html(lang='en')
                     | I am a new user
 
             .modal-footer
-              button.btn.btn-primary.btn-block(type='submit') Login
+              button.btn.btn-primary.btn-block(
+                type='submit',
+                data-loading-text='Logging in'
+              ) Login
 
     // jQuery (necessary for Bootstrap's JavaScript plugins)
     script(
       src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+    script(src='http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js')
     script(src='/lib/masonry/dist/masonry.pkgd.min.js')
     script(src='/lib/imagesloaded/imagesloaded.js')
     script.
@@ -154,6 +167,10 @@ html(lang='en')
         this.innerHTML = 'Created ';
         this.innerHTML += moment(this.getAttribute('datetime')).fromNow()
       })
+
+      toastr.options = {
+        "positionClass": "toast-bottom-right"
+      }
 
     // Include all compiled plugins (below), or include individual files as
     // needed

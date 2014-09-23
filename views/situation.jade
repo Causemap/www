@@ -71,7 +71,7 @@ block content
                   )
               .modal-footer
                 a.btn.btn-default(data-dismiss='modal') Cancel
-                button.btn.btn-primary(type='submit') Save
+                button.btn.btn-primary(type='submit', data-loading-text='Saving...') Save
 
     #edit-location.modal.fade
       .modal-dialog
@@ -83,7 +83,7 @@ block content
                   input.form-control(placeholder='eg. Montreal, Quebec', ng-model='situation_draft.location')
               .modal-footer
                 a.btn.btn-default(data-dismiss='modal') Cancel
-                button.btn.btn-primary(type='submit') Save
+                button.btn.btn-primary(type='submit', data-loading-text='Saving...') Save
 
     #edit-period.modal.fade
       .modal-dialog
@@ -95,7 +95,7 @@ block content
                   input.form-control(placeholder='eg. Summer 2014', ng-model='situation_draft.period')
               .modal-footer
                 a.btn.btn-default(data-dismiss='modal') Cancel
-                button.btn.btn-primary(type='submit') Save
+                button.btn.btn-primary(type='submit', data-loading-text='Saving...') Save
 
     #edit-description.modal.fade
       .modal-dialog
@@ -111,7 +111,7 @@ block content
                   )
               .modal-footer
                 a.btn.btn-default(data-dismiss='modal') Cancel
-                button.btn.btn-primary(type='submit') Save
+                button.btn.btn-primary(type='submit', data-loading-text='Saving...') Save
 
     #edit-display-image.modal.fade
       .modal-dialog
@@ -123,7 +123,7 @@ block content
                   input#new-display-image-input.form-control(type='file')
               .modal-footer
                 a.btn.btn-default(data-dismiss='modal') Cancel
-                button.btn.btn-primary(type='submit') Save
+                button.btn.btn-primary(type='submit', data-loading-text='Saving...') Save
 
     #add-relationship.modal.fade(ng-controller='RelationshipCtrl')
       .modal-dialog

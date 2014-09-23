@@ -69,9 +69,11 @@ causemap.controller('AuthCtrl', [
           $rootScope.auth.password,
           function(error, result){
             if (error){
-              return console.error(error)
+              toastr.error('couldnt login')
+              return console.error('dog', error)
             }
 
+            toastr.success('logged in')
             // close the authentication modal
             $('.modal').modal('hide');
             return $rootScope.getSession();
@@ -110,6 +112,10 @@ causemap.controller('AuthCtrl', [
       user_db.getSession(function(err, response){
         if (err) return console.error(err);
         $rootScope.session = response;
+
+        if (response.userCtx.name){
+        }
+
         $rootScope.$apply();
       })
     }
@@ -137,10 +143,17 @@ causemap.controller('SituationsCtrl', [
     causemap_db
   ){
     $rootScope.add_situation = function(){
+      $('button[type="submit"]').button('loading');
+
       causemap_db.update(
         'situation/create',
         function(error, result){
-          if (error) return console.error(error);
+          $('button[type="submit"]').button('reset');
+
+          if (error){
+            toastr.error(error.message)
+            return console.error(error);
+          }
 
           var situation_id = JSON.parse(result.body).id;
 
@@ -159,11 +172,12 @@ causemap.controller('SituationsCtrl', [
               $('#add-situation-modal').on('hidden.bs.modal', function(){
                 // reset the new_situation_name
                 $scope.new_situation_name = null;
+                toastr.success('Created!')
 
                 setTimeout(function(){
                   // send the user to the new situation url
                   window.location = '/situation/'+ situation_id;
-                }, 500)
+                }, 1200)
               });
             }
           )
@@ -224,14 +238,21 @@ causemap.controller('SituationCtrl', [
     ).dataset.situationId
 
     $scope.createChange = function createChange(field_name, field_value){
-      console.log(arguments)
+      $('button[type="submit"]').button('loading');
 
       function put_update(new_field){
         causemap_db.update(
           'change/create/'+ $scope.situation_id, {
             body: JSON.stringify(new_field)
           }, function(error, result){
-            if (error) return console.error(error);
+            $('button[type="submit"]').button('reset');
+
+            if (error){
+              toastr.error(error.message)
+              return console.error(error);
+            }
+
+            toastr.success('Saved!')
 
             // close the modal
             $('.modal').modal('hide');
@@ -243,6 +264,7 @@ causemap.controller('SituationCtrl', [
               $scope.situation.html_description = marked(field_value, {
                 gfm: true
               })
+
               return $scope.$apply();
             }
 
@@ -349,6 +371,7 @@ causemap.controller('RelationshipCtrl', [
       elasticsearch_client.search({
         index: 'situations',
         type: 'situation',
+        size: 3,
         body: query
       }).then(function(result){
         $scope.situationSuggestions = result;
@@ -375,8 +398,12 @@ causemap.controller('RelationshipCtrl', [
         'relationship/create',
         { body: JSON.stringify(body) },
         function(error, response){
-          if (error) return console.error(error);
-          console.log('relationship created')
+          if (error){
+            toastr.error(error.message)
+            return console.error(error);
+          }
+
+          toastr.success('Added to '+ rel_type);
           // close the modal
           return $('.modal').modal('hide');
         }
