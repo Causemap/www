@@ -69,7 +69,7 @@ causemap.controller('AuthCtrl', [
           $rootScope.auth.password,
           function(error, result){
             if (error){
-              toastr.error('couldnt login')
+              toastr.error('couldn\'t login')
               return console.error('dog', error)
             }
 
