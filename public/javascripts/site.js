@@ -63,16 +63,20 @@ causemap.controller('AuthCtrl', [
     }
 
     $rootScope.loginSignup = function(){
+      mixpanel.track("login attempt");
+
       if ($rootScope.auth.user_has_account){
         return user_db.login(
           $rootScope.auth.username,
           $rootScope.auth.password,
           function(error, result){
             if (error){
+              mixpanel.track("login error");
               toastr.error('couldn\'t login')
               return console.error('dog', error)
             }
 
+            mixpanel.track("logged in");
             toastr.success('logged in')
             // close the authentication modal
             $('.modal').modal('hide');
@@ -86,6 +90,7 @@ causemap.controller('AuthCtrl', [
         $rootScope.auth.password,
         function(error, result){
           if (error){
+            mixpanel.track("signup error");
             return console.error(error)
           }
 
@@ -93,6 +98,7 @@ causemap.controller('AuthCtrl', [
             $rootScope.auth.username,
             $rootScope.auth.password,
             function(error, result){
+              mixpanel.track("logged in");
               // close the auth modal
               return $rootScope.getSession()
             }
@@ -103,6 +109,7 @@ causemap.controller('AuthCtrl', [
 
     $rootScope.logout = function(){
       user_db.logout(function(){
+        mixpanel.track("logged out");
         $rootScope.getSession()
       })
     }
@@ -122,6 +129,8 @@ causemap.controller('AuthCtrl', [
 
     $rootScope.requireLogin = function(next){
       if (!$rootScope.session.userCtx.name){
+        mixpanel.track("login required");
+
         // show the auth modal
         return false
       }
@@ -144,6 +153,7 @@ causemap.controller('SituationsCtrl', [
   ){
     $rootScope.add_situation = function(){
       $('button[type="submit"]').button('loading');
+      mixpanel.track("new situation submitted");
 
       causemap_db.update(
         'situation/create',
@@ -151,10 +161,12 @@ causemap.controller('SituationsCtrl', [
           $('button[type="submit"]').button('reset');
 
           if (error){
+            mixpanel.track("error submitting new situation");
             toastr.error(error.message)
             return console.error(error);
           }
 
+          mixpanel.track("situation created");
           var situation_id = JSON.parse(result.body).id;
 
           causemap_db.update(
@@ -239,6 +251,7 @@ causemap.controller('SituationCtrl', [
 
     $scope.createChange = function createChange(field_name, field_value){
       $('button[type="submit"]').button('loading');
+      mixpanel.track("change submitted");
 
       function put_update(new_field){
         causemap_db.update(
@@ -248,10 +261,12 @@ causemap.controller('SituationCtrl', [
             $('button[type="submit"]').button('reset');
 
             if (error){
+              mixpanel.track("error saving change");
               toastr.error(error.message)
               return console.error(error);
             }
 
+            mixpanel.track("change saved");
             toastr.success('Saved!')
 
             // close the modal
