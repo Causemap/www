@@ -42,7 +42,18 @@ router.get('/', function(req, res) {
   });
 
   var query = {
-    sort: { creation_date: { order: 'desc' } }
+    sort: { creation_date: { order: 'desc' } },
+    query: {
+      filtered: {
+        filter: {
+          bool: {
+            must_not: {
+              exists: { field: 'marked_for_deletion' }
+            }
+          }
+        }
+      }
+    }
   }
 
   elasticsearch_client.search({
@@ -81,14 +92,23 @@ router.get('/situation/:situation_id', function(req, res, next){
         query: {
           filtered: {
             filter: {
-              term: {}
+              bool: {
+                must_not: [
+                  { exists: { field: 'marked_for_deletion' } },
+                  { exists: { field: 'cause.marked_for_deletion'} },
+                  { exists: { field: 'effect.marked_for_deletion'} }
+                ],
+                must: {
+                  term: {},
+                }
+              }
             }
           }
         }
       }
     }
 
-    q.body.query.filtered.filter.term[rel_type +'._id'] = situation._id;
+    q.body.query.filtered.filter.bool.must.term[rel_type +'._id'] = situation._id;
 
     elasticsearch_client.search(q).then(function(result){
       var return_me = {};
