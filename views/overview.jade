@@ -56,30 +56,6 @@ block situation-content
         .btn-toolbar
           button.btn.btn-link.pull-right(
             data-toggle='modal',
-            data-target='#add-relationship',
-            ng-click='rel_type = "causes"'
-          ) Add a Cause
-          a.btn.btn-link.pull-right(
-            href='/situation/'+ situation._id +'/causes',
-            ng-disabled='!situation.total_causes'
-          )
-            | View causes
-
-        if situation.total_effects == 0
-          h3.subdued No Effects
-          p.subdued
-            | How has this situation effected things?
-        else
-          h3 Effects
-          ol.list-unstyled.situations
-            - each relationship in situation.effects
-              - var relationship_situation = relationship.effect
-                li.situation.relationship-situation.situation-landscape
-                  +situation_item(relationship_situation)
-
-        .btn-toolbar
-          button.btn.btn-link.pull-right(
-            data-toggle='modal',
             data-target='#add-relationship'
             ng-click='rel_type = "effects"'
           ) Add an Effect
@@ -87,4 +63,14 @@ block situation-content
             href='/situation/'+ situation._id +'/effects',
             ng-disabled='!situation.total_effects'
           )
-            | View effects
+            | View {{ situation.total_effects }} effects
+          button.btn.btn-link.pull-right(
+            data-toggle='modal',
+            data-target='#add-relationship',
+            ng-click='rel_type = "causes"'
+          ) Add a Cause
+          a.btn.btn-link.pull-right(
+            href='/situation/'+ situation._id +'/causes',
+            ng-disabled='!situation.total_causes'
+          )
+            | View {{ situation.total_causes }} causes
