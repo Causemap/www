@@ -5,6 +5,16 @@ block content
   .container
     .row
       .col-md-12
+        .jumbotron
+          h1 Crowd-sourced Causality
+          p
+            | Causemap is a database of real-life situations linked together by
+            | their causes and effects
+    .row
+      .col-md-12
+        .page-header
+          h1 Latest
+
         ol.situations.list-unstyled
           - each hit in result.hits.hits
             - var situation = hit._source
