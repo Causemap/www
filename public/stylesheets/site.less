@@ -56,8 +56,16 @@ ol.situations {
       background-color: #FAFAFA;
       display: table;
 
+      &.suggestion {
+        cursor: pointer;
+
+        &.selected, &:hover {
+          background-color: @brand-primary;
+        }
+      }
+
       & > .situation-section {
-        background-color: white;
+        background-color: rgba(255, 255, 255, 0.75);
         margin-left: 8em;
       }
 
