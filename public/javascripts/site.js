@@ -283,6 +283,7 @@ causemap.controller('SituationCtrl', [
               return $scope.$apply();
             }
 
+            getSituation();
             $scope.$apply();
           }
         )

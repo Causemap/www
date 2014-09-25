@@ -56,7 +56,24 @@ html(lang='en')
               a(href='/').branding Causemap
 
           #navbar-collapse.collapse.navbar-collapse
-            ul.nav.navbar-nav.pull-right
+            .navbar-form.navbar-left(role='search')
+              form(action='/', method='get')
+                .form-group
+                  if query && query.search
+                    input.form-control(
+                      type='search',
+                      name='search',
+                      value=query.search,
+                      placeholder='Search'
+                    )
+                  else
+                    input.form-control(
+                      type='search',
+                      name='search',
+                      placeholder='Search'
+                    )
+
+            ul.nav.navbar-nav.navbar-right
               li(ng-controller='SituationsCtrl')
                 a(
                   data-toggle='modal',

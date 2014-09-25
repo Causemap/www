@@ -56,6 +56,14 @@ router.get('/', function(req, res) {
     }
   }
 
+  if (req.query.search){
+    query.query.filtered.query = {
+      query_string: {
+        query: req.query.search
+      }
+    }
+  }
+
   elasticsearch_client.search({
     index: 'situations',
     type: 'situation',
@@ -64,6 +72,7 @@ router.get('/', function(req, res) {
     body: query
   }).then(function(result){
     res.render('index', {
+      query: req.query,
       result: result,
       size: parseInt(req.query.size) || 25,
       from: parseInt(req.query.from) || 0
