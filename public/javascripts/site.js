@@ -283,7 +283,7 @@ causemap.controller('SituationCtrl', [
               return $scope.$apply();
             }
 
-            getSituation();
+            getSituation($scope.situation_id);
             $scope.$apply();
           }
         )
