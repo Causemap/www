@@ -35,6 +35,11 @@ var get_situation = function(req, res, next, id){
 router.param('situation_id', get_situation)
 
 
+router.get('/landing', function(req, res){
+  return res.render('landing');
+})
+
+
 /* GET home page. */
 router.get('/', function(req, res) {
   var elasticsearch_client = new elasticsearch.Client({

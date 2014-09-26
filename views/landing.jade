@@ -1,0 +1,107 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title
+      block title
+        | Cause &amp; Effect |&nbsp;
+      | Causemap
+
+    style(type='text/css')
+      | html, body {
+      |   color: white;
+      |   font-family: 'helvetica neue';
+      |   height: 100%;
+      |   margin: 0;
+      | }
+      | 
+      | body {
+      |   background: -webkit-linear-gradient(-45deg, #DD5E89 10%, #F7BB97 90%); /* Chrome 10+, Saf5.1+ */
+      |   background:    -moz-linear-gradient(-45deg, #DD5E89 10%, #F7BB97 90%); /* FF3.6+ */
+      |   background:     -ms-linear-gradient(-45deg, #DD5E89 10%, #F7BB97 90%); /* IE10 */
+      |   background:      -o-linear-gradient(-45deg, #DD5E89 10%, #F7BB97 90%); /* Opera 11.10+ */
+      |   background:         linear-gradient(-45deg, #DD5E89 10%, #F7BB97 90%); /* W3C */
+      | }
+      | 
+      | .particles {
+      |   position: absolute;
+      |   top: 0;
+      |   right: 0;
+      |   bottom: 0;
+      |   left: 0;
+      | }
+      | 
+      | #particles-1 {
+      |   -webkit-filter: blur(7px);
+      |   opacity: 0.5;
+      | }
+      | 
+      | #particles-2 {
+      |   -webkit-filter: blur(3px);
+      |   opacity: 0.6;
+      | }
+      | 
+      | .container {
+      |   position: absolute;
+      |   top: 50%;
+      |   transform: translate(-50%, -50%);
+      |   left: 50%;
+      | }
+      | 
+      | .branding {
+      |   letter-spacing: 2px;
+      |   font-weight: 100;
+      |   text-transform: uppercase
+      | }
+
+
+  body
+    #particles-1.particles
+    #particles-2.particles
+    #particles-3.particles
+    .container
+      h1.branding Causemap
+
+    script(
+      src='https://code.jquery.com/jquery-2.1.1.min.js'
+    )
+    script(
+      src='/javascripts/jquery.particleground.min.js'
+    )
+    script.
+      $(document).ready(function(){
+        var defaults = {
+          dotColor: 'rgba(255,255,255,0.4)',
+          lineColor: 'rgba(255,255,255,0.2)'
+        }
+
+        var config1 = defaults;
+        var config2 = defaults;
+        var config3 = defaults;
+
+        config1.minSpeedX = 0.1*0.5;
+        config1.maxSpeedX = 0.7*0.5;
+        config1.minSpeedY = 0.1*0.5;
+        config1.maxSpeedY = 0.7*0.5;
+        config1.density = 10000*2;
+        config1.particleRadius = 7*0.5;
+        config1.lineWidth = 1*0.5;
+        config1.proximity = 100*0.5;
+        config1.parallaxMultiplier = 5*2;
+
+        config2.minSpeedX = 0.1*0.75;
+        config2.maxSpeedX = 0.7*0.75;
+        config2.minSpeedY = 0.1*0.75;
+        config2.maxSpeedY = 0.7*0.75;
+        config2.density = 10000*0.75;
+        config2.particleRadius = 7*0.75;
+        config2.lineWidth = 1*0.75;
+        config2.proximity = 100*0.75;
+        config2.parallaxMultiplier = 5*1.5;
+
+        $('#particles-1').particleground(config1);
+        $('#particles-2').particleground(config2);
+        $('#particles-3').particleground(defaults);
+      })
