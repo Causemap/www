@@ -3,6 +3,12 @@ extends base
 block title
   | #{ situation.name } |&nbsp;
 
+block meta-tags
+  meta(
+    name='description',
+    content=situation.name
+  )
+
 block content
   include ./partials/situation.jade
   script#situation-json(type='application/json')
