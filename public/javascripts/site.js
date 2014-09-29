@@ -397,6 +397,31 @@ causemap.controller('RelationshipCtrl', [
       })
     }
 
+    $scope.createAndAddRelationship = function(rel_type, name){
+      causemap_db.update(
+        'situation/create',
+        function(error, response){
+          if (error) return console.error(error);
+
+          var situation_id = response.json.id;
+
+          causemap_db.update(
+            'change/create/'+ situation_id, {
+              body: JSON.stringify({
+                field_name: 'name',
+                field_value: name
+              })
+            },
+            function(error, response){
+              if (error) return console.error(error);
+
+              return $scope.createRelationship(rel_type, situation_id);
+            }
+          )
+        }
+      )
+    }
+
     $scope.createRelationship = function(rel_type, id){
       if (rel_type == 'causes'){
         var body = {

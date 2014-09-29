@@ -177,6 +177,11 @@ block content
 
                     br
                     span.name(ng-bind='situation.name')
+              li.create-and-add.suggestion(
+                ng-if='suggestion_query',
+                ng-click='createAndAddRelationship(rel_type, suggestion_query)'
+              )
+                | Add &ldquo;{{ suggestion_query }}&rdquo; to {{ rel_type }}
 
     #mark-for-deletion.modal.fade
       .modal-dialog.modal-sm
