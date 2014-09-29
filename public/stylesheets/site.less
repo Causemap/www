@@ -107,8 +107,6 @@ ol.situations {
 }
 
 .loading {
-  background-image: url('throbber.svg');
-  background-repeat: no-repeat;
   opacity: 0;
 }
 
@@ -166,4 +164,9 @@ ol.situations .situation-landscape {
 
 #situation-header {
   margin-bottom: 20px;
+}
+
+[class^="cm-"]:before, [class*=" cm-"]:before {
+  position: relative;
+  top: 1.7pt;
 }

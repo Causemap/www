@@ -19,6 +19,7 @@ html(lang='en')
     link(href='http://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.4/toaster.css', rel='stylesheet')
 
     // Bootstrap
+    link(href='/fonts/cm-streamline/styles.css', rel='stylesheet')
     link(href='/stylesheets/site.css', rel='stylesheet')
 
     // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
@@ -59,7 +60,10 @@ html(lang='en')
               span.icon-bar
 
             .navbar-brand
-              a(href='/').branding Causemap
+              a(href='/').branding
+                i.cm-logo
+                | &nbsp;
+                | Causemap
 
           #navbar-collapse.collapse.navbar-collapse
             .navbar-form.navbar-left(role='search')
@@ -84,7 +88,9 @@ html(lang='en')
                 a(
                   data-toggle='modal',
                   data-target='#add-situation-modal'
-                ) Add a Situation
+                )
+                  i.glyphicon.glyphicon-plus &nbsp;
+                  | Add a Situation
 
               li(
                 ng-controller='AuthCtrl',
@@ -96,12 +102,13 @@ html(lang='en')
                   data-target='#login-signup-modal',
                   href=''
                 )
+                  i.glyphicon.glyphicon-login &nbsp;
                   | Login or Sign-Up
 
               li.dropdown.pull-right(ng-if='session.userCtx.name', ng-cloak)
                 a(data-toggle='dropdown')
+                  i.glyphicon.glyphicon-user &nbsp;
                   | {{ session.userCtx.name }}
-                  span.caret
                 ul.dropdown-menu(role='menu')
                   li
                     a(ng-click='logout()') Logout
