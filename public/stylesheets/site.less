@@ -18,7 +18,7 @@ ol.situations {
   .situation {
     background-color: white;
     box-shadow: 0 1px 2px darken(@body-bg, 10);
-    margin-bottom: 1em;
+    margin-bottom: 15px;
 
     &.relationship-situation {
       width: 100%;
@@ -70,8 +70,6 @@ ol.situations {
       }
 
       & > .display-image {
-        background-size: cover;
-        background-position: center;
         display: table-cell;
         width: 8em;
 
@@ -88,6 +86,8 @@ ol.situations {
 }
 
 .display-image {
+  background-size: cover;
+  background-position: center;
   display: block;
   position: relative;
   transition: all 1s ease-in-out;
