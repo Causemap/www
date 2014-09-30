@@ -1,4 +1,5 @@
 FROM dockerfile/nodejs
+ENV NODE_ENV production
 
 RUN npm install -g bower
 
