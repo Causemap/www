@@ -139,10 +139,13 @@ block content
             h4(ng-if='rel_type=="effects"') Add an Effect
             h4(ng-if='rel_type=="causes"') Add a Cause
           .modal-body
-            .form-group
-              label Type the name of a situation
-              input.form-control.input-lg(ng-model='suggestion_query', type='search', placeholder='eg. Germany Won the 2014 World Cup', ng-change='suggestSituations(suggestion_query)')
-          form
+            form(ng-submit='createAndAddRelationship(rel_type, suggestion_query)')
+              .form-group
+                label Type the name of a situation
+                input.form-control(ng-model='suggestion_query', type='search', placeholder='eg. Germany Won the 2014 World Cup', ng-change='suggestSituations(suggestion_query)')
+            p(ng-if='suggestion_query && suggestion_query.length > 3')
+              | press Enter to add &ldquo;{{ suggestion_query }}&rdquo; to {{
+              | rel_type }} or click an existing situation below.
             ol.suggestions.situations.list-unstyled
               li.situation.situation-landscape.relationship-situation.suggestion(
                 ng-repeat='suggestion in situationSuggestions.hits.hits',
@@ -177,11 +180,6 @@ block content
 
                     br
                     span.name(ng-bind='situation.name')
-              li.create-and-add.suggestion(
-                ng-if='suggestion_query',
-                ng-click='createAndAddRelationship(rel_type, suggestion_query)'
-              )
-                | Add &ldquo;{{ suggestion_query }}&rdquo; to {{ rel_type }}
 
     #mark-for-deletion.modal.fade
       .modal-dialog.modal-sm
