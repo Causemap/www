@@ -1,4 +1,5 @@
-mixin situation_item(situation)
+mixin relationship_item(relationship, hide_type)
+  - var situation = hide_type == 'cause' ? relationship.effect : relationship.causes
   if situation.display_image
     - var img_url = 'http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
       a.display-image.loading(
