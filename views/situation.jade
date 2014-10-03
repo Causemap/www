@@ -11,6 +11,7 @@ block meta-tags
 
 block content
   include ./partials/situation.jade
+  include ./partials/relationship.jade
   script#situation-json(type='application/json')
     | !{ JSON.stringify(situation) }
 

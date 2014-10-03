@@ -50,9 +50,8 @@ block situation-content
         else
           ol.list-unstyled.situations
             - each hit in result.hits.hits
-              - var situation = rel_type == 'causes' ? hit._source.cause : hit._source.effect
-                li.situation.situation-landscape.relationship-situation
-                  +situation_item(situation)
+              li.situation.situation-landscape.relationship-situation
+                +relationship_item(hit._source, 'cause')
 
       if rel_type == 'causes'
         if situation.total_causes == 0
@@ -68,6 +67,5 @@ block situation-content
         else
           ol.list-unstyled.situations
             - each hit in result.hits.hits
-              - var situation = hit._source.cause
-                li.situation.relationship-situation.situation-landscape
-                  +situation_item(situation)
+              li.situation.relationship-situation.situation-landscape
+                +relationship_item(hit._source, 'effect')

@@ -166,11 +166,21 @@ router.get('/situation/:situation_id/:relationship_type', function(
   var q = {
     index: 'relationships',
     type: 'relationship',
+    size: 100,
     body: {
       query: {
         filtered: {
           filter: {
-            term: {}
+            bool: {
+              must_not: [
+                { exists: { field: 'marked_for_deletion' } },
+                { exists: { field: 'cause.marked_for_deletion'} },
+                { exists: { field: 'effect.marked_for_deletion'} }
+              ],
+              must: {
+                term: {},
+              }
+            }
           }
         }
       }

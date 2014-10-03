@@ -334,9 +334,7 @@ causemap.controller('SituationCtrl', [
         'action/mark_for_deletion/'+ id,
         function(error, result){
           if (error) return console.error(error);
-          $scope.situation.marked_for_deletion = true;
-          $scope.$apply();
-          getSituation($scope.situation_id);
+          toastr.success('Marked for deletion')
           console.log('marked for deletion:', id)
         }
       )
@@ -347,10 +345,7 @@ causemap.controller('SituationCtrl', [
         'action/unmark_for_deletion/'+ id,
         function(error, result){
           if (error) return console.error(error);
-          delete $scope.situation.marked_for_deletion;
-          $scope.situation.unmarked_for_deletion = true;
-          $scope.$apply();
-          getSituation($scope.situation_id);
+          toastr.success('Unmarked for deletion')
           console.log('unmarked for deletion:', id)
         }
       )
@@ -440,6 +435,27 @@ causemap.controller('RelationshipCtrl', [
         { body: JSON.stringify(body) },
         function(error, response){
           if (error){
+            if (error.name == 'conflict'){
+              // already exists
+              return elasticsearch_client.get({
+                index: 'relationships',
+                type: 'relationship',
+                id: [ body.cause_id, 'caused', body.effect_id ].join(':')
+              }, function(error, result){
+                if (error){
+                  toastr.error('Relationship could not be created')
+                  return console.error(error);
+                }
+
+                if (result._source.marked_for_deletion){
+                  toastr.info('relationship already exists, but was marked for deletion')
+                  return $scope.unmarkForDeletion(result._source._id)
+                }
+
+                toastr.error('That relationship already exists')
+              })
+            }
+
             toastr.error(error.message)
             return console.error(error);
           }

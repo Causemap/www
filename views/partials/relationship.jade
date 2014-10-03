@@ -1,5 +1,5 @@
 mixin relationship_item(relationship, hide_type)
-  - var situation = hide_type == 'cause' ? relationship.effect : relationship.causes
+  - var situation = hide_type == 'cause' ? relationship.effect : relationship.cause
   if situation.display_image
     - var img_url = 'http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
       a.display-image.loading(
@@ -24,3 +24,9 @@ mixin relationship_item(relationship, hide_type)
           | 1 Effect
         else
           | #{ situation.total_effects } Effects
+
+      span.with-dropdown
+        a.more.dropdown-toggle(data-toggle='dropdown') More
+        ul.dropdown-menu(role='menu')
+          li(role='presentation')
+            a(ng-click='markForDeletion("'+ relationship._id +'")') Delete this relationship
