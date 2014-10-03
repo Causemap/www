@@ -444,14 +444,17 @@ causemap.controller('RelationshipCtrl', [
               }, function(error, result){
                 if (error){
                   toastr.error('Relationship could not be created')
+                  $('.modal').modal('hide');
                   return console.error(error);
                 }
 
                 if (result._source.marked_for_deletion){
                   toastr.info('relationship already exists, but was marked for deletion')
+                  $('.modal').modal('hide');
                   return $scope.unmarkForDeletion(result._source._id)
                 }
 
+                $('.modal').modal('hide');
                 toastr.error('That relationship already exists')
               })
             }
