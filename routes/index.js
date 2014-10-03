@@ -188,7 +188,7 @@ router.get('/situation/:situation_id/:relationship_type', function(
   }
 
   var rel_type = req.params.relationship_type == 'causes' ? 'effect' : 'cause';
-  q.body.query.filtered.filter.term[rel_type +'._id'] = situation._id;
+  q.body.query.filtered.filter.bool.must.term[rel_type +'._id'] = situation._id;
 
   return elasticsearch_client.search(q).then(function(result){
     return res.render('relationships', {
