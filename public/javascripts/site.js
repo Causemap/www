@@ -121,6 +121,7 @@ causemap.controller('AuthCtrl', [
         $rootScope.session = response;
 
         if (response.userCtx.name){
+          $rootScope.$emit('logged-in', response.userCtx.name);
         }
 
         $rootScope.$apply();
@@ -240,6 +241,41 @@ causemap.controller('SituationCtrl', [
       document.getElementById('situation-json').innerHTML
     );
 
+    function setStrength(relationship){
+      causemap_db.get(
+        [
+          $rootScope.session.userCtx.name,
+          '.adjusted.relationship.strength:',
+          relationship._id
+        ].join(''),
+        function(error, doc){
+          if (error){
+            return
+          }
+
+          var id = relationship._id;
+
+          switch(doc.adjusted.field.by){
+            case 1 : $('[data-id="'+ id +'"] .strength').addClass('upvoted'); break;
+            case 0 : $('[data-id="'+ id +'"] .strength').addClass('unvoted'); break;
+            case -1 : $('[data-id="'+ id +'"] .strength').addClass('downvoted'); break;
+          }
+
+          return $scope.$apply()
+        }
+      )
+    }
+
+    $rootScope.$on('logged-in', function(username){
+      if ($scope.situation.causes){
+        $scope.situation.causes.forEach(setStrength);
+      }
+
+      if ($scope.situation.effects){
+        $scope.situation.effects.forEach(setStrength);
+      }
+    })
+
     $scope.situation_draft = _.extend(
       $scope.situation_draft,
       _.clone($scope.situation)
@@ -347,6 +383,34 @@ causemap.controller('SituationCtrl', [
           if (error) return console.error(error);
           toastr.success('Unmarked for deletion')
           console.log('unmarked for deletion:', id)
+        }
+      )
+    }
+
+    $scope.adjustRelationshipStrength = function(id, direction){
+      if (!$rootScope.requireLogin()){
+        toastr.warning('Please login first')
+        return
+      }
+
+      var adj_id = [
+        $rootScope.session.userCtx.name,
+        '.adjusted.relationship.strength:',
+        id
+      ].join('')
+
+      causemap_db.update(
+        'adjustment/'+ direction +'vote_relationship/'+ adj_id,
+        function(error, result){
+          if (error){
+            return console.error(error);
+          }
+
+          $('[data-id="'+ id +'"] .strength')
+            .removeClass('downvoted')
+            .removeClass('upvoted')
+            .removeClass('unvoted')
+            .addClass(direction +'voted');
         }
       )
     }

@@ -47,7 +47,9 @@ router.get('/', function(req, res) {
   });
 
   var query = {
-    sort: { creation_date: { order: 'desc' } },
+    sort: [
+      { creation_date: { order: 'desc' } }
+    ],
     query: {
       filtered: {
         filter: {
@@ -103,6 +105,9 @@ router.get('/situation/:situation_id', function(req, res, next){
       type: 'relationship',
       size: 3,
       body: {
+        sort: [
+          { strength: { order: 'desc' } },
+        ],
         query: {
           filtered: {
             filter: {
@@ -168,6 +173,9 @@ router.get('/situation/:situation_id/:relationship_type', function(
     type: 'relationship',
     size: 100,
     body: {
+      sort: [
+        { strength: { order: 'desc' } },
+      ],
       query: {
         filtered: {
           filter: {
@@ -191,6 +199,12 @@ router.get('/situation/:situation_id/:relationship_type', function(
   q.body.query.filtered.filter.bool.must.term[rel_type +'._id'] = situation._id;
 
   return elasticsearch_client.search(q).then(function(result){
+    req.situation[req.params.relationship_type] = result.hits.hits.map(
+      function(hit){
+        return hit._source
+      }
+    )
+
     return res.render('relationships', {
       rel_type: req.params.relationship_type,
       result: result

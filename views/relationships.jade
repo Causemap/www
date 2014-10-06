@@ -49,9 +49,11 @@ block situation-content
             ) Add an Effect
         else
           ol.list-unstyled.situations
-            - each hit in result.hits.hits
-              li.situation.situation-landscape.relationship-situation
-                +relationship_item(hit._source, 'cause')
+            - each relationship in situation[rel_type]
+              li.situation.situation-landscape.relationship-situation(
+                data-id=relationship._id
+              )
+                +relationship_item(relationship, 'cause')
 
       if rel_type == 'causes'
         if situation.total_causes == 0
@@ -66,6 +68,8 @@ block situation-content
             ) Add a Cause
         else
           ol.list-unstyled.situations
-            - each hit in result.hits.hits
-              li.situation.relationship-situation.situation-landscape
-                +relationship_item(hit._source, 'effect')
+            - each relationship in situation[rel_type]
+              li.situation.relationship-situation.situation-landscape(
+                data-id=relationship._id
+              )
+                +relationship_item(relationship, 'effect')

@@ -8,6 +8,19 @@ mixin relationship_item(relationship, hide_type)
       )
         img.img-responsive(src=img_url)
 
+  .strength
+    button.upvote(
+      ng-click='adjustRelationshipStrength("'+relationship._id+'", "up")',
+      title='Upvote this relationship'
+    )
+      i.cm-arrow-66
+
+    button.downvote(
+      ng-click='adjustRelationshipStrength("'+relationship._id+'", "down")',
+      title='Downvote this relationship'
+    )
+      i.cm-arrow-65
+
   .situation-section
     h4.situation-name
       a.name(href='/situation/'+ situation._id, title=situation.name)= situation.name

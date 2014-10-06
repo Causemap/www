@@ -59,6 +59,10 @@ ol.situations {
       }
     }
 
+    .strength + .situation-section {
+      width: ~"calc(100% -8em - 40px)";
+    }
+
     .situation-name {
       margin: 0 0 5px;
     }
@@ -203,5 +207,37 @@ ol.situations .situation-landscape {
     display: inline-block;
     cursor: pointer;
     position: relative;
+  }
+
+  .strength {
+    cursor: pointer;
+    float: right;
+    height: 72px;
+    width: 40px;
+
+    > button {
+      border: none;
+      background-color: transparent;
+      height: 50%;
+      width: 100%;
+
+      &::focus {
+        outline: none;
+      }
+    }
+
+    &.downvoted {
+      > .downvote {
+        background-color: @brand-primary;
+        color: white;
+      }
+    }
+
+    &.upvoted {
+      > .upvote {
+        background-color: @brand-primary;
+        color: white;
+      }
+    }
   }
 }

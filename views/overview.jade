@@ -49,7 +49,9 @@ block situation-content
           h3 Causes
           ol.list-unstyled.situations
             - each relationship in situation.causes
-              li.situation.relationship-situation.situation-landscape
+              li.situation.relationship-situation.situation-landscape(
+                data-id=relationship._id
+              )
                 +relationship_item(relationship, 'effect')
 
         .btn-toolbar
@@ -72,7 +74,9 @@ block situation-content
           h3 Effects
           ol.list-unstyled.situations
             - each relationship in situation.effects
-              li.situation.relationship-situation.situation-landscape
+              li.situation.relationship-situation.situation-landscape(
+                data-id=relationship._id
+              )
                 +relationship_item(relationship, 'cause')
 
         .btn-toolbar
