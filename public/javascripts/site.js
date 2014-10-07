@@ -205,11 +205,15 @@ causemap.controller('SituationsCtrl', [
 causemap.controller('SituationCtrl', [
   '$scope',
   '$rootScope',
+  '$timeout',
+  '$window',
   'elasticsearch_client',
   'causemap_db',
   function(
     $scope,
     $rootScope,
+    $timeout,
+    $window,
     elasticsearch_client,
     causemap_db
   ){
@@ -316,6 +320,10 @@ causemap.controller('SituationCtrl', [
                 gfm: true
               })
 
+              $timeout(function(){
+                $window.location.reload();
+              }, 2000)
+
               return $scope.$apply();
             }
 
@@ -372,6 +380,10 @@ causemap.controller('SituationCtrl', [
           if (error) return console.error(error);
           toastr.success('Marked for deletion')
           console.log('marked for deletion:', id)
+
+          $timeout(function(){
+            $window.location.reload();
+          }, 2000)
         }
       )
     }
@@ -383,6 +395,10 @@ causemap.controller('SituationCtrl', [
           if (error) return console.error(error);
           toastr.success('Unmarked for deletion')
           console.log('unmarked for deletion:', id)
+
+          $timeout(function(){
+            $window.location.reload();
+          }, 2000)
         }
       )
     }
@@ -420,11 +436,15 @@ causemap.controller('SituationCtrl', [
 causemap.controller('RelationshipCtrl', [
   '$scope',
   '$rootScope',
+  '$window',
+  '$timeout',
   'causemap_db',
   'elasticsearch_client',
   function(
     $scope,
     $rootScope,
+    $window,
+    $timeout,
     causemap_db,
     elasticsearch_client
   ){
@@ -515,6 +535,11 @@ causemap.controller('RelationshipCtrl', [
                 if (result._source.marked_for_deletion){
                   toastr.info('relationship already exists, but was marked for deletion')
                   $('.modal').modal('hide');
+
+                  $timeout(function(){
+                    $window.location.reload();
+                  }, 2000)
+
                   return $scope.unmarkForDeletion(result._source._id)
                 }
 
@@ -526,6 +551,10 @@ causemap.controller('RelationshipCtrl', [
             toastr.error(error.message)
             return console.error(error);
           }
+
+          $timeout(function(){
+            $window.location.reload();
+          }, 2000)
 
           toastr.success('Added to '+ rel_type);
           // close the modal
