@@ -10,11 +10,13 @@ mixin situation_item(situation)
   .situation-section
     if situation.location || situation.period
       .meta.subdued
-        span.location
-          | #{ situation.location }
+        if situation.location
+          span.location
+            | #{ situation.location }
 
-        span.period
-          | #{ situation.period }
+        if situation.period
+          span.period
+            | #{ situation.period }
 
     h4.situation-name
       a.name(href='/situation/'+ situation._id, title=situation.name)= situation.name
