@@ -42,7 +42,7 @@ block situation-content
 
     .row
       .col-md-12
-        if situation.total_causes == 0
+        if situation.causes.length == 0
           h3.subdued No Causes
           p.subdued Do you know what caused this?
         else
@@ -62,11 +62,11 @@ block situation-content
           ) Add a Cause
           a.btn.btn-link.pull-right(
             href='/situation/'+ situation._id +'/causes',
-            ng-disabled='!situation.total_causes'
+            ng-disabled='!situation.causes.length'
           )
             | View causes
 
-        if situation.total_effects == 0
+        if situation.effects.length == 0
           h3.subdued No Effects
           p.subdued
             | How has this situation effected things?
@@ -87,7 +87,7 @@ block situation-content
           ) Add an Effect
           a.btn.btn-link.pull-right(
             href='/situation/'+ situation._id +'/effects',
-            ng-disabled='!situation.total_effects'
+            ng-disabled='!situation.effects.length'
           )
             | View effects
 
