@@ -232,6 +232,13 @@ ol.situations .situation-landscape {
 }
 
 .relationship-situation {
+
+  &:hover {
+    .strength {
+      opacity: 1;
+    }
+  }
+
   span.with-dropdown {
     display: inline-block;
     cursor: pointer;
@@ -243,6 +250,11 @@ ol.situations .situation-landscape {
     float: right;
     height: 72px;
     width: 40px;
+
+    @media (min-width: @screen-md-min){
+      opacity: 0;
+      transition: all 0.5s linear;
+    }
 
     > button {
       border: none;
