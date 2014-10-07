@@ -26,6 +26,8 @@ var get_situation = function(req, res, next, id){
     }
 
     req.situation = res.locals.situation = result._source;
+    res.locals.body_class = 'situation';
+
     return next();
   }, function(error){
     return next(error)

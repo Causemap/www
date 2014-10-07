@@ -45,7 +45,7 @@ html(lang='en')
       for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=f.createElement("script");a.type="text/javascript";a.async=!0;a.src="//cdn.mxpnl.com/libs/mixpanel-2.2.min.js";e=f.getElementsByTagName("script")[0];e.parentNode.insertBefore(a,e)}})(document,window.mixpanel||[]);
       mixpanel.init("bc42d283aff847567e615478b2408778");
 
-  body(ng-app='causemap')
+  body(ng-app='causemap', class='#{ body_class }')
     .navbar.navbar-default.navbar-static-top(role='navigation')
       .container
         .row

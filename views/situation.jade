@@ -21,7 +21,7 @@ block content
   )
 
     .row
-      .col-md-8.col-md-push-2
+      .col-md-8
         if situation.marked_for_deletion
           .alert.alert-danger(ng-if='situation.marked_for_deletion', ng-cloak)
             p This situation has been marked for deletion.
@@ -62,7 +62,7 @@ block content
           )= situation.name
 
     .row
-      .col-md-8.col-md-push-2
+      .col-md-8
         block situation-content
 
     #edit-name.modal.fade
