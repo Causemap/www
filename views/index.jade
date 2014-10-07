@@ -3,20 +3,10 @@ extends base
 block content
   include ./partials/situation
   .container
-    if !query.search
-      .row
-        .col-md-12
-          .alert.alert-info
-            strong Crowd-sourced Causality
-            p
-              | Causemap is a network of real-life situations linked together
-              | by causality.
     .row
       .col-md-12
-        .page-header
-          if !query.search
-            h2 Latest Situations
-          else
+        if query.search
+          .page-header
             h2 &ldquo;#{ query.search }&rdquo;
 
         ol.situations.list-unstyled
