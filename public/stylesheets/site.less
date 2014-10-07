@@ -23,6 +23,25 @@ ol.situations {
     background-color: white;
     margin-bottom: 15px;
 
+    &.small {
+      .meta { display: none }
+
+      &.situation-landscape {
+        > .display-image {
+          float: right;
+        }
+
+        .situation-section {
+          margin-left: 0;
+          padding-left: 0;
+        }
+
+        .situation-name {
+          font-weight: 400;
+        }
+      }
+    }
+
     &.relationship-situation {
       width: 100%;
     }
@@ -72,6 +91,7 @@ ol.situations {
 
     &.situation-landscape {
       .clearfix();
+      width: 100%;
 
       &.suggestion {
         cursor: pointer;
@@ -114,6 +134,10 @@ ol.situations {
           width: ~"calc(100% - 8em)";
         }
       }
+    }
+
+    &.situation-landscape.small {
+      .situation-name { white-space: initial; }
     }
   }
 }
@@ -240,6 +264,25 @@ ol.situations .situation-landscape {
         background-color: @brand-primary;
         color: white;
       }
+    }
+  }
+}
+
+#situation-aside {
+  position: relative;
+
+  @media (min-width: @screen-md-min){
+    opacity: 0.13;
+    transition: 0.5s;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    > h4:first-child {
+      position: absolute;
+      top: 0;
+      transform: translateY(-200%)
     }
   }
 }

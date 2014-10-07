@@ -28,7 +28,35 @@ var get_situation = function(req, res, next, id){
     req.situation = res.locals.situation = result._source;
     res.locals.body_class = 'situation';
 
-    return next();
+    // get similar
+    elasticsearch_client.search({
+      index: 'situations',
+      type: 'situation',
+      body: {
+        query: {
+          fuzzy_like_this: {
+            fields: ['name'],
+            like_text: req.situation.name,
+            max_query_terms: 12
+          }
+        },
+        filter: {
+          not: {
+            ids: {
+              type: 'situation',
+              values: [req.situation._id]
+            }
+          }
+        }
+      }
+    }).then(function(result){
+      req.similar = res.locals.similar = result
+      return next();
+    }, function(error){
+      console.log(error)
+      return next();
+    })
+
   }, function(error){
     return next(error)
   })
@@ -94,8 +122,7 @@ router.get('/', function(req, res) {
 
 router.get('/situation/:situation_id', function(req, res, next){
   var elasticsearch_client = new elasticsearch.Client({
-    host: ES_URL,
-    log: 'trace'
+    host: ES_URL
   });
 
   var situation = req.situation;
