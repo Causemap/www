@@ -10,6 +10,7 @@ a:hover {
 }
 
 .branding {
+  color: #626262;
   font-weight: 900;
   text-transform: uppercase;
 }
@@ -73,7 +74,7 @@ ol.situations {
         color: #777;
         font-size: 1em;
         white-space: nowrap;
-        overflow: hidden;
+        overflow-wrap: hidden;
         text-overflow: ellipsis;
 
         > *:not(:first-child)::before {
@@ -90,6 +91,10 @@ ol.situations {
 
     .situation-name {
       margin: 0 0 5px;
+
+      > a {
+        color: #626262;
+      }
     }
 
     &.situation-landscape {
@@ -224,6 +229,10 @@ ol.situations .situation-landscape {
 
 #situation-header {
   margin-bottom: 20px;
+
+  .name, a.name {
+    color: #626262;
+  }
 }
 
 [class^="cm-"]:before, [class*=" cm-"]:before {

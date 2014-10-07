@@ -65,14 +65,14 @@ block content
       .col-md-8
         block situation-content
 
-      #situation-aside.col-md-4
-        if similar && similar.hits.hits.length
-          h4 Other situations
-          ol.list-unstyled.situations
-            - each hit in similar.hits.hits
-              - var situation = hit._source
-              li.situation.situation-landscape(data-id=situation._id)
-                +situation_item(situation)
+      // #situation-aside.col-md-4
+      //   if similar && similar.hits.hits.length
+      //     h4 Other situations
+      //     ol.list-unstyled.situations
+      //       - each hit in similar.hits.hits
+      //         - var situation = hit._source
+      //         li.situation.situation-landscape(data-id=situation._id)
+      //           +situation_item(situation)
 
 
     #edit-name.modal.fade

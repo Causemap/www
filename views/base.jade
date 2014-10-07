@@ -115,8 +115,14 @@ html(lang='en')
                     a(ng-click='logout()') Logout
 
 
-    toaster-container(toaster-options="{'position-class': 'toast-bottom-right'}")
     block content
+
+    #footer.text-muted
+      .container
+        .row
+          .col-md-12
+            :markdown 
+              Get updates on [twitter](http://twitter.com/causemap) or [facebook](https://www.facebook.com/causemap) and make requests on [reddit](http://www.reddit.com/r/causemap)
 
     #add-situation-modal.modal.fade
       .modal-dialog
