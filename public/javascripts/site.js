@@ -99,7 +99,9 @@ causemap.controller('AuthCtrl', [
             $rootScope.auth.password,
             function(error, result){
               mixpanel.track("logged in");
+              toastr.success('logged in')
               // close the auth modal
+              $('.modal').modal('hide');
               return $rootScope.getSession()
             }
           )
