@@ -8,18 +8,13 @@ mixin situation_item(situation)
         img.img-responsive(src=img_url)
 
   .situation-section
+    if situation.location || situation.period
+      .meta.subdued
+        span.location
+          | #{ situation.location }
+
+        span.period
+          | #{ situation.period }
+
     h4.situation-name
       a.name(href='/situation/'+ situation._id, title=situation.name)= situation.name
-
-    .meta.subdued
-      span.total-causes(href='/situation/'+ situation._id +'/causes')
-        if situation.total_causes == 1
-          | 1 Cause
-        else
-          | #{ situation.total_causes } Causes
-
-      span.total-effects(href='/situation/'+ situation._id +'/effects')
-        if situation.total_effects == 1
-          | 1 Effect
-        else
-          | #{ situation.total_effects } Effects
