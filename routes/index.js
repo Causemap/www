@@ -29,26 +29,46 @@ var get_situation = function(req, res, next, id){
     res.locals.body_class = 'situation';
 
     // get similar
-    elasticsearch_client.search({
-      index: 'situations',
-      type: 'situation',
-      body: {
-        query: {
-          fuzzy_like_this: {
-            fields: ['name'],
-            like_text: req.situation.name,
-            max_query_terms: 12
-          }
-        },
-        filter: {
-          not: {
-            ids: {
-              type: 'situation',
-              values: [req.situation._id]
+    var similar_query = { "query":
+      {
+        filtered: {
+          query: {
+            fuzzy_like_this: {
+              fields: ['name'],
+              like_text: req.situation.name,
+              max_query_terms: 12
+            }
+          },
+          filter: {
+            bool: {
+              must_not: [
+                {
+                  exists: {
+                    field: "marked_for_deletion"
+                  }
+                },
+                {
+                  ids: {
+                    type: 'situation',
+                    values: [ req.situation._id ]
+                  }
+                }
+              ],
+              must: {
+                exists: {
+                  field: "display_image"
+                }
+              }
             }
           }
         }
       }
+    }
+
+    elasticsearch_client.search({
+      index: 'situations',
+      type: 'situation',
+      body: similar_query
     }).then(function(result){
       req.similar = res.locals.similar = result
       return next();
