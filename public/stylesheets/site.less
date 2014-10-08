@@ -22,30 +22,8 @@ body.situation {
 ol.situations {
   .situation {
     background-color: white;
+    box-shadow: 0 0 1px rgba(0,0,0,0.1);
     margin-bottom: 15px;
-
-    &.small {
-      .meta { display: none }
-
-      &.situation-landscape {
-        > .display-image {
-          float: right;
-        }
-
-        .situation-section {
-          margin-left: 0;
-          padding-left: 0;
-        }
-
-        .situation-name {
-          font-weight: 400;
-        }
-      }
-    }
-
-    &.relationship-situation {
-      width: 100%;
-    }
 
     @media (min-width: @screen-lg){
       width: ~"calc(25% - 11.25px)";
@@ -86,7 +64,7 @@ ol.situations {
     }
 
     .strength + .situation-section {
-      width: ~"calc(100% -8em - 40px)";
+      width: ~"calc(100% - 8em - 40px)";
     }
 
     .situation-name {
@@ -98,6 +76,8 @@ ol.situations {
     }
 
     &.situation-landscape {
+      box-shadow: none;
+
       .clearfix();
       width: 100%;
 
@@ -117,13 +97,13 @@ ol.situations {
 
       & > .situation-section {
         background-color: rgba(255, 255, 255, 0.75);
+        padding-top: 0;
+        padding-bottom: 0;
         margin-left: 8em;
       }
 
       .situation-name {
-        white-space: nowrap;
         margin-bottom: 3px;
-        overflow: hidden;
         text-overflow: ellipsis;
       }
 
@@ -213,10 +193,6 @@ ol.situations {
   .button-size(@padding-base-vertical; @padding-base-horizontal; @font-size-base; @line-height-base; @border-radius-base);
 }
 
-ol.situations .situation-landscape {
-  margin-bottom: 1px;
-}
-
 #overview {
   & > .display-image {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
@@ -296,17 +272,20 @@ ol.situations .situation-landscape {
   position: relative;
 
   @media (min-width: @screen-md-min){
-    opacity: 0.2;
-    transition: 0.5s;
-
-    &:hover {
-      opacity: 1;
-    }
-
     > h4:first-child {
       position: absolute;
       top: 0;
       transform: translateY(-200%)
+    }
+
+    > ol.situations > li {
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      margin: 0;
+      padding: 20px 0;
+
+      &:first-child {
+        border-top: 1px solid rgba(0,0,0,0.1);
+      }
     }
   }
 }

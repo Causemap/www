@@ -22,9 +22,6 @@ mixin relationship_item(relationship, hide_type)
       i.cm-arrow-65
 
   .situation-section
-    h4.situation-name
-      a.name(href='/situation/'+ situation._id, title=situation.name)= situation.name
-
     .meta.subdued
       if situation.location
         span.location
@@ -34,8 +31,11 @@ mixin relationship_item(relationship, hide_type)
         span.period
           | #{ situation.period }
 
-      span.with-dropdown
-        a.more.dropdown-toggle(data-toggle='dropdown') More
-        ul.dropdown-menu(role='menu')
-          li(role='presentation')
-            a(ng-click='markForDeletion("'+ relationship._id +'")') Delete this relationship
+    h4.situation-name
+      a.name(href='/situation/'+ situation._id, title=situation.name)= situation.name
+
+    span.with-dropdown
+      a.more.dropdown-toggle(data-toggle='dropdown') More
+      ul.dropdown-menu(role='menu')
+        li(role='presentation')
+          a(ng-click='markForDeletion("'+ relationship._id +'")') Delete this relationship
