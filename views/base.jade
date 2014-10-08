@@ -48,71 +48,70 @@ html(lang='en')
   body(ng-app='causemap', class='#{ body_class }')
     .navbar.navbar-default.navbar-static-top(role='navigation')
       .container
-        .row
-          .navbar-header.col-md-2
-            button.navbar-toggle.collapsed(
-              type='button',
-              data-toggle='collapse',
-              data-target='#navbar-collapse'
-            )
-              span.sr-only Toggle Navigation
-              span.icon-bar
-              span.icon-bar
-              span.icon-bar
+        .navbar-header
+          button.navbar-toggle.collapsed(
+            type='button',
+            data-toggle='collapse',
+            data-target='#navbar-collapse'
+          )
+            span.sr-only Toggle Navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
 
-            .navbar-brand
-              a(href='/').branding
-                i.cm-logo
-                | &nbsp;
-                | Causemap
+          .navbar-brand
+            a(href='/').branding
+              i.cm-logo
+              | &nbsp;
+              | Causemap
 
-          #navbar-collapse.collapse.navbar-collapse
-            .navbar-form.navbar-left(role='search')
-              form(action='/', method='get')
-                .form-group
-                  if query && query.search
-                    input.form-control(
-                      type='search',
-                      name='search',
-                      value=query.search,
-                      placeholder='Search'
-                    )
-                  else
-                    input.form-control(
-                      type='search',
-                      name='search',
-                      placeholder='Search'
-                    )
+        #navbar-collapse.collapse.navbar-collapse
+          .navbar-form.navbar-left(role='search')
+            form(action='/', method='get')
+              .form-group
+                if query && query.search
+                  input.form-control(
+                    type='search',
+                    name='search',
+                    value=query.search,
+                    placeholder='Search'
+                  )
+                else
+                  input.form-control(
+                    type='search',
+                    name='search',
+                    placeholder='Search'
+                  )
 
-            ul.nav.navbar-nav.navbar-right
-              li(ng-controller='SituationsCtrl')
-                a(
-                  data-toggle='modal',
-                  data-target='#add-situation-modal'
-                )
-                  i.glyphicon.glyphicon-plus &nbsp;
-                  | Add a Situation
-
-              li(
-                ng-controller='AuthCtrl',
-                ng-if='!session.userCtx.name',
-                ng-cloak
+          ul.nav.navbar-nav.navbar-right
+            li(ng-controller='SituationsCtrl')
+              a(
+                data-toggle='modal',
+                data-target='#add-situation-modal'
               )
-                a(
-                  data-toggle='modal',
-                  data-target='#login-signup-modal',
-                  href=''
-                )
-                  i.glyphicon.glyphicon-login &nbsp;
-                  | Login or Sign-Up
+                i.glyphicon.glyphicon-plus &nbsp;
+                | Add a Situation
 
-              li.dropdown.pull-right(ng-if='session.userCtx.name', ng-cloak)
-                a(data-toggle='dropdown')
-                  i.glyphicon.glyphicon-user &nbsp;
-                  | {{ session.userCtx.name }}
-                ul.dropdown-menu(role='menu')
-                  li
-                    a(ng-click='logout()') Logout
+            li(
+              ng-controller='AuthCtrl',
+              ng-if='!session.userCtx.name',
+              ng-cloak
+            )
+              a(
+                data-toggle='modal',
+                data-target='#login-signup-modal',
+                href=''
+              )
+                i.glyphicon.glyphicon-login &nbsp;
+                | Login or Sign-Up
+
+            li.dropdown.pull-right(ng-if='session.userCtx.name', ng-cloak)
+              a(data-toggle='dropdown')
+                i.glyphicon.glyphicon-user &nbsp;
+                | {{ session.userCtx.name }}
+              ul.dropdown-menu(role='menu')
+                li
+                  a(ng-click='logout()') Logout
 
 
     block content
