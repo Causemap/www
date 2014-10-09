@@ -472,6 +472,8 @@ causemap.controller('RelationshipCtrl', [
         }).error(function(error){
           return console.error(error);
         })
+      }).error(function(error){
+        toastr.error(error.reason)
       })
     }
 
