@@ -101,7 +101,9 @@ causemap.controller('AuthCtrl', [
           $rootScope.$emit('logged-in', response.userCtx.name);
         }
 
-        $rootScope.$apply();
+        if(!$rootScope.$$phase) {
+          $rootScope.$apply();
+        }
       }).error(function(error){
         return console.error(err);
       })
@@ -275,14 +277,18 @@ causemap.controller('SituationCtrl', [
               $window.location.reload();
             }, 2000)
 
-            return $scope.$apply();
+            if(!$scope.$$phase) {
+              return $scope.$apply();
+            }
           }
 
-          getSituation($scope.situation_id);
-          $scope.$apply();
+          if(!$scope.$$phase) {
+            $scope.$apply();
+          }
         }).error(function(error){
           mixpanel.track("error saving change");
-          toastr.error(error.message)
+          $('button[type="submit"]').button('reset');
+          toastr.error(error.reason)
           return console.error(error);
         })
       }
@@ -445,7 +451,9 @@ causemap.controller('RelationshipCtrl', [
         data: query
       }).success(function(data, status){
         $scope.situationSuggestions = data;
-        $scope.$apply();
+        if(!$scope.$$phase) {
+          $scope.$apply();
+        }
       }).error(function(){
         console.error(arguments)
       })
@@ -531,7 +539,7 @@ causemap.controller('RelationshipCtrl', [
           })
         }
 
-        toastr.error(error.message)
+        toastr.error(error.reason)
         return console.error(error);
       })
     }
