@@ -46,7 +46,7 @@ ol.situations {
     }
 
     .situation-section {
-      padding: 14px 20px 16px;
+      padding: 16px 20px 14px;
 
       > .meta {
         color: #777;
@@ -275,7 +275,8 @@ ol.situations {
     > h4:first-child {
       position: absolute;
       top: 0;
-      transform: translateY(-200%)
+      -webkit-transform: translateY(-200%);
+      transform: translateY(-200%);
     }
 
     > ol.situations > li {
@@ -285,6 +286,10 @@ ol.situations {
 
       &:first-child {
         border-top: 1px solid rgba(0,0,0,0.1);
+      }
+
+      &:last-child {
+        border-bottom: none;
       }
     }
   }
