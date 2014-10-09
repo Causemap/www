@@ -459,8 +459,29 @@ causemap.controller('RelationshipCtrl', [
       // find suggestions
       var query = {
         query: {
-          query_string: {
-            query: query_text +'*'
+          filtered: {
+            query: {
+              query_string: {
+                query: query_text +'*'
+              }
+            },
+            filter: {
+              bool: {
+                must_not: [
+                  {
+                    exists: {
+                      field: "marked_for_deletion"
+                    }
+                  },
+                  {
+                    ids: {
+                      type: 'situation',
+                      values: [ $scope.situation._id ]
+                    }
+                  }
+                ]
+              }
+            }
           }
         }
       }
