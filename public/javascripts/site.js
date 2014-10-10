@@ -169,6 +169,7 @@ causemap.controller('SituationsCtrl', [
             }, 1200)
           });
         }).error(function(error){
+          toastr.error(error.reason);
           return console.error(error);
         })
       })
