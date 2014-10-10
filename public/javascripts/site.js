@@ -224,7 +224,10 @@ causemap.controller('SituationCtrl', [
           case -1 : $('[data-id="'+ id +'"] .strength').addClass('downvoted'); break;
         }
 
-        return $scope.$apply()
+
+        if(!$scope.$$phase) {
+          return $scope.$apply();
+        }
       })
     }
 
