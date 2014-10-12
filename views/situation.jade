@@ -90,6 +90,21 @@ block content
                 a.btn.btn-default(data-dismiss='modal') Cancel
                 button.btn.btn-primary(type='submit', data-loading-text='Saving...') Save
 
+    #edit-alias.modal.fade
+      .modal-dialog
+          .modal-content
+            form(ng-submit='createChange("alias", situation_draft.alias)')
+              .modal-body
+                .form-group
+                  label Alias (URL fragment)
+                  input.form-control(
+                    placeholder='eg. iphone-6-announced',
+                    ng-model='situation_draft.alias'
+                  )
+              .modal-footer
+                a.btn.btn-default(data-dismiss='modal') Cancel
+                button.btn.btn-primary(type='submit', data-loading-text='Saving...') Save
+
     #edit-location.modal.fade
       .modal-dialog
           .modal-content
