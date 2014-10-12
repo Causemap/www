@@ -38,4 +38,7 @@ mixin relationship_item(relationship, hide_type)
       a.more.dropdown-toggle(data-toggle='dropdown') More
       ul.dropdown-menu(role='menu')
         li(role='presentation')
+          a(data-toggle='modal', data-target='#edit-relationship-desc', ng-click='editing_relationship ="'+ relationship._id +'"; relationship_draft.description ="'+ relationship.description +'"')
+            | Edit relationship description
+        li(role='presentation')
           a(ng-click='markForDeletion("'+ relationship._id +'")') Delete this relationship

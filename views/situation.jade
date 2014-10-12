@@ -213,3 +213,19 @@ block content
                 data-dismiss='modal'
               ) Yes, unmark this situation for deletion
             button.btn.btn-block.btn-default(type='button', data-dismiss='modal') Cancel
+
+    #edit-relationship-desc.modal.fade
+      .modal-dialog
+          .modal-content
+            form(ng-submit='createChange("description", relationship_draft.description, editing_relationship)')
+              .modal-body
+                .form-group
+                  label Relationship Description
+                  textarea.form-control(
+                    placeholder='Describe the relationship',
+                    ng-model='relationship_draft.description',
+                    rows='8'
+                  )
+              .modal-footer
+                a.btn.btn-default(data-dismiss='modal') Cancel
+                button.btn.btn-primary(type='submit', data-loading-text='Saving...') Save

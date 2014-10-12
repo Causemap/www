@@ -250,13 +250,16 @@ causemap.controller('SituationCtrl', [
       '#situation'
     ).dataset.situationId
 
-    $scope.createChange = function createChange(field_name, field_value){
+    $scope.createChange = function createChange(field_name, field_value, id){
       $('button[type="submit"]').button('loading');
       mixpanel.track("change submitted");
 
       function put_update(new_field){
         $http({
-          url: 'http://api.causemap.org:5984/causemap/_design/change/_update/create/'+ $scope.situation_id,
+          url: [
+            'http://api.causemap.org:5984/causemap/_design/change/_update/create/',
+            id || $scope.situation_id
+          ].join(''),
           method: 'POST',
           withCredentials: true,
           data: new_field
