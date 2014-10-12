@@ -2,7 +2,7 @@ mixin situation_item(situation)
   if situation.display_image
     - var img_url = 'http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
       a.display-image.loading(
-        href='/situation/'+ situation._id,
+        href='/'+ (situation.alias || situation._id),
         style='background-image: url("'+ img_url +'");'
       )
         img.img-responsive(src=img_url)
@@ -19,4 +19,6 @@ mixin situation_item(situation)
             | #{ situation.period }
 
     h4.situation-name
-      a.name(href='/situation/'+ situation._id, title=situation.name)= situation.name
+      a.name(
+        href='/'+ (situation.alias || situation._id), title=situation.name
+      )= situation.name
