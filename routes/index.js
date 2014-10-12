@@ -5,8 +5,7 @@ var router = express.Router();
 var elasticsearch = require('elasticsearch');
 var marked = require('marked');
 
-// var ES_URL = 'http://api.causemap.org:9200';
-var ES_URL = 'http://elasticsearch-1.bbff670e-jeffmarshall.node.tutum.io:49153'
+var ES_URL = 'http://api.causemap.org:9200';
 var elasticsearch_client = new elasticsearch.Client({
   host: ES_URL,
   sniffOnConnectionFault: true
