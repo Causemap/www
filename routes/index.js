@@ -291,58 +291,87 @@ router.get(
 
 router.get('/situation/:situation_id/:relationship_type', function(
   req,
-  res,
-  next
+  res
 ){
-  var elasticsearch_client = new elasticsearch.Client({
-    host: ES_URL
-  });
+  return res.redirect(301, [
+    '/',
+    req.params.situation_id,
+    '/',
+    req.params.relationship_type
+  ].join(''))
+})
 
-  var situation = req.situation;
-  var q = {
-    index: 'relationships',
-    type: 'relationship',
-    size: 100,
-    body: {
-      sort: [
-        { strength: { order: 'desc' } },
-      ],
-      query: {
-        filtered: {
-          filter: {
-            bool: {
-              must_not: [
-                { exists: { field: 'marked_for_deletion' } },
-                { exists: { field: 'cause.marked_for_deletion'} },
-                { exists: { field: 'effect.marked_for_deletion'} }
-              ],
-              must: {
-                term: {},
+router.get(
+  '/:situation_id/:relationship_type(causes|effects)',
+  get_situation,
+  get_aliased_situation,
+  situation_or_404,
+  function(req, res, next){
+    if (req.situation.alias && req.params.situation_id != req.situation.alias){
+      return res.redirect(
+        301,
+        ['/', req.situation.alias, '/', req.params.relationship_type ].join('')
+      )
+    }
+
+    return next();
+  },
+  get_similar_situations,
+  function(
+    req,
+    res,
+    next
+  ){
+    var elasticsearch_client = new elasticsearch.Client({
+      host: ES_URL
+    });
+
+    var situation = req.situation;
+    var q = {
+      index: 'relationships',
+      type: 'relationship',
+      size: 100,
+      body: {
+        sort: [
+          { strength: { order: 'desc' } },
+        ],
+        query: {
+          filtered: {
+            filter: {
+              bool: {
+                must_not: [
+                  { exists: { field: 'marked_for_deletion' } },
+                  { exists: { field: 'cause.marked_for_deletion'} },
+                  { exists: { field: 'effect.marked_for_deletion'} }
+                ],
+                must: {
+                  term: {},
+                }
               }
             }
           }
         }
       }
     }
+
+    var rel_type = req.params.relationship_type == 'causes' ? 'effect' : 'cause';
+    q.body.query.filtered.filter.bool.must.term[rel_type +'._id'] = req.situation._id;
+
+    return elasticsearch_client.search(q).then(function(result){
+      req.situation[req.params.relationship_type] = result.hits.hits.map(
+        function(hit){
+          return hit._source
+        }
+      )
+
+      return res.render('relationships', {
+        rel_type: req.params.relationship_type,
+        result: result
+      });
+    }, function(error){
+      return next(error);
+    })
   }
-
-  var rel_type = req.params.relationship_type == 'causes' ? 'effect' : 'cause';
-  q.body.query.filtered.filter.bool.must.term[rel_type +'._id'] = situation._id;
-
-  return elasticsearch_client.search(q).then(function(result){
-    req.situation[req.params.relationship_type] = result.hits.hits.map(
-      function(hit){
-        return hit._source
-      }
-    )
-
-    return res.render('relationships', {
-      rel_type: req.params.relationship_type,
-      result: result
-    });
-  }, function(error){
-    return next(error);
-  })
-})
+)
 
 module.exports = router;
