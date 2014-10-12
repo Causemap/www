@@ -314,6 +314,7 @@ causemap.controller('SituationCtrl', [
 
           var new_field = {
             field_name: field_name,
+            caption: $scope.new_display_image_caption,
             width: img.naturalWidth,
             height: img.naturalHeight,
             filename: file.name,

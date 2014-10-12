@@ -153,6 +153,12 @@ block content
                 .form-group
                   label Display Image
                   input#new-display-image-input.form-control(type='file')
+                .form-group
+                  label Caption
+                  textarea.form-control(
+                    ng-model='new_display_image_caption',
+                    rows='2'
+                  )
               .modal-footer
                 a.btn.btn-default(data-dismiss='modal') Cancel
                 button.btn.btn-primary(type='submit', data-loading-text='Saving...') Save
