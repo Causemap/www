@@ -8,21 +8,18 @@ mixin situation_item(situation, size)
         style='background-image: url("'+ img_url +'");'
       )
         img.img-responsive(src=img_url)
-
-    if size == 'md' && situation.display_image.width > 690
+    else if size == 'md' && situation.display_image.width > 690
       a.display-image.loading(
         href='/'+ (situation.alias || situation._id),
         style='background-image: url("http://api.causemap.org:8008/690x10000/'+ img_url +'");'
       )
         img.img-responsive(src='http://api.causemap.org:8008/690x10000/'+ img_url)
-
-    if size == 'sm' && situation.display_image.width > 224
+    else if size == 'sm' && situation.display_image.width > 224
       a.display-image.loading(
         href='/'+ (situation.alias || situation._id),
         style='background-image: url("http://api.causemap.org:8008/224/'+ img_url +'");'
       )
         img.img-responsive(src='http://api.causemap.org:8008/224/'+ img_url)
-
     else
       a.display-image.loading(
         href='/'+ (situation.alias || situation._id),

@@ -10,14 +10,14 @@ mixin relationship_item(relationship, hide_type, size)
       )
         img.img-responsive(src=img_url)
 
-    if size == 'md'
+    else if size == 'md'
       a.display-image.loading(
         href='/'+ (situation.alias || situation._id),
         style='background-image: url("http://api.causemap.org:8008/690x10000/'+ img_url +'");'
       )
         img.img-responsive(src='http://api.causemap.org:8008/690x10000/'+ img_url)
 
-    if size == 'sm'
+    else if size == 'sm'
       a.display-image.loading(
         href='/'+ (situation.alias || situation._id),
         style='background-image: url("http://api.causemap.org:8008/224/'+ img_url +'");'
