@@ -1,12 +1,28 @@
-mixin relationship_item(relationship, hide_type)
+mixin relationship_item(relationship, hide_type, size)
   - var situation = hide_type == 'cause' ? relationship.effect : relationship.cause
   if situation.display_image
     - var img_url = 'http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
+
+    if !size || size == 'lg'
       a.display-image.loading(
         href='/'+ (situation.alias || situation._id),
         style='background-image: url("'+ img_url +'");'
       )
         img.img-responsive(src=img_url)
+
+    if size == 'md'
+      a.display-image.loading(
+        href='/'+ (situation.alias || situation._id),
+        style='background-image: url("http://api.causemap.org:8008/690x10000/'+ img_url +'");'
+      )
+        img.img-responsive(src='http://api.causemap.org:8008/690x10000/'+ img_url)
+
+    if size == 'sm'
+      a.display-image.loading(
+        href='/'+ (situation.alias || situation._id),
+        style='background-image: url("http://api.causemap.org:8008/224/'+ img_url +'");'
+      )
+        img.img-responsive(src='http://api.causemap.org:8008/224/'+ img_url)
 
   .strength
     button.upvote(

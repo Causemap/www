@@ -72,7 +72,7 @@ block content
             - each hit in similar.hits.hits
               - var situation = hit._source
               li.situation.situation-landscape(data-id=situation._id)
-                +situation_item(situation)
+                +situation_item(situation, 'sm')
 
 
     #edit-name.modal.fade

@@ -13,7 +13,7 @@ block content
           - each hit in result.hits.hits
             - var situation = hit._source
               li.situation
-                +situation_item(situation)
+                +situation_item(situation, 'md')
 
         ul.pagination
           - var total_pages = Math.ceil(result.hits.total / size)

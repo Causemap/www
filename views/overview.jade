@@ -6,7 +6,12 @@ block situation-content
   #overview
     if situation.display_image
       .display-image.loading
-        img.img-responsive(src='http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename)
+        - var img_url = 'http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
+        if situation.display_image.width > 1440
+          - var scale = 1440/situation.display_image.width
+          img.img-responsive(src='http://api.causemap.org:8008/1440x'+ parseInt(situation.display_image.height * scale)+1 +'/'+ img_url)
+        else
+          img.img-responsive(src=img_url)
     .toolbar.btn-toolbar.padded-tb
       .toolbar-text.pull-left.subdued
         em
