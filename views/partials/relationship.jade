@@ -50,11 +50,17 @@ mixin relationship_item(relationship, hide_type, size)
     h4.situation-name
       a.name(href='/'+ (situation.alias || situation._id), title=situation.name)= situation.name
 
+    if relationship.description
+      p.relationship-description= relationship.description
+
     span.with-dropdown
       a.more.dropdown-toggle(data-toggle='dropdown') More
       ul.dropdown-menu(role='menu')
         li(role='presentation')
           a(data-toggle='modal', data-target='#edit-relationship-desc', ng-click='editing_relationship ="'+ relationship._id +'"; relationship_draft.description ="'+ relationship.description +'"')
-            | Edit relationship description
+            if relationship.description
+              | Edit this relationship's explanation
+            else
+              | Explain this relationship
         li(role='presentation')
           a(ng-click='markForDeletion("'+ relationship._id +'")') Delete this relationship
