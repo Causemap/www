@@ -187,6 +187,8 @@ router.get('/', function(req, res) {
         query: req.query.search
       }
     }
+
+    delete query.query.filtered.filter.bool.must.exists
   }
 
   elasticsearch_client.search({
