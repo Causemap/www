@@ -5,7 +5,7 @@ block situation-content
     mixpanel.track("situation viewed");
   #overview
     if situation.display_image
-      .display-image.loading
+      .display-image.loading(title=situation.display_image.caption)
         - var img_url = 'http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
         if situation.display_image.width > 1440
           - var scale = 1440/situation.display_image.width
