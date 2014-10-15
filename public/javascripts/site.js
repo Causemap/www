@@ -520,7 +520,7 @@ causemap.controller('RelationshipCtrl', [
         // close the modal
         return $('.modal').modal('hide');
       }).error(function(error){
-        if (error.name == 'conflict'){
+        if (error.error == 'conflict'){
           // already exists
           var id = [ body.cause_id, 'caused', body.effect_id ].join(':');
           return $http({
