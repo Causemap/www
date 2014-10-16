@@ -1,3 +1,5 @@
+include ./situation
+
 mixin relationship_item(relationship, hide_type, size)
   - var situation = hide_type == 'cause' ? relationship.effect : relationship.cause
   if situation.display_image
@@ -5,10 +7,9 @@ mixin relationship_item(relationship, hide_type, size)
 
     if !size || size == 'lg'
       a.display-image.loading(
-        href='/'+ (situation.alias || situation._id),
-        style='background-image: url("'+ img_url +'");'
+        href='/'+ (situation.alias || situation._id)
       )
-        img.img-responsive(src=img_url)
+        +situation_display_image(situation, 112, 72)
 
     else if size == 'md'
       a.display-image.loading(

@@ -42,3 +42,50 @@ mixin situation_item(situation, size)
       a.name(
         href='/'+ (situation.alias || situation._id), title=situation.name
       )= situation.name
+
+
+mixin situation_display_image(situation, width, height)
+  - var img_url = 'http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
+  if situation.display_image.height >= situation.display_image.width
+    - var cropped_height = (width/situation.display_image.width) * situation.display_image.height
+    img.img-responsive(
+      src='//api.causemap.org:8008/?scale='+ width +','+ cropped_height +'&crop='+ width +','+ height +'&url='+ encodeURIComponent(img_url),
+      title='('+ width +' / '+ situation.display_image.width +') * '+ situation.display_image.height
+    )
+  if situation.display_image.width > situation.display_image.height
+    - var cropped_width = (height/situation.display_image.height) * situation.display_image.width
+
+    if !(cropped_width > width)
+      - var cropped_height = (width/situation.display_image.width) * situation.display_image.height
+      img.img-responsive(
+        src='//api.causemap.org:8008/?scale='+ width +','+ cropped_height +'&crop='+ width +','+ height +'&url='+ encodeURIComponent(img_url),
+        title='('+ width +' / '+ situation.display_image.width +') * '+ situation.display_image.height
+      )
+    else
+      img.img-responsive(
+        src='//api.causemap.org:8008/?scale='+ cropped_width +','+ height +'&crop='+ width +','+ height +'&url='+ encodeURIComponent(img_url)
+        title=situation.display_image.caption
+      )
+
+mixin situation_landscape(situation)
+  if situation.display_image
+    a.display-image(
+      href='/'+ (situation.alias || situation._id),
+    )
+      +situation_display_image(situation, 112, 72)
+
+  .situation-section
+    if situation.location || situation.period
+      .meta.subdued
+        if situation.location
+          span.location
+            | #{ situation.location }
+
+        if situation.period
+          span.period
+            | #{ situation.period }
+
+    h4.situation-name
+      a.name(
+        href='/'+ (situation.alias || situation._id), title=situation.name
+      )= situation.name
