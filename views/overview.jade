@@ -6,7 +6,11 @@ block situation-content
   #overview
     if situation.display_image
       .display-image.loading(title=situation.display_image.caption)
-        +situation_display_image(situation, 743, 465)
+        +situation_display_image(
+          situation,
+          743,
+          (743/situation.display_image.width)*situation.display_image.height
+        )
     .toolbar.btn-toolbar.padded-tb
       .toolbar-text.pull-left.subdued
         em
