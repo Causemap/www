@@ -49,6 +49,7 @@ mixin situation_display_image(situation, width, height)
   if situation.display_image.height >= situation.display_image.width
     - var cropped_height = (width/situation.display_image.width) * situation.display_image.height
     img.img-responsive(
+      srcset='//api.causemap.org:8008/?scale='+ width*2 +','+ cropped_height*2 +'&crop='+ width*2 +','+ height*2 +'&url='+ encodeURIComponent(img_url) +' 2x',
       src='//api.causemap.org:8008/?scale='+ width +','+ cropped_height +'&crop='+ width +','+ height +'&url='+ encodeURIComponent(img_url),
       title='('+ width +' / '+ situation.display_image.width +') * '+ situation.display_image.height
     )
@@ -58,11 +59,13 @@ mixin situation_display_image(situation, width, height)
     if !(cropped_width > width)
       - var cropped_height = (width/situation.display_image.width) * situation.display_image.height
       img.img-responsive(
+        srcset='//api.causemap.org:8008/?scale='+ width*2 +','+ cropped_height*2 +'&crop='+ width*2 +','+ height*2 +'&url='+ encodeURIComponent(img_url),
         src='//api.causemap.org:8008/?scale='+ width +','+ cropped_height +'&crop='+ width +','+ height +'&url='+ encodeURIComponent(img_url),
         title='('+ width +' / '+ situation.display_image.width +') * '+ situation.display_image.height
       )
     else
       img.img-responsive(
+        srcset='//api.causemap.org:8008/?scale='+ cropped_width*2 +','+ height*2 +'&crop='+ width*2 +','+ height*2 +'&url='+ encodeURIComponent(img_url),
         src='//api.causemap.org:8008/?scale='+ cropped_width +','+ height +'&crop='+ width +','+ height +'&url='+ encodeURIComponent(img_url)
         title=situation.display_image.caption
       )
