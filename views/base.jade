@@ -116,8 +116,12 @@ html(lang='en')
       .container
         .row
           .col-md-12
-            :markdown
-              Get updates on [twitter](http://twitter.com/causemap) or [facebook](https://www.facebook.com/causemap) and make requests on [reddit](http://www.reddit.com/r/causemap)
+            | Get updates on&nbsp;
+            a.twitter(href='http://twitter.com/causemap') twitter&nbsp;
+            | or&nbsp;
+            a.facebook(href='https://www.facebook.com/causemap') facebook&nbsp;
+            | and make requests on&nbsp;
+            a.reddit(href='http://www.reddit.com/r/causemap') reddit
 
     #add-situation-modal.modal.fade
       .modal-dialog
