@@ -23,6 +23,7 @@
     "imagesloaded": "~3.1.8",
     "moment": "~2.8.3",
     "marked": "~0.3.2",
-    "respimage": "https://github.com/aFarkas/respimage.git#~0.9.3"
+    "respimage": "https://github.com/aFarkas/respimage.git#~0.9.3",
+    "lazysizes": "https://github.com/aFarkas/lazysizes.git#~0.1.4"
   }
 }
