@@ -237,12 +237,6 @@ ol.situations {
 
 .relationship-situation {
 
-  &:hover {
-    .strength {
-      opacity: 1;
-    }
-  }
-
   span.with-dropdown {
     display: inline-block;
     cursor: pointer;
@@ -250,38 +244,29 @@ ol.situations {
   }
 
   .strength {
-    cursor: pointer;
-    float: right;
-    height: 72px;
-    width: 40px;
+    a {
+      color: lighten(@text-color, 60);
 
-    @media (min-width: @screen-md-min){
-      opacity: 0;
-      transition: all 0.5s linear;
-    }
+      &:first-child::after {
+        content: '/';
+        margin: 0 5px;
+      }
 
-    > button {
-      border: none;
-      background-color: transparent;
-      height: 50%;
-      width: 100%;
-
-      &::focus {
-        outline: none;
+      &:last-child {
+        content: '';
+        margin-right: 0.5em;
       }
     }
 
     &.downvoted {
       > .downvote {
-        background-color: @brand-primary;
-        color: white;
+        color: lighten(@text-color, 20);
       }
     }
 
     &.upvoted {
       > .upvote {
-        background-color: @brand-primary;
-        color: white;
+        color: lighten(@text-color, 20);
       }
     }
   }
