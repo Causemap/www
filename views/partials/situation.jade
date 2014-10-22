@@ -26,6 +26,10 @@ mixin situation_item(situation, size)
         style='background-image: url("'+ img_url +'");'
       )
         img.img-responsive(src=img_url)
+  else
+    a.display-image.empty(
+      href='/'+ (situation.alias || situation._id)
+    )
 
   .situation-section
     if situation.location || situation.period

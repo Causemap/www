@@ -130,6 +130,10 @@ ol.situations {
         @media (max-width: @screen-sm-max){
           width: 6em;
 
+          &.empty {
+            height: 54px;
+          }
+
           & + .situation-section {
             padding-left: 1em;
             padding-right: 0;
@@ -163,6 +167,15 @@ ol.situations {
     top: 0;
     bottom: 0;
     width: 100%;
+  }
+
+  &.empty {
+    background-color: rgba(0,0,0,0.05);
+    height: 72px;
+
+    &::before {
+      border: none;
+    }
   }
 
   > img {

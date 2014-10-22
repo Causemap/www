@@ -24,6 +24,10 @@ mixin relationship_item(relationship, hide_type, size)
         style='background-image: url("http://api.causemap.org:8008/224/'+ img_url +'");'
       )
         img.img-responsive(src='http://api.causemap.org:8008/224/'+ img_url)
+  else
+    a.empty.display-image(
+      href='/'+ (situation.alias || situation._id)
+    )
 
   .situation-section
     .meta.subdued
