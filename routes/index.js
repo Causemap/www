@@ -98,6 +98,17 @@ var markup_situation = function(req, res, next){
 
 var get_similar_situations = function(req, res, next){
   if (!req.situation) return next();
+  var omit_ids = [
+    req.situation._id
+  ]
+
+  req.situation.causes.forEach(function(relationship){
+    return omit_ids.push(relationship.cause._id)
+  })
+
+  req.situation.effects.forEach(function(relationship){
+    return omit_ids.push(relationship.effect._id)
+  })
 
   var similar_query = { "query":
     {
@@ -120,7 +131,7 @@ var get_similar_situations = function(req, res, next){
               {
                 ids: {
                   type: 'situation',
-                  values: [ req.situation._id ]
+                  values: omit_ids
                 }
               }
             ],
@@ -221,7 +232,6 @@ router.get(
   situation_or_404,
   redirect_if_situation_alias,
   markup_situation,
-  get_similar_situations,
   function(req, res, next){
     var elasticsearch_client = new elasticsearch.Client({
       host: ES_URL
@@ -282,10 +292,15 @@ router.get(
         situation = _.extend(situation, result)
       })
 
-      res.render('overview', {
-        body_class: 'situation',
-        situation: situation
-      })
+      req.situation = res.situation = situation;
+      return next()
+    })
+  },
+  get_similar_situations,
+  function(req, res){
+
+    return res.render('overview', {
+      body_class: 'situation'
     })
   }
 )
