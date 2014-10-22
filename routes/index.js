@@ -102,13 +102,17 @@ var get_similar_situations = function(req, res, next){
     req.situation._id
   ]
 
-  req.situation.causes.forEach(function(relationship){
-    return omit_ids.push(relationship.cause._id)
-  })
+  if (req.situation.causes){
+    req.situation.causes.forEach(function(relationship){
+      return omit_ids.push(relationship.cause._id)
+    })
+  }
 
-  req.situation.effects.forEach(function(relationship){
-    return omit_ids.push(relationship.effect._id)
-  })
+  if (req.situation.effects){
+    req.situation.effects.forEach(function(relationship){
+      return omit_ids.push(relationship.effect._id)
+    })
+  }
 
   var similar_query = { "query":
     {
@@ -333,7 +337,6 @@ router.get(
 
     return next();
   },
-  get_similar_situations,
   function(
     req,
     res,
@@ -381,13 +384,18 @@ router.get(
         }
       )
 
-      return res.render('relationships', {
-        rel_type: req.params.relationship_type,
-        result: result
-      });
+      req.result = res.result = result;
+
+      return next()
     }, function(error){
       return next(error);
     })
+  },
+  get_similar_situations,
+  function(req, res){
+    return res.render('relationships', {
+      rel_type: req.params.relationship_type
+    });
   }
 )
 
