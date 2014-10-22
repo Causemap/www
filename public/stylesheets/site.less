@@ -5,8 +5,54 @@
 // @container-desktop: @container-tablet;
 // @container-large-desktop: @container-tablet;
 
-a:hover {
+a:hover, .btn-link:hover {
   text-decoration: none;
+}
+
+#primary-nav {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  margin-bottom: @grid-gutter-width/2;
+
+  .col-md-12 {
+    display: table;
+
+    > * {
+      display: table-cell;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    > .navigation {
+      > * {
+        display: table-cell;
+        vertical-align: middle;
+        white-space: nowrap;
+      }
+
+      .btn-toolbar {
+        > * {
+          display: inline-block;
+          float: none;
+        }
+
+        a.btn.btn-link {
+          color: #626262;
+        }
+      }
+    }
+
+    .navbar-brand {
+      margin-left: -27.5px;
+    }
+  }
+}
+
+#search-form {
+  width: 100%;
+
+  input[type=search] {
+    max-width: 35em;
+  }
 }
 
 .branding {

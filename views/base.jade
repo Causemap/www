@@ -42,72 +42,63 @@ html(lang='en')
       mixpanel.init("bc42d283aff847567e615478b2408778");
 
   body(ng-app='causemap', class='#{ body_class }')
-    .navbar.navbar-default.navbar-static-top(role='navigation')
+    #primary-nav
       .container
-        .navbar-header
-          button.navbar-toggle.collapsed(
-            type='button',
-            data-toggle='collapse',
-            data-target='#navbar-collapse'
-          )
-            span.sr-only Toggle Navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
+        .row
+          .col-md-12
+            .navbar-brand
+              a(href='/').branding
+                i.cm-logo
+                span.hidden-sm.hidden-xs
+                  | &nbsp;
+                  | Causemap
 
-          .navbar-brand
-            a(href='/').branding
-              i.cm-logo
-              | &nbsp;
-              | Causemap
+            form#search-form(action='/', method='get')
+              if query && query.search
+                input.form-control(
+                  type='search',
+                  name='search',
+                  value=query.search,
+                  placeholder='Search'
+                )
+              else
+                input.form-control(
+                  type='search',
+                  name='search',
+                  placeholder='Search'
+                )
 
-        #navbar-collapse.collapse.navbar-collapse
-          .navbar-form.navbar-left(role='search')
-            form(action='/', method='get')
-              .form-group
-                if query && query.search
-                  input.form-control(
-                    type='search',
-                    name='search',
-                    value=query.search,
-                    placeholder='Search'
+            .navigation
+              .btn-toolbar
+                .btn-group(
+                  ng-controller='AuthCtrl',
+                  ng-if='!session.userCtx.name',
+                  ng-cloak
+                )
+                  a.btn.btn-link(
+                    data-toggle='modal',
+                    data-target='#login-signup-modal',
+                    href=''
                   )
-                else
-                  input.form-control(
-                    type='search',
-                    name='search',
-                    placeholder='Search'
+                    i.glyphicon.glyphicon-log-in
+                    span.hidden-xs.hidden-sm &nbsp;Login or Sign-Up
+                .btn-group.dropdown(ng-if='session.userCtx.name', ng-cloak)
+                  a.btn.btn-link(data-toggle='dropdown')
+                    i.glyphicon.glyphicon-user
+                    span.hidden-sm.hidden-xs &nbsp;{{ session.userCtx.name }}
+                  ul.dropdown-menu.pull-right(role='menu')
+                    li.dropdown-header Logged in as {{ session.userCtx.name }}
+                    li.divider
+                    li
+                      a(ng-click='logout()') Logout
+                .btn-group(ng-controller='SituationsCtrl')
+                  a.btn.btn-link(
+                    title='Add a situation',
+                    data-toggle='modal',
+                    data-target='#add-situation-modal'
                   )
-
-          ul.nav.navbar-nav.navbar-right
-            li(ng-controller='SituationsCtrl')
-              a(
-                data-toggle='modal',
-                data-target='#add-situation-modal'
-              )
-                i.glyphicon.glyphicon-plus &nbsp;
-                | Add a Situation
-
-            li(
-              ng-controller='AuthCtrl',
-              ng-if='!session.userCtx.name',
-              ng-cloak
-            )
-              a(
-                data-toggle='modal',
-                data-target='#login-signup-modal',
-                href=''
-              )
-                i.glyphicon.glyphicon-login &nbsp;
-                | Login or Sign-Up
-
-            li.dropdown.pull-right(ng-if='session.userCtx.name', ng-cloak)
-              a(data-toggle='dropdown')
-                i.glyphicon.glyphicon-user &nbsp;
-                | {{ session.userCtx.name }}
-              ul.dropdown-menu(role='menu')
-                li
-                  a(ng-click='logout()') Logout
+                    i.glyphicon.glyphicon-plus
+                    span.hidden-sm.hidden-xs &nbsp;Add a Situation
 
 
     block content
