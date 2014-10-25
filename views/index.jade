@@ -5,42 +5,24 @@ block content
   .container
     .row
       .col-md-12
-        if query.search
+        if query
           .page-header
             h2 &ldquo;#{ query.search }&rdquo;
 
-        ol.situations.list-unstyled
-          - each hit in result.hits.hits
-            - var situation = hit._source
-              li.situation
-                +situation_item(situation, 'md')
+          ol.situations.list-unstyled
+            - each hit in result.hits.hits
+              - var situation = hit._source
+                li.situation.situation-landscape
+                  +situation_landscape(situation, 'md')
 
-        ul.pagination
-          - var total_pages = Math.ceil(result.hits.total / size)
-          - var n = 0
-          while n < total_pages
-            - n++
-              if ((n-1)*size == from)
-                li.active
-                  a= n
-              else
-                li
-                  a(href='/?size='+ size +'&from='+ (n-1)*size)= n
-
-block body-js
-  script.
-    var masonry_opts = {
-      itemSelector: '.situation',
-      gutter: 15
-    }
-
-    var $container = $('.situations').masonry(masonry_opts);
-
-    $container.imagesLoaded(function(){
-      $container.masonry(masonry_opts)
-    }).progress(function(instance, image){
-      $(image.img).parent().removeClass('loading');
-      $container.masonry('layout');
-    })
-
-
+          ul.pagination
+            - var total_pages = Math.ceil(result.hits.total / size)
+            - var n = 0
+            while n < total_pages
+              - n++
+                if ((n-1)*size == from)
+                  li.active
+                    a= n
+                else
+                  li
+                    a(href='/?size='+ size +'&from='+ (n-1)*size)= n

@@ -19,10 +19,8 @@
     "bootstrap": "~3.2.0",
     "angular": "~1",
     "lodash": "~2.4.1",
-    "masonry": "~3.1.5",
     "imagesloaded": "~3.1.8",
     "moment": "~2.8.3",
-    "marked": "~0.3.2",
     "respimage": "https://github.com/aFarkas/respimage.git#~0.9.3",
     "lazysizes": "https://github.com/aFarkas/lazysizes.git#~0.1.4"
   }

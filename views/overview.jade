@@ -5,7 +5,7 @@ block situation-content
     mixpanel.track("situation viewed");
   #overview
     if situation.display_image
-      .display-image.loading(title=situation.display_image.caption)
+      .display-image(title=situation.display_image.caption)
         +situation_display_image(
           situation,
           743,
