@@ -49,12 +49,12 @@ mixin relationship_item(relationship, hide_type, size)
     span.strength
       a.upvote(
         ng-click='adjustRelationshipStrength("'+relationship._id+'", "up")',
-        title='Upvote this relationship'
+        title='Strengthen this relationship'
       ) upvote
 
       a.downvote(
         ng-click='adjustRelationshipStrength("'+relationship._id+'", "down")',
-        title='Downvote this relationship'
+        title='Weaken this relationship'
       ) downvote
 
     span.with-dropdown
