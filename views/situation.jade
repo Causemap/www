@@ -170,19 +170,19 @@ block content
             button.close(type='button', data-dismiss='modal') &times;
             h4(ng-if='rel_type=="effects"') Add an Effect
             h4(ng-if='rel_type=="causes"') Add a Cause
-          .modal-body
-            form(ng-submit='createAndAddRelationship(rel_type, suggestion_query)')
+          .modal-body(ng-controller='RelationshipCtrl')
+            form(ng-submit='createAndAddRelationship($parent.rel_type, suggestion_query)')
               .form-group
                 label Type the name of a situation
                 input.form-control(ng-model='suggestion_query', type='search', placeholder='eg. Germany Won the 2014 World Cup', ng-change='suggestSituations(suggestion_query)')
             p(ng-if='suggestion_query && suggestion_query.length > 3')
               | press Enter to add &ldquo;{{ suggestion_query }}&rdquo; to {{
-              | rel_type }} or click an existing situation below.
+              | $parent.rel_type }} or click an existing situation below.
             ol.suggestions.situations.list-unstyled
               li.situation.situation-landscape.relationship-situation.suggestion(
                 ng-repeat='suggestion in situationSuggestions.hits.hits',
                 ng-init='situation = suggestion._source; img_url = "http://api.causemap.org:5984/causemap/{{ situation.display_image.change_id }}/{{ situation.display_image.filename }}"',
-                ng-click='createRelationship(rel_type, situation._id)'
+                ng-click='createRelationship($parent.$parent.rel_type, situation._id)'
               )
                 .situation-section
                   h4.situation-name

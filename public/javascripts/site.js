@@ -439,8 +439,6 @@ causemap.controller('RelationshipCtrl', [
     $timeout,
     $http
   ){
-    $scope.rel_type = null;
-
     $scope.suggestSituations = function(query_text){
       if (query_text.length < 3){
         // too short, do nothing
