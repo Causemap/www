@@ -10,6 +10,7 @@ causemap.controller('AuthCtrl', [
     $http
   ){
     $rootScope.auth = {
+      login_next: null,
       user_has_account: true
     }
 
@@ -126,6 +127,22 @@ causemap.controller('AuthCtrl', [
     }
 
     $rootScope.getSession()
+
+    $rootScope.$watch('session.userCtx', function(newVal, oldVal){
+      $('[data-toggle=tooltip]').tooltip();
+    })
+
+    $rootScope.$on('logged-in', function(username){
+      console.log($rootScope.auth.login_next)
+      if ($rootScope.auth.login_next){
+        if ($rootScope.auth.login_next.click){
+          setTimeout(function(){
+            $($rootScope.auth.login_next.click).click();
+            $rootScope.auth.login_next = null;
+          }, 500)
+        }
+      }
+    });
   }
 ])
 
@@ -422,6 +439,8 @@ causemap.controller('RelationshipCtrl', [
     $timeout,
     $http
   ){
+    $scope.rel_type = null;
+
     $scope.suggestSituations = function(query_text){
       if (query_text.length < 3){
         // too short, do nothing

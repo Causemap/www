@@ -78,6 +78,7 @@ html(lang='en')
                   a.btn.btn-link(
                     data-toggle='modal',
                     data-target='#login-signup-modal',
+                    ng-click='auth.login_next=null'
                     href=''
                   )
                     i.glyphicon.glyphicon-log-in
@@ -91,9 +92,24 @@ html(lang='en')
                     li.divider
                     li
                       a(ng-click='logout()') Logout
-                .btn-group(ng-controller='SituationsCtrl')
+                .btn-group(
+                  ng-controller='SituationsCtrl'
+                )
                   a.btn.btn-link(
                     title='Add a situation',
+                    ng-if='!session.userCtx.name',
+                    ng-click='auth.login_next={message: "Login or Sign-up first", click: "#add-situation-button"}',
+                    data-toggle='modal',
+                    data-target='#login-signup-modal'
+                  )
+                    i.glyphicon.glyphicon-plus
+                    span.hidden-sm.hidden-xs &nbsp;Add a Situation
+
+                  a#add-situation-button.btn.btn-link(
+                    title='Add a situation',
+                    ng-cloak,
+                    ng-if='session.userCtx.name',
+                    ng-click='auth.login_next={click:"#add-situation-button", message: "Login to add a situation"}',
                     data-toggle='modal',
                     data-target='#add-situation-modal'
                   )
@@ -135,6 +151,9 @@ html(lang='en')
         .modal-content
           form(ng-submit='loginSignup()')
             .modal-body
+              .alert.alert-info(
+                ng-if='auth.login_next && auth.login_next.message'
+              ) {{ auth.login_next.message }}
               .form-group
                 .input-group
                   span.input-group-addon
@@ -178,8 +197,14 @@ html(lang='en')
             .modal-footer
               button.btn.btn-primary.btn-block(
                 type='submit',
+                ng-if='auth.user_has_account',
                 data-loading-text='Logging in'
               ) Login
+              button.btn.btn-primary.btn-block(
+                type='submit',
+                data-loading-text='Signing up'
+                ng-if='!auth.user_has_account',
+              ) Sign up
 
     // jQuery (necessary for Bootstrap's JavaScript plugins)
     script(
