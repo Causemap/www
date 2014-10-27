@@ -135,13 +135,11 @@ html(lang='en')
         .modal-content
           form(ng-submit='add_situation()')
             .modal-body
-              // h3 What's the situation?
-              .form-group
-                label What's the situation?
-                input.form-control(
-                  ng-model='new_situation_name',
-                  placeholder='eg. Germany won the 2014 World Cup'
-                )
+              label What's the situation?
+              input.form-control(
+                ng-model='new_situation_name',
+                placeholder='eg. Germany won the 2014 World Cup'
+              )
             .modal-footer
               a.btn.btn-default(data-dismiss='modal') Cancel
               button.btn.btn-primary(type='submit') Add
