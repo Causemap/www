@@ -5,24 +5,26 @@ block content
   .container
     .row
       .col-md-12
-        if query
-          .page-header
+        .page-header
+          if query.search
             h2 &ldquo;#{ query.search }&rdquo;
+          else
+            h2 Latest Situations
 
-          ol.situations.list-unstyled
-            - each hit in result.hits.hits
-              - var situation = hit._source
-                li.situation.situation-landscape
-                  +situation_landscape(situation, 'md')
+        ol.situations.list-unstyled
+          - each hit in result.hits.hits
+            - var situation = hit._source
+              li.situation.situation-landscape
+                +situation_landscape(situation, 'md')
 
-          ul.pagination
-            - var total_pages = Math.ceil(result.hits.total / size)
-            - var n = 0
-            while n < total_pages
-              - n++
-                if ((n-1)*size == from)
-                  li.active
-                    a= n
-                else
-                  li
-                    a(href='/?size='+ size +'&from='+ (n-1)*size)= n
+        ul.pagination
+          - var total_pages = Math.ceil(result.hits.total / size)
+          - var n = 0
+          while n < total_pages
+            - n++
+              if ((n-1)*size == from)
+                li.active
+                  a= n
+              else
+                li
+                  a(href='/?size='+ size +'&from='+ (n-1)*size)= n

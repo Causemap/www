@@ -204,27 +204,26 @@ router.get('/', function(req, res) {
     }
 
     delete query.query.filtered.filter.bool.must.exists
-
-    return elasticsearch_client.search({
-      index: 'situations',
-      type: 'situation',
-      size: req.query.size || 25,
-      from: req.query.from || 0,
-      body: query
-    }).then(function(result){
-      res.render('index', {
-        query: req.query,
-        result: result,
-        size: parseInt(req.query.size) || 25,
-        from: parseInt(req.query.from) || 0
-      });
-
-    }, function(error){
-      res.send(500)
-    })
+    delete query.sort
   }
 
-  return res.render('index');
+  return elasticsearch_client.search({
+    index: 'situations',
+    type: 'situation',
+    size: req.query.size || 25,
+    from: req.query.from || 0,
+    body: query
+  }).then(function(result){
+    res.render('index', {
+      query: req.query,
+      result: result,
+      size: parseInt(req.query.size) || 25,
+      from: parseInt(req.query.from) || 0
+    });
+
+  }, function(error){
+    res.send(500)
+  })
 });
 
 router.get('/situation/:situation_id', function(req, res, next){
