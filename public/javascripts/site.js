@@ -73,6 +73,11 @@ causemap.controller('AuthCtrl', [
         })
       }).error(function(error){
         mixpanel.track("signup error");
+        if (error.error == 'conflict'){
+          return toastr.error('That username is in use');
+        }
+
+        toastr.error('There was an error')
         return console.error(error)
       })
     }
