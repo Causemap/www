@@ -26,15 +26,15 @@ causemap.controller('AuthCtrl', [
             password: $rootScope.auth.password
           }
         }).success(function(result){
-          mixpanel.track("logged in");
           toastr.success('logged in')
+          mixpanel.track("logged in");
+
           // close the authentication modal
           $('.modal').modal('hide');
           return $rootScope.getSession();
         }).error(function(error){
           mixpanel.track("login error");
           toastr.error('couldn\'t login')
-          return console.error('dog', error)
         })
       }
 
