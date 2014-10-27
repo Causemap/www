@@ -223,7 +223,7 @@ html(lang='en')
 
       $('.modal').on('shown.bs.modal', function(event){
         // focus on the first input
-        $('input', event.currentTarget).first().focus();
+        $('input', event.currentTarget).first().focus().select();
       })
 
     script.
