@@ -89,17 +89,12 @@ mixin situation_landscape(situation)
     )
 
   .situation-section
-    if situation.location || situation.period
+    if situation.location
       .meta.subdued
-        if situation.location
-          span.location
-            | #{ situation.location }
+        span.location
+          | #{ situation.location }
 
-        if situation.period
-          span.period
-            | #{ situation.period }
-
-    h4.situation-name
+    .situation-name
       a.name(
         href='/'+ (situation.alias || situation._id), title=situation.name
       )= situation.name

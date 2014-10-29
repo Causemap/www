@@ -16,7 +16,6 @@ html(lang='en')
       )
 
     link(rel='alternate icon', type='image/png', href='/images/favicon.png')
-    link(href='https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
     link(href='http://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.4/toaster.css', rel='stylesheet')
 
     // Bootstrap
@@ -49,9 +48,6 @@ html(lang='en')
             .navbar-brand
               a(href='/').branding
                 i.cm-logo
-                span.hidden-sm.hidden-xs
-                  | &nbsp;
-                  | Causemap
 
             form#search-form(action='/', method='get')
               if query && query.search
@@ -81,12 +77,11 @@ html(lang='en')
                     ng-click='auth.login_next=null'
                     href=''
                   )
-                    i.glyphicon.glyphicon-log-in
-                    span.hidden-xs.hidden-sm &nbsp;Login or Sign-Up
+                    span.hidden-xs.hidden-sm Login or Sign-Up
                 .btn-group.dropdown(ng-if='session.userCtx.name', ng-cloak)
                   a.btn.btn-link(data-toggle='dropdown')
-                    i.glyphicon.glyphicon-user
-                    span.hidden-sm.hidden-xs &nbsp;{{ session.userCtx.name }}
+                    i.cm-smiley-happy-5
+                    span.hidden-sm.hidden-xs &nbsp;&nbsp;{{ session.userCtx.name }}
                   ul.dropdown-menu.pull-right(role='menu')
                     li.dropdown-header Logged in as {{ session.userCtx.name }}
                     li.divider
@@ -95,17 +90,17 @@ html(lang='en')
                 .btn-group(
                   ng-controller='SituationsCtrl'
                 )
-                  a.btn.btn-link(
+                  a.btn.btn-success(
                     title='Add a situation',
                     ng-if='!session.userCtx.name',
                     ng-click='auth.login_next={message: "Login or Sign-up first", click: "#add-situation-button"}',
                     data-toggle='modal',
                     data-target='#login-signup-modal'
                   )
-                    i.glyphicon.glyphicon-plus
-                    span.hidden-sm.hidden-xs &nbsp;Add a Situation
+                    i.cm-add-1
+                    span.hidden-sm.hidden-xs &nbsp;&nbsp;Add a Situation
 
-                  a#add-situation-button.btn.btn-link(
+                  a#add-situation-button.btn.btn-success(
                     title='Add a situation',
                     ng-cloak,
                     ng-if='session.userCtx.name',
@@ -113,8 +108,8 @@ html(lang='en')
                     data-toggle='modal',
                     data-target='#add-situation-modal'
                   )
-                    i.glyphicon.glyphicon-plus
-                    span.hidden-sm.hidden-xs &nbsp;Add a Situation
+                    i.cm-add-1
+                    span.hidden-sm.hidden-xs &nbsp;&nbsp;Add a Situation
 
 
     block content
@@ -153,24 +148,18 @@ html(lang='en')
                 ng-if='auth.login_next && auth.login_next.message'
               ) {{ auth.login_next.message }}
               .form-group
-                .input-group
-                  span.input-group-addon
-                    i.fa.fa-user.fa-fw
-                  input.form-control(
-                    type='text',
-                    placeholder='Username',
-                    ng-model='auth.username'
-                  )
+                input.form-control(
+                  type='text',
+                  placeholder='Username',
+                  ng-model='auth.username'
+                )
 
               .form-group
-                .input-group
-                  span.input-group-addon
-                    i.fa.fa-key.fa-fw
-                  input.form-control(
-                    type='password',
-                    placeholder='Password',
-                    ng-model='auth.password'
-                  )
+                input.form-control(
+                  type='password',
+                  placeholder='Password',
+                  ng-model='auth.password'
+                )
 
               .form-group
                 .radio
@@ -221,7 +210,7 @@ html(lang='en')
 
       $('.modal').on('shown.bs.modal', function(event){
         // focus on the first input
-        $('input', event.currentTarget).first().focus().select();
+        $('input, textarea', event.currentTarget).first().focus().select();
       })
 
     script.

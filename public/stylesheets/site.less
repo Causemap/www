@@ -1,12 +1,35 @@
 @import "variables";
-@icon-font-path: "../lib/bootstrap/fonts/";
+// @icon-font-path: "../lib/bootstrap/fonts/";
 @import "../lib/bootstrap/less/bootstrap";
 
 // @container-desktop: @container-tablet;
 // @container-large-desktop: @container-tablet;
 
+body {
+  font-weight: 200;
+}
+
 a {
   cursor: pointer;
+}
+
+input, textarea {
+  &.form-control {
+    box-shadow: none;
+
+    &:focus {
+      box-shadow: 0 0 0 2px fadeout(@brand-primary, 70);
+      outline: none;
+    }
+  }
+}
+
+.dropdown-menu>li>a {
+  font-weight: inherit;
+}
+
+.btn-link {
+  font-weight: @btn-font-weight;
 }
 
 .modal-content {
@@ -65,8 +88,8 @@ a:hover, .btn-link:hover {
 }
 
 .branding {
-  color: #626262;
-  font-weight: 900;
+  color: black;
+  font-weight: 200;
   text-transform: uppercase;
 }
 
@@ -74,7 +97,7 @@ ol.situations {
   .situation {
     background-color: white;
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    padding: 20px 0;
 
     @media (min-width: @screen-lg){
       width: ~"calc(25% - 11.25px)";
@@ -122,7 +145,7 @@ ol.situations {
       margin: 0 0 5px;
 
       > a {
-        color: #626262;
+        color: black;
       }
     }
 
@@ -148,7 +171,6 @@ ol.situations {
       }
 
       & > .situation-section {
-        background-color: rgba(255, 255, 255, 0.75);
         padding: 0 0 0 20px;
         margin-left: 8em;
 
@@ -166,6 +188,7 @@ ol.situations {
       }
 
       .situation-name {
+        font-size: 16pt;
         margin-bottom: 3px;
         text-overflow: ellipsis;
       }
@@ -292,7 +315,8 @@ ol.situations {
   margin-bottom: 20px;
 
   .name, a.name {
-    color: #626262;
+    color: black;
+    font-size: 32pt;
   }
 }
 
@@ -340,10 +364,12 @@ ol.situations {
 }
 
 #situation-aside {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
   position: relative;
 
   a.name {
     font-size: 11pt;
+    display: block;
   }
 
   @media (min-width: @screen-md-min){
@@ -355,17 +381,8 @@ ol.situations {
     }
 
     > ol.situations > li {
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-      margin: 0;
-      padding: 20px 0;
-
-      &:first-child {
-        border-top: 1px solid rgba(0,0,0,0.1);
-      }
-
-      &:last-child {
-        border-bottom: none;
-      }
+      margin-bottom: 20px;
+      padding: 0;
     }
   }
 }

@@ -18,21 +18,21 @@ block situation-content
       .btn-group.pull-right(
         ng-if='!session.userCtx.name'
       )
-        button#edit-situation-button.btn.btn-link.btn-block.dropdown-toggle(
+        button#edit-situation-button.btn.btn-link.dropdown-toggle(
           data-toggle='modal',
           data-target='#login-signup-modal',
           ng-click='auth.login_next={message: "Login or Sign-up first", click: "#edit-situation-button"}'
         )
-          span.glyphicon.glyphicon-edit &nbsp;
-          | Edit
+          span.cm-edit-3
+          | &nbsp;Edit
       .btn-group.pull-right(
         ng-if='session.userCtx.name'
       )
-        button.btn.btn-link.btn-block.dropdown-toggle(
+        button.btn.btn-link.dropdown-toggle(
           data-toggle='dropdown'
         )
-          span.glyphicon.glyphicon-edit &nbsp;
-          | Edit
+          span.cm-edit-3
+          | &nbsp;Edit
         ul.dropdown-menu
           li
             a(data-toggle='modal', data-target='#edit-name') Name
@@ -64,7 +64,7 @@ block situation-content
           h3.subdued No Causes
           p.subdued Do you know what caused this?
         else
-          h3 Caused by
+          h2 Caused by
           ol.list-unstyled.situations
             - each relationship in situation.causes
               li.situation.relationship-situation.situation-landscape(
@@ -96,7 +96,7 @@ block situation-content
           p.subdued
             | How has this situation effected things?
         else
-          h3 Effects
+          h2 Created these effects
           ol.list-unstyled.situations
             - each relationship in situation.effects
               li.situation.relationship-situation.situation-landscape(

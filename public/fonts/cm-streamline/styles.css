@@ -38,123 +38,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.cm-bookmark-3:before {
-  content: "j";
-}
-.cm-board:before {
-  content: "k";
-}
-.cm-bomb:before {
-  content: "f";
-}
-.cm-skull-1:before {
-  content: "i";
-}
-.cm-lock-4:before {
-  content: "g";
-}
-.cm-magnifier:before {
-  content: "l";
-}
-.cm-bookmark-3-1:before {
-  content: "m";
-}
-.cm-edit-2:before {
-  content: "h";
-}
-.cm-edit-3:before {
+.cm-add-1:before {
   content: "n";
 }
-.cm-bin-2:before {
-  content: "o";
-}
-.cm-stationery-2:before {
-  content: "p";
-}
-.cm-flag-1:before {
-  content: "q";
-}
-.cm-hand-unlike-2:before {
-  content: "r";
-}
-.cm-hand-like-2:before {
-  content: "s";
-}
-.cm-heart-1:before {
-  content: "t";
-}
-.cm-heart-minus:before {
-  content: "u";
-}
-.cm-heart-plus:before {
-  content: "v";
-}
-.cm-smiley-sad:before {
-  content: "w";
-}
-.cm-profile-1:before {
-  content: "x";
-}
-.cm-add-3:before {
-  content: "y";
-}
-.cm-add-1:before {
-  content: "z";
-}
-.cm-log-out-1:before {
-  content: "A";
-}
-.cm-check-circle-1:before {
-  content: "B";
-}
-.cm-check-list:before {
-  content: "C";
-}
-.cm-alert-1:before {
-  content: "D";
-}
-.cm-question-mark:before {
-  content: "E";
-}
-.cm-information:before {
-  content: "F";
-}
-.cm-marker-2:before {
-  content: "G";
-}
-.cm-html5:before {
-  content: "H";
-}
-.cm-css3:before {
-  content: "I";
-}
-.cm-bug-1:before {
-  content: "J";
-}
-.cm-filter-1:before {
-  content: "K";
-}
-.cm-beer:before {
-  content: "L";
-}
-.cm-arrow-67:before {
-  content: "M";
-}
-.cm-arrow-68:before {
-  content: "N";
-}
-.cm-arrow-66:before {
-  content: "O";
-}
-.cm-arrow-65:before {
-  content: "P";
-}
-.cm-logo:before {
-  content: "c";
-}
-.cm-effects-1:before {
+.cm-smiley-happy-5:before {
   content: "d";
 }
-.cm-causes-1:before {
-  content: "e";
+.cm-edit-3:before {
+  content: "c";
+}
+.cm-logo:before {
+  content: "a";
 }
