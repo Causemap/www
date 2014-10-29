@@ -41,12 +41,15 @@
 .cm-add-1:before {
   content: "n";
 }
-.cm-smiley-happy-5:before {
-  content: "d";
-}
 .cm-edit-3:before {
   content: "c";
 }
 .cm-logo:before {
   content: "a";
+}
+.cm-smiley-happy-5:before {
+  content: "b";
+}
+.cm-smiley-happy-4:before {
+  content: "d";
 }
