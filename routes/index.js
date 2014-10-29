@@ -210,14 +210,14 @@ router.get('/', function(req, res) {
   return elasticsearch_client.search({
     index: 'situations',
     type: 'situation',
-    size: req.query.size || 25,
+    size: req.query.size || 24,
     from: req.query.from || 0,
     body: query
   }).then(function(result){
     res.render('index', {
       query: req.query,
       result: result,
-      size: parseInt(req.query.size) || 25,
+      size: parseInt(req.query.size) || 24,
       from: parseInt(req.query.from) || 0
     });
 
