@@ -318,6 +318,16 @@ ol.situations {
     color: black;
     font-size: 32pt;
   }
+
+  small {
+    font-weight: 200;
+
+    &+small:before {
+      content: '\00B7';
+      opacity: .5;
+      padding: 0 0.25em;
+    }
+  }
 }
 
 [class^="cm-"]:before, [class*=" cm-"]:before {
