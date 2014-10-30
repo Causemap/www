@@ -79,11 +79,11 @@ html(lang='en')
                     href=''
                   )
                     i.cm-smiley-happy-4
-                    span.hidden-xs &nbsp;&nbsp;Login or Sign-Up
+                    span.btn-label.hidden-xs Login or Sign-Up
                 .btn-group.dropdown(ng-if='session.userCtx.name', ng-cloak)
                   a.btn.btn-link(data-toggle='dropdown')
                     i.cm-smiley-happy-5
-                    span.hidden-sm.hidden-xs &nbsp;&nbsp;{{ session.userCtx.name }}
+                    span.btn-label.hidden-sm.hidden-xs {{ session.userCtx.name }}
                   ul.dropdown-menu.pull-right(role='menu')
                     li.dropdown-header Logged in as {{ session.userCtx.name }}
                     li.divider
@@ -100,7 +100,7 @@ html(lang='en')
                     data-target='#login-signup-modal'
                   )
                     i.cm-add-1
-                    span.hidden-sm.hidden-xs &nbsp;&nbsp;Add a Situation
+                    span.btn-label.hidden-sm.hidden-xs Add a Situation
 
                   a#add-situation-button.btn.btn-success(
                     title='Add a situation',
@@ -111,7 +111,7 @@ html(lang='en')
                     data-target='#add-situation-modal'
                   )
                     i.cm-add-1
-                    span.hidden-sm.hidden-xs &nbsp;&nbsp;Add a Situation
+                    span.btn-label.hidden-sm.hidden-xs Add a Situation
 
 
     block content
