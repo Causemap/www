@@ -185,11 +185,7 @@ router.get('/', function(req, res) {
             must_not: {
               exists: { field: 'marked_for_deletion' }
             },
-            must: {
-              exists: {
-                field: "display_image"
-              }
-            }
+            must: []
           }
         }
       }
@@ -203,8 +199,21 @@ router.get('/', function(req, res) {
       }
     }
 
-    delete query.query.filtered.filter.bool.must.exists
     delete query.sort
+  }
+
+  if (req.query.created_by){
+    query.query.filtered.filter.bool.must.push(
+      { term: { created_by: req.query.created_by }}
+    );
+  }
+
+  if (!req.query.search && !req.query.created_by){
+    query.query.filtered.filter.bool.must.push({
+      exists: {
+        field: "display_image"
+      }
+    })
   }
 
   return elasticsearch_client.search({

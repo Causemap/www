@@ -88,6 +88,9 @@ html(lang='en')
                     li.dropdown-header Logged in as {{ session.userCtx.name }}
                     li.divider
                     li
+                      a(href='/?created_by={{ session.userCtx.name }}') Situations created by me
+                    li.divider
+                    li
                       a(ng-click='logout()') Logout
                 .btn-group(
                   ng-controller='SituationsCtrl'
