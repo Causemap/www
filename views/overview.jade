@@ -5,7 +5,7 @@ block situation-content
     mixpanel.track("situation viewed");
   #overview
     if situation.display_image
-      .display-image(title=situation.display_image.caption)
+      .loading.display-image(title=situation.display_image.caption)
         +situation_display_image(
           situation,
           743,
@@ -24,7 +24,7 @@ block situation-content
           ng-click='auth.login_next={message: "Login or Sign-up first", click: "#edit-situation-button"}'
         )
           span.cm-edit-3
-          | &nbsp;Edit
+          span.btn-label Edit
       .btn-group.pull-right(
         ng-if='session.userCtx.name'
       )
@@ -32,7 +32,7 @@ block situation-content
           data-toggle='dropdown'
         )
           span.cm-edit-3
-          | &nbsp;Edit
+          span.btn-label Edit
         ul.dropdown-menu
           li
             a(data-toggle='modal', data-target='#edit-name') Name

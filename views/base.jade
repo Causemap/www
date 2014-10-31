@@ -229,5 +229,12 @@ html(lang='en')
 
     script(src='/lib/respimage/respimage.min.js')
     script(src='/lib/lazysizes/lazysizes.min.js')
+    script(src='http://imagesloaded.desandro.com/imagesloaded.pkgd.min.js')
+    script.
+      $('.loading').each(function(){
+        $(this).imagesLoaded(function(instance){
+          $(instance.elements[0]).removeClass('loading')
+        })
+      })
 
     block body-js
