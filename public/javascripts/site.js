@@ -306,6 +306,12 @@ causemap.controller('SituationCtrl', [
           $scope.situation[field_name] = field_value;
 
 
+          if (field_name == 'display_image'){
+            $('#overview > .display-image > img').attr('srcset', null).attr('title', null).attr('src', [
+              'data:'+ new_field._attachments[Object.keys(new_field._attachments)[0]].content_type +';base64,',
+              new_field._attachments[Object.keys(new_field._attachments)[0]].data
+            ].join(''))
+          }
 
           if (field_name == 'description'){
             $http({
