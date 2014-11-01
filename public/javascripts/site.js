@@ -204,12 +204,14 @@ causemap.controller('SituationsCtrl', [
 causemap.controller('SituationCtrl', [
   '$scope',
   '$rootScope',
+  '$sce',
   '$timeout',
   '$window',
   '$http',
   function(
     $scope,
     $rootScope,
+    $sce,
     $timeout,
     $window,
     $http
@@ -224,6 +226,12 @@ causemap.controller('SituationCtrl', [
     $scope.situation = JSON.parse(
       document.getElementById('situation-json').innerHTML
     );
+
+    $scope.$watch('situation.html_description', function(){
+      $scope.situation.safe_html_description = $sce.trustAsHtml(
+        $scope.situation.html_description
+      );
+    })
 
     function setStrength(relationship){
 
@@ -297,22 +305,24 @@ causemap.controller('SituationCtrl', [
           // set the situation name to whatever
           $scope.situation[field_name] = field_value;
 
+
+
           if (field_name == 'description'){
-            $scope.situation.html_description = marked(field_value, {
-              gfm: true
+            $http({
+              url: '?format=json',
+              withCredentials: true,
+              method: 'GET'
+            }).success(function(result){
+              $scope.situation = result.situation;
+
+              if(!$scope.$$phase) {
+                $scope.$apply();
+              }
             })
-
-            $timeout(function(){
-              $window.location.reload();
-            }, 2000)
-
+          } else {
             if(!$scope.$$phase) {
-              return $scope.$apply();
+              $scope.$apply();
             }
-          }
-
-          if(!$scope.$$phase) {
-            $scope.$apply();
           }
         }).error(function(error){
           mixpanel.track("error saving change");
