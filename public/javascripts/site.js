@@ -305,6 +305,11 @@ causemap.controller('SituationCtrl', [
           // set the situation name to whatever
           $scope.situation[field_name] = field_value;
 
+          if (id){
+            return $timeout(function(){
+              $window.location.reload();
+            }, 2000)
+          }
 
           if (field_name == 'display_image'){
             $('#overview > .display-image > img').attr('srcset', null).attr('title', null).attr('src', [
