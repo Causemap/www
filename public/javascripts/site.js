@@ -312,14 +312,30 @@ causemap.controller('SituationCtrl', [
           }
 
           if (field_name == 'display_image'){
-            $('#overview > .display-image > img').attr('srcset', null).attr('title', null).attr('src', [
+            var $existing_img = $('#overview > .display-image > img');
+            var src = [
               'data:'+ new_field._attachments[Object.keys(new_field._attachments)[0]].content_type +';base64,',
               new_field._attachments[Object.keys(new_field._attachments)[0]].data
-            ].join(''))
+            ].join('');
+
+            if ($existing_img.length){
+              return $('#overview > .display-image > img').attr('srcset', null).attr('title', null).attr('src', src)
+            }
+
+            var img = document.createElement('img');
+            img.src = src;
+            img.classList.add('img-responsive');
+
+            var display_image_div = document.createElement('div');
+            display_image_div.classList.add('display-image');
+
+            display_image_div.appendChild(img);
+
+            $('#overview').prepend(display_image_div);
           }
 
           if (field_name == 'description'){
-            $http({
+            return $http({
               url: '?format=json',
               withCredentials: true,
               method: 'GET'
@@ -330,10 +346,10 @@ causemap.controller('SituationCtrl', [
                 $scope.$apply();
               }
             })
-          } else {
-            if(!$scope.$$phase) {
-              $scope.$apply();
-            }
+          }
+
+          if(!$scope.$$phase) {
+            $scope.$apply();
           }
         }).error(function(error){
           mixpanel.track("error saving change");
