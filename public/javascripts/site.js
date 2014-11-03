@@ -344,7 +344,7 @@ causemap.controller('SituationCtrl', [
               if(!$scope.$$phase) {
                 $scope.$apply();
               }
-            })
+            }).error(function(){ console.log(arguments) })
           }
 
           if(!$scope.$$phase) {
