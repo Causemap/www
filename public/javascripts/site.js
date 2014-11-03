@@ -133,7 +133,6 @@ causemap.controller('AuthCtrl', [
     })
 
     $rootScope.$on('logged-in', function(username){
-      console.log($rootScope.auth.login_next)
       if ($rootScope.auth.login_next){
         if ($rootScope.auth.login_next.click){
           setTimeout(function(){
