@@ -138,12 +138,7 @@ var get_similar_situations = function(req, res, next){
                   values: omit_ids
                 }
               }
-            ],
-            must: {
-              exists: {
-                field: "display_image"
-              }
-            }
+            ]
           }
         }
       }
