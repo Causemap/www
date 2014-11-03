@@ -301,9 +301,6 @@ causemap.controller('SituationCtrl', [
           // close the modal
           $('.modal').modal('hide');
 
-          // set the situation name to whatever
-          $scope.situation[field_name] = field_value;
-
           if (id){
             return $timeout(function(){
               $window.location.reload();
@@ -346,6 +343,9 @@ causemap.controller('SituationCtrl', [
               }
             }).error(function(){ console.log(arguments) })
           }
+
+          // set the situation name to whatever
+          $scope.situation[field_name] = field_value;
 
           if(!$scope.$$phase) {
             $scope.$apply();
