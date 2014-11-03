@@ -340,7 +340,7 @@ causemap.controller('SituationCtrl', [
               withCredentials: true,
               method: 'GET'
             }).success(function(result){
-              $scope.situation = result.situation;
+              $scope.situation = result;
 
               if(!$scope.$$phase) {
                 $scope.$apply();
