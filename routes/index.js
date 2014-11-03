@@ -313,6 +313,10 @@ router.get(
   get_similar_situations,
   function(req, res){
 
+    if (req.query.format == 'json'){
+      return res.json(req.situation);
+    }
+
     return res.render('overview', {
       body_class: 'situation'
     })
