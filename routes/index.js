@@ -287,6 +287,10 @@ router.get(
           }
         )
 
+        return_me[
+          'total_'+ (rel_type == 'cause' ? 'effects' : 'causes')
+        ] = result.hits.total;
+
         return map_cb(null, return_me)
       }, function(error){
         return map_cb(error, null)

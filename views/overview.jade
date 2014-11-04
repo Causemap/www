@@ -89,7 +89,7 @@ block situation-content
             href='/situation/'+ situation._id +'/causes',
             ng-disabled='!situation.causes.length'
           )
-            | View causes
+            | View #{ situation.total_causes } causes
 
         if situation.effects.length == 0
           h3.subdued No Effects
@@ -121,4 +121,4 @@ block situation-content
             href='/situation/'+ situation._id +'/effects',
             ng-disabled='!situation.effects.length'
           )
-            | View effects
+            | View #{ situation.total_effects } effects
