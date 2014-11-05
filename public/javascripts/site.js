@@ -241,10 +241,13 @@ causemap.controller('SituationCtrl', [
       ].join('')
 
       $http({
-        url: 'http://api.causemap.org:5984/causemap/'+ doc_id,
+        url: 'http://api.causemap.org:5984/causemap/_design/adjustment/_show/adjustment/'+ doc_id,
         method: 'GET',
         withCredentials: true,
-      }).success(function(doc){
+      }).success(function(result){
+        if (!result.ok){ return false }
+
+        var doc = result.doc;
         var id = relationship._id;
 
         switch(doc.adjusted.field.by){
