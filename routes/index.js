@@ -263,9 +263,7 @@ router.get(
               filter: {
                 bool: {
                   must_not: [
-                    { exists: { field: 'marked_for_deletion' } },
-                    { exists: { field: 'cause.marked_for_deletion'} },
-                    { exists: { field: 'effect.marked_for_deletion'} }
+                    { exists: { field: 'marked_for_deletion' } }
                   ],
                   must: {
                     term: {},
@@ -276,6 +274,12 @@ router.get(
           }
         }
       }
+
+      q.body.query.filtered.filter.bool.must_not.push({
+        exists: {
+          field: (rel_type == 'cause' ? 'effect' : 'cause') +'.marked_for_deletion'
+        }
+      })
 
       q.body.query.filtered.filter.bool.must.term[rel_type +'._id'] = situation._id;
 
