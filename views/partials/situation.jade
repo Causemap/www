@@ -98,3 +98,15 @@ mixin situation_landscape(situation)
       a.name(
         href='/'+ (situation.alias || situation._id), title=situation.name
       )= situation.name
+
+    .situation-details
+      a.causes(href='/'+ (situation.alias || situation._id)+'/causes')
+        if situation.total_causes == 1
+          | #{ situation.total_causes } cause
+        else
+          | #{ situation.total_causes } causes
+      a.effects(href='/'+ (situation.alias || situation._id)+'/effects')
+        if situation.total_effects == 1
+          | #{ situation.total_effects } effect
+        else
+          | #{ situation.total_effects } effects

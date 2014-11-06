@@ -453,3 +453,11 @@ li .relationship-description {
   padding-top: @grid-gutter-width;
   padding-bottom: @grid-gutter-width;
 }
+
+.situation-details {
+  > *:not(:first-child)::before {
+    content: '\00B7';
+    opacity: .5;
+    padding: 0 0.25em;
+  }
+}
