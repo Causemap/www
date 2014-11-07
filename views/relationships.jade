@@ -17,18 +17,17 @@ block situation-content
 
   .row
     .col-md-12
-      .btn-toolbar.padded-tb
-        if rel_type == 'effects'
-          .toolbar-text.pull-left
-            strong Effects
+      if rel_type == 'effects'
+        h2 Effects
+        .btn-toolbar.padded-tb
           button.btn.btn-link.pull-right(
             data-toggle='modal',
             data-target='#add-relationship',
             ng-click='rel_type = "effects"'
           ) Add an Effect
-        else
-          .toolbar-text.pull-left
-            strong Causes
+      else
+        h2 Caused by
+        .btn-toolbar.padded-tb
           button.btn.btn-link.pull-right(
             data-toggle='modal',
             data-target='#add-relationship',
