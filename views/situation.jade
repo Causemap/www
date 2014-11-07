@@ -1,7 +1,7 @@
 extends base
 
 block title
-  | #{ situation.name } |&nbsp;
+  | #{ situation.name } &middot;&nbsp;
 
 block meta-tags
   meta(
@@ -168,10 +168,10 @@ block content
             button.close(type='button', data-dismiss='modal') &times;
             form(ng-submit='createAndAddRelationship($parent.rel_type, suggestion_query)')
               label(
-                ng-if='$parent.rel_type == "causes"'  
+                ng-if='$parent.rel_type == "causes"'
               ) What caused "{{ situation.name }}"?
               label(
-                ng-if='$parent.rel_type == "effects"'  
+                ng-if='$parent.rel_type == "effects"'
               ) What is an effect of "{{ situation.name }}"?
               input.form-control(ng-model='suggestion_query', type='search', placeholder='eg. Germany Won the 2014 World Cup', ng-change='suggestSituations(suggestion_query)')
             p(ng-if='suggestion_query && suggestion_query.length > 3')

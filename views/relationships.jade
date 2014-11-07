@@ -2,9 +2,9 @@ extends situation
 
 block title
   if rel_type == 'effects'
-    | Effects of "#{ situation.name }"
+    | Effects of "#{ situation.name }" &middot;&nbsp;
   else
-    | Causes of "#{ situation.name }"
+    | Causes of "#{ situation.name }" &middot;&nbsp;
 
 block situation-content
   if rel_type == 'effects'
