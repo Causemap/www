@@ -15,6 +15,17 @@ block situation-content
       .toolbar-text.pull-left.subdued
         em
           time.from-now(datetime=(new Date(situation.creation_date)))
+        | &nbsp;
+
+      .btn-group.pull-left.bookmarkable(
+        data-bookmarkable-id=situation._id,
+        data-bookmarkable-type='situation'
+      )
+        a.btn.btn-link.bookmark(
+          ng-if='session.userCtx.name',
+          ng-click='toggleBookmark("'+ situation._id +'", "situation")'
+        )
+
       .btn-group.pull-right(
         ng-if='!session.userCtx.name'
       )

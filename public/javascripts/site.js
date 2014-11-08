@@ -142,6 +142,65 @@ causemap.controller('AuthCtrl', [
         }
       }
     });
+
+    $rootScope.$on('logged-in', function(username){
+      $('.bookmarkable').each(function(){
+        var $this = $(this);
+
+        var id = $this.attr('data-bookmarkable-id');
+        var type = $this.attr('data-bookmarkable-type');
+
+        $http({
+          url: 'http://api.causemap.org:5984/_users/_design/user/_show/has_bookmark/org.couchdb.user:'+ $rootScope.session.userCtx.name +'?id='+ id,
+          method: 'GET',
+          withCredentials: true
+        }).success(function(response){
+          if (response.has_bookmark){
+            $this.addClass('bookmarked');
+          }
+        })
+      })
+    })
+
+    $rootScope.unbookmark = function(id){
+      $http({
+        url: 'http://api.causemap.org:5984/_users/_design/user/_update/unbookmark/org.couchdb.user:'+ $rootScope.session.userCtx.name,
+        method: 'POST',
+        withCredentials: true,
+        data: { id: id } 
+      }).success(function(response){
+        if (response == 'true'){
+          $('[data-bookmarkable-id='+ id +']').removeClass('bookmarked')
+        }
+      })
+    }
+
+    $rootScope.bookmark = function(id, type){
+      $http({
+        url: 'http://api.causemap.org:5984/_users/_design/user/_update/bookmark/org.couchdb.user:'+ $rootScope.session.userCtx.name,
+        method: 'POST',
+        withCredentials: true,
+        data: { id: id, type: type } 
+      }).success(function(response){
+        if (response == 'true'){
+          $('[data-bookmarkable-id='+ id +']').addClass('bookmarked')
+        }
+      })
+    }
+
+    $rootScope.toggleBookmark = function(id, type){
+      $http({
+        url: 'http://api.causemap.org:5984/_users/_design/user/_show/has_bookmark/org.couchdb.user:'+ $rootScope.session.userCtx.name +'?id='+ id,
+        method: 'GET',
+        withCredentials: true
+      }).success(function(response){
+        if (response.has_bookmark){
+          $rootScope.unbookmark(id)
+        } else {
+          $rootScope.bookmark(id, type)
+        }
+      })
+    }
   }
 ])
 

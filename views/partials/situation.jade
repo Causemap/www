@@ -77,7 +77,7 @@ mixin situation_display_image(situation, width, height)
         title=situation.display_image.caption
       )
 
-mixin situation_landscape(situation)
+mixin situation_landscape(situation, bookmarkable)
   if situation.display_image
     a.loading.display-image(
       href='/'+ (situation.alias || situation._id),
@@ -110,3 +110,8 @@ mixin situation_landscape(situation)
           | #{ situation.total_effects } effect
         else
           | #{ situation.total_effects } effects
+      if bookmarkable
+        a.bookmark(
+          ng-if='session.userCtx.name',
+          ng-click='toggleBookmark("'+ situation._id +'", "situation")'
+        )

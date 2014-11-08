@@ -16,8 +16,11 @@ block content
         ol.situations.list-unstyled
           - each hit in result.hits.hits
             - var situation = hit._source
-              li.situation.situation-landscape
-                +situation_landscape(situation, 'md')
+              li.situation.situation-landscape.bookmarkable(
+                data-bookmarkable-id=situation._id,
+                data-bookmarkable-type='situation'
+              )
+                +situation_landscape(situation, true)
 
         ul.pagination
           - var total_pages = Math.ceil(result.hits.total / size)

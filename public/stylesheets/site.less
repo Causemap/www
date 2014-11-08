@@ -461,3 +461,23 @@ li .relationship-description {
     padding: 0 0.25em;
   }
 }
+
+.bookmarkable {
+  a.bookmark {
+    color: fadeOut(@text-color, 50);
+
+    &::after {
+      content: 'bookmark'
+    }
+  }
+
+  &.bookmarked {
+    a.bookmark {
+      color: @brand-success;
+
+      &::after {
+        content: 'bookmarked';
+      }
+    }
+  }
+}
