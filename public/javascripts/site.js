@@ -151,7 +151,7 @@ causemap.controller('AuthCtrl', [
         var type = $this.attr('data-bookmarkable-type');
 
         $http({
-          url: 'http://api.causemap.org:5984/_users/_design/user/_show/has_bookmark/org.couchdb.user:'+ $rootScope.session.userCtx.name +'?id='+ id,
+          url: 'http://api.causemap.org:5984/causemap/_design/bookmark/_show/has_bookmark/'+ $rootScope.session.userCtx.name +'.bookmarked.'+ type +':'+ id,
           method: 'GET',
           withCredentials: true
         }).success(function(response){
@@ -162,14 +162,13 @@ causemap.controller('AuthCtrl', [
       })
     })
 
-    $rootScope.unbookmark = function(id){
+    $rootScope.unbookmark = function(id, type){
       $http({
-        url: 'http://api.causemap.org:5984/_users/_design/user/_update/unbookmark/org.couchdb.user:'+ $rootScope.session.userCtx.name,
+        url: 'http://api.causemap.org:5984/causemap/_design/bookmark/_update/unbookmark/'+ $rootScope.session.userCtx.name +'.bookmarked.'+ type +':'+ id,
         method: 'POST',
-        withCredentials: true,
-        data: { id: id } 
+        withCredentials: true
       }).success(function(response){
-        if (response == 'true'){
+        if (response.ok){
           $('[data-bookmarkable-id='+ id +']').removeClass('bookmarked')
         }
       })
@@ -177,12 +176,11 @@ causemap.controller('AuthCtrl', [
 
     $rootScope.bookmark = function(id, type){
       $http({
-        url: 'http://api.causemap.org:5984/_users/_design/user/_update/bookmark/org.couchdb.user:'+ $rootScope.session.userCtx.name,
+        url: 'http://api.causemap.org:5984/causemap/_design/bookmark/_update/bookmark/'+ $rootScope.session.userCtx.name +'.bookmarked.'+ type +':'+ id,
         method: 'POST',
-        withCredentials: true,
-        data: { id: id, type: type } 
+        withCredentials: true
       }).success(function(response){
-        if (response == 'true'){
+        if (response.ok){
           $('[data-bookmarkable-id='+ id +']').addClass('bookmarked')
         }
       })
@@ -190,12 +188,12 @@ causemap.controller('AuthCtrl', [
 
     $rootScope.toggleBookmark = function(id, type){
       $http({
-        url: 'http://api.causemap.org:5984/_users/_design/user/_show/has_bookmark/org.couchdb.user:'+ $rootScope.session.userCtx.name +'?id='+ id,
+        url: 'http://api.causemap.org:5984/causemap/_design/bookmark/_show/has_bookmark/'+ $rootScope.session.userCtx.name +'.bookmarked.'+ type +':'+ id,
         method: 'GET',
         withCredentials: true
       }).success(function(response){
         if (response.has_bookmark){
-          $rootScope.unbookmark(id)
+          $rootScope.unbookmark(id, type)
         } else {
           $rootScope.bookmark(id, type)
         }
