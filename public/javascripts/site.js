@@ -430,24 +430,26 @@ causemap.controller('SituationCtrl', [
           img.file = file;
           img.src = file_reader.result;
 
-          var new_field = {
-            field_name: field_name,
-            caption: $scope.new_display_image_caption,
-            width: img.naturalWidth,
-            height: img.naturalHeight,
-            filename: file.name,
-            _attachments: {}
-          };
+          img.onload = function(){
+            var new_field = {
+              field_name: field_name,
+              caption: $scope.new_display_image_caption,
+              width: img.naturalWidth,
+              height: img.naturalHeight,
+              filename: file.name,
+              _attachments: {}
+            };
 
-          new_field._attachments[file.name] = {
-            content_type: file.type,
-            data: file_reader.result.replace(
-              'data:'+ file.type +';base64,',
-              ''
-            )
+            new_field._attachments[file.name] = {
+              content_type: file.type,
+              data: file_reader.result.replace(
+                'data:'+ file.type +';base64,',
+                ''
+              )
+            }
+
+            return put_update(new_field);
           }
-
-          return put_update(new_field);
         }
 
         return file_reader.readAsDataURL(file);
