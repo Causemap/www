@@ -19,7 +19,6 @@ block content
     data-situation-id=situation._id,
     ng-controller='SituationCtrl'
   )
-
     .row
       .col-md-8
         if situation.marked_for_deletion
@@ -72,6 +71,68 @@ block content
               li.situation.situation-landscape(data-id=situation._id)
                 +situation_landscape(situation, false)
 
+
+    #tags.modal.fade
+      .modal-dialog.modal-sm
+          .modal-content
+            .modal-header
+              h4.modal-title Tags
+            .modal-body
+              ul.tags.list-unstyled(ng-if='situation.tags.length')
+                li.tag(ng-repeat='tag in situation.tags')
+                  .btn-group
+                    a.btn.btn-link(
+                      href='/?search={{ tag.replace(" ", "+") }}'
+                    ) {{ tag }}
+                    a.btn.btn-link(
+                      data-toggle='tooltip',
+                      title='Untag',
+                      ng-click='confirmUntag(tag)'
+                    ) &times;
+              p.subdued(ng-if='!situation.tags.length')
+                | This situation doesn't have any tags
+
+            .modal-footer
+              button.btn.btn-block.btn-primary(
+                ng-if='!session.userCtx.name',
+                data-toggle='modal',
+                data-dismiss='modal',
+                data-target='#login-signup-modal',
+                ng-click='auth.login_next={message: "Login or Sign-up first", click: "#add-tag-button"}'
+              ) Tag this situation
+              button#add-tag-button.btn.btn-block.btn-primary(
+                ng-if='session.userCtx.name',
+                data-toggle='modal',
+                data-target='#tag',
+                data-dismiss='modal'
+              ) Tag this situation
+
+    #confirm-untag.modal.fade
+      .modal-dialog.modal-sm
+          .modal-content
+            .modal-body
+              p Are you sure you want to remove the tag "{{ confirm_untag }}"?
+              button.btn.btn-block.btn-primary(ng-click='untag(confirm_untag)')
+                | Yes, remove the tag
+              button.btn.btn-block.btn-default(data-dismiss='modal')
+                | No, don't remove the tag
+
+    #tag.modal.fade
+      .modal-dialog.modal-sm
+          .modal-content
+            form(ng-submit='tag(tag_name)')
+              .modal-body
+                .form-group
+                  label Tag name
+                  input.form-control(
+                    placeholder='eg. Civil Disobedience'
+                    ng-model='tag_name'
+                  )
+              .modal-footer
+                button.btn.btn-block.btn-primary(type='submit')
+                  | Add tag
+                button.btn.btn-block.btn-default(data-dismiss='modal')
+                  | Cancel
 
     #edit-name.modal.fade
       .modal-dialog

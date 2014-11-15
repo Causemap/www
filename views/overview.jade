@@ -17,16 +17,14 @@ block situation-content
           time.from-now(datetime=(new Date(situation.creation_date)))
         | &nbsp;
 
-      .btn-group.pull-left.bookmarkable(
-        data-bookmarkable-id=situation._id,
-        data-bookmarkable-type='situation'
-      )
-        a.btn.btn-link.bookmark(
-          ng-if='session.userCtx.name',
-          ng-click='toggleBookmark("'+ situation._id +'", "situation")'
-        )
+      .toolbar-text.pull-left.subdued
+        a#tags-button(data-toggle='modal', data-target='#tags', title='view tags')
+          em(ng-if='!situation.tags.length') No tags
+          em(ng-if='situation.tags.length == 1') {{ situation.tags.length }} tag
+          em(ng-if='situation.tags.length > 1') {{ situation.tags.length }} tags
 
       .btn-group.pull-right(
+        ng-cloak,
         ng-if='!session.userCtx.name'
       )
         button#edit-situation-button.btn.btn-link.dropdown-toggle(
@@ -36,7 +34,9 @@ block situation-content
         )
           span.cm-edit-3
           span.btn-label Edit
+
       .btn-group.pull-right(
+        ng-cloak,
         ng-if='session.userCtx.name'
       )
         button.btn.btn-link.dropdown-toggle(

@@ -320,6 +320,74 @@ causemap.controller('SituationCtrl', [
       })
     }
 
+    $scope.confirmUntag = function(tag_name){
+      // hide other modals
+      $('.modal').modal('hide');
+
+      $scope.confirm_untag = tag_name;
+
+      if(!$scope.$$phase) {
+        return $scope.$apply();
+      }
+
+      // show the confirmation modal
+      $('#confirm-untag').modal('show');
+    }
+
+    $scope.untag = function(tag_name){
+      $http({
+        url: [
+          'http://api.causemap.org:5984/causemap/_design/action/_update/untag/',
+          $scope.situation_id
+        ].join(''),
+        method: "POST",
+        withCredentials: true,
+        data: {
+          tag_name: tag_name
+        }
+      }).success(function(response){
+        toastr.success('Untagged: '+ tag_name)
+        $('.modal').modal('hide');
+
+        $scope.situation.tags.splice(
+          $scope.situation.tags.indexOf(tag_name),
+          1
+        )
+
+        if(!$scope.$$phase) {
+          return $scope.$apply();
+        }
+      }).error(function(error){
+        return console.error(error)
+      })
+    }
+
+    $scope.tag = function(tag_name){
+      $http({
+        url: [
+          'http://api.causemap.org:5984/causemap/_design/action/_update/tag/',
+          $scope.situation_id
+        ].join(''),
+        method: "POST",
+        withCredentials: true,
+        data: {
+          tag_name: tag_name
+        }
+      }).success(function(response){
+        toastr.success('Tagged: '+ tag_name)
+        $('.modal').modal('hide');
+
+        if (!$scope.situation.hasOwnProperty('tags')) $scope.situation.tags = [];
+        $scope.situation.tags.push(tag_name)
+
+        if(!$scope.$$phase) {
+          return $scope.$apply();
+        }
+      }).error(function(error){
+        return console.error(error)
+      })
+    }
+
     $rootScope.$on('logged-in', function(username){
       if ($scope.situation.causes){
         $scope.situation.causes.forEach(setStrength);
