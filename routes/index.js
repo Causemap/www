@@ -118,10 +118,12 @@ var get_similar_situations = function(req, res, next){
     {
       filtered: {
         query: {
-          fuzzy_like_this: {
-            fields: ['name'],
-            like_text: req.situation.name,
-            max_query_terms: 12
+          more_like_this: {
+            ids: [ req.situation._id ],
+            fields: ['name', 'tags'],
+            analyzer: 'english',
+            min_term_freq: 1,
+            min_doc_freq: 1
           }
         },
         filter: {
@@ -142,7 +144,8 @@ var get_similar_situations = function(req, res, next){
           }
         }
       }
-    }
+    },
+    min_score: 0.4
   }
 
   elasticsearch_client.search({
