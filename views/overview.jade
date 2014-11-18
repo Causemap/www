@@ -17,7 +17,7 @@ block situation-content
           time.from-now(datetime=(new Date(situation.creation_date)))
         | &nbsp;
 
-      .toolbar-text.pull-left.subdued
+      .toolbar-text.pull-left.subdued(ng-cloak)
         a#tags-button(data-toggle='modal', data-target='#tags', title='view tags')
           em(ng-if='!situation.tags.length') No tags
           em(ng-if='situation.tags.length == 1') {{ situation.tags.length }} tag
