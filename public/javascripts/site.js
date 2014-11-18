@@ -283,6 +283,12 @@ causemap.controller('SituationCtrl', [
       document.getElementById('situation-json').innerHTML
     );
 
+    if ($scope.situation.causes.length){
+      var top_cause = $scope.situation.causes[0].cause;
+      if (top_cause.period) $scope.situation_draft.period = top_cause.period;
+      if (top_cause.location) $scope.situation_draft.location = top_cause.location;
+    }
+
     $scope.$watch('situation.html_description', function(){
       $scope.situation.safe_html_description = $sce.trustAsHtml(
         $scope.situation.html_description
