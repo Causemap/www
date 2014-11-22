@@ -326,6 +326,25 @@ causemap.controller('SituationCtrl', [
       })
     }
 
+    var typing_timeout = null;
+
+    $scope.parsePeriod = function(period_string, callback){
+      if (typing_timeout) $timeout.cancel(typing_timeout);
+
+      typing_timeout = $timeout(function(){
+        $http({
+          url: 'http://api.causemap.org:1337/',
+          method: 'POST',
+          data: { period: period_string }
+        }).success(function(data, status){
+          return callback(null, data);
+        }).error(function(error){
+          console.error('period parse error', arguments);
+          return callback(error, null)
+        })
+      }, 750)
+    }
+
     $scope.confirmUntag = function(tag_name){
       // hide other modals
       $('.modal').modal('hide');
@@ -441,6 +460,7 @@ causemap.controller('SituationCtrl', [
             }, 2000)
           }
 
+
           if (field_name == 'display_image'){
             var $existing_img = $('#overview > .display-image > img');
             var src = [
@@ -489,6 +509,71 @@ causemap.controller('SituationCtrl', [
           $('button[type="submit"]').button('reset');
           toastr.error(error.reason)
           return console.error(error);
+        })
+      }
+
+      if (field_name == 'period'){
+        return $scope.parsePeriod(field_value.text, function(error, result){
+          if (error) return console.error(error);
+
+          if (result.length){
+            var period_text = field_value.text;
+            var began;
+            var ended;
+            var datetime = result[result.length -1];
+            var ongoing_indication_strings = [
+              'since',
+              'now',
+              'present',
+              'today',
+              'current'
+            ];
+            var is_ongoing;
+            console.log(datetime);
+
+            ongoing_indication_strings.forEach(function(word){
+              if (period_text.toLowerCase().indexOf(word) != -1) is_ongoing = true;
+            })
+
+            if (datetime.value.type == 'interval'){
+              if (!began) began = datetime.value.from.value;
+              else began = datetime.value.from.value < began ? datetime.value.from.value : began;
+
+              if (!is_ongoing){
+                if (!ended) ended = datetime.value.to.value;
+                else ended = datetime.value.to.value > ended ? datetime.value.to.value : ended;
+              }
+            } else {
+              began = datetime.value.value;
+
+              var datetime_ended = (moment(datetime.value.value).add(
+                1,
+                datetime.value.grain +'s'
+              )._d).toJSON();
+
+              if (!is_ongoing){
+                ended = datetime_ended;
+              }
+            }
+
+            var new_value = {
+              text: period_text
+            }
+
+            if (began) new_value.began = (new Date(began)).getTime();
+            if (ended){
+              new_value.ended = (new Date(ended)).getTime();
+
+              if (new_value.ended > (new Date()).getTime()){
+                new_value.ended = (new Date()).getTime();
+              }
+            }
+
+            return put_update({
+              field_name: 'period',
+              field_value: new_value
+            });
+          }
         })
       }
 

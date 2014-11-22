@@ -41,11 +41,11 @@ block content
             ) Everywhere
 
           if situation.period
-            small.period(ng-bind='situation.period')= situation.period
+            small.period(ng-bind='situation.period.text')= situation.period.text
           else
             small.period(
               ng-if='situation.period',
-              ng-bind='situation.period'
+              ng-bind='situation.period.text'
             )
             small.period.default.subdued(
               ng-if='!situation.period'
@@ -183,7 +183,10 @@ block content
               .modal-body
                 .form-group
                   label Period
-                  input.form-control(placeholder='eg. Summer 2014', ng-model='situation_draft.period')
+                  input.form-control(
+                    placeholder='eg. Summer 2014',
+                    ng-model='situation_draft.period.text'
+                  )
               .modal-footer
                 a.btn.btn-default(data-dismiss='modal') Cancel
                 button.btn.btn-primary(type='submit', data-loading-text='Saving...') Save
@@ -258,7 +261,7 @@ block content
 
                     small.period(
                       ng-if='situation.period',
-                      ng-bind='situation.period'
+                      ng-bind='situation.period.text'
                     )
                     small.period.default.subdued(
                       ng-if='!situation.period'

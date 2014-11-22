@@ -37,7 +37,7 @@ mixin relationship_item(relationship, hide_type, size)
 
       if situation.period
         span.period
-          | #{ situation.period }
+          | #{ situation.period.text }
 
     h4.situation-name
       a.name(href='/'+ (situation.alias || situation._id), title=situation.name)= situation.name
