@@ -61,7 +61,8 @@ mixin relationship_item(relationship, hide_type, size)
       a.more.dropdown-toggle(data-toggle='dropdown') more
       ul.dropdown-menu(role='menu')
         li(role='presentation')
-          a(data-toggle='modal', data-target='#edit-relationship-desc', ng-click='editing_relationship ="'+ relationship._id +'"; relationship_draft.description ='+ relationship.description ? JSON.stringify(relationship.description) : '""')
+          - var safe_desc = JSON.stringify(relationship.description)
+          a(data-toggle='modal', data-target='#edit-relationship-desc', ng-click='editing_relationship ="'+ relationship._id +'"; relationship_draft.description ='+ safe_desc)
             if relationship.description
               | Edit this relationship's explanation
             else
