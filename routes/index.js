@@ -174,6 +174,7 @@ router.get('/', function(req, res) {
 
   var query = {
     sort: [
+      { 'period.began': { order: 'desc' } },
       { creation_date: { order: 'desc' } }
     ],
     query: {
