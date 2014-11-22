@@ -425,7 +425,7 @@ causemap.controller('SituationCtrl', [
 
     $scope.situation_draft = _.extend(
       $scope.situation_draft,
-      _.clone($scope.situation)
+      _.clone($scope.situation, true)
     );
 
     $scope.situation_id = document.querySelector(
