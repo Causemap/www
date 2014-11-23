@@ -75,7 +75,7 @@ block situation-content
           h3.subdued No Causes
           p.subdued Do you know what caused this?
         else
-          h2 Caused by
+          h2 This situation was caused by
           ol.list-unstyled.situations
             - each relationship in situation.causes
               li.situation.relationship-situation.situation-landscape(
@@ -107,7 +107,7 @@ block situation-content
           p.subdued
             | How has this situation effected things?
         else
-          h2 Effects
+          h2 Effects of this situation are
           ol.list-unstyled.situations
             - each relationship in situation.effects
               li.situation.relationship-situation.situation-landscape(
