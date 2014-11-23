@@ -14,7 +14,7 @@ block situation-content
     .toolbar.btn-toolbar.padded-tb
       .toolbar-text.pull-left.subdued
         em
-          time.from-now(datetime=(new Date(situation.creation_date)))
+          time.created.from-now(datetime=(new Date(situation.creation_date)))
         | &nbsp;
 
       .toolbar-text.pull-left.subdued(ng-cloak)

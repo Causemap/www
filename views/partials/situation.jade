@@ -93,6 +93,11 @@ mixin situation_landscape(situation, bookmarkable)
       .meta.subdued
         span.location
           | #{ situation.location }
+        if situation.period
+          if situation.period.ended
+            time.from-now.ended(datetime=(new Date(situation.period.ended)))
+          else
+            time.from-now.started(datetime=(new Date(situation.period.began)))
 
     .situation-name
       a.name(

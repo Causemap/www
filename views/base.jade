@@ -207,8 +207,17 @@ html(lang='en')
     script(src='http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js')
     script(src='/lib/bootstrap/dist/js/bootstrap.min.js')
     script.
-      $('time.from-now').each(function(){
+      $('time.from-now.created').each(function(){
         this.innerHTML = 'Created ';
+        this.innerHTML += moment(this.getAttribute('datetime')).fromNow()
+      })
+
+      $('time.from-now.started').each(function(){
+        this.innerHTML = 'started ';
+        this.innerHTML += moment(this.getAttribute('datetime')).fromNow()
+      })
+
+      $('time.from-now.ended').each(function(){
         this.innerHTML += moment(this.getAttribute('datetime')).fromNow()
       })
 
