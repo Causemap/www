@@ -1,4 +1,4 @@
-var causemap = angular.module('causemap', []);
+var causemap = angular.module('causemap', ['siyfion.sfTypeahead']);
 
 causemap.controller('AuthCtrl', [
   '$rootScope',
@@ -294,6 +294,45 @@ causemap.controller('SituationCtrl', [
         $scope.situation.html_description
       );
     })
+
+    var tags = new Bloodhound({
+      datumTokenizer: function(d){
+        return Bloodhound.tokenizers.whitespace(d.value)
+      },
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      remote:{
+        url: "http://api.causemap.org:9200/situations/_suggest",
+        replace: function(url, query){
+          return url + "#" + query;
+        },
+        ajax: {
+          type: "POST",
+          beforeSend: function(jqXhr, settings){
+            settings.data = JSON.stringify({
+              situation_suggest: {
+                completion: {
+                  field: 'tag_suggest'
+                },
+                text: $('#tag-input').val() // TODO: typed text
+              }
+            })
+          }
+        },
+        filter: function(parsedResponse){
+          return parsedResponse.situation_suggest[0].options
+        }
+      }
+    });
+
+    tags.initialize();
+
+    $scope.tagSuggestDataset = {
+      name: 'situation_tags',
+      displayKey: 'text',
+      source: tags.ttAdapter()
+    }
+
+    $scope.tagSuggestOptions = null;
 
     function setStrength(relationship){
 

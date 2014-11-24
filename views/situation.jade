@@ -120,13 +120,16 @@ block content
     #tag.modal.fade
       .modal-dialog.modal-sm
           .modal-content
-            form(ng-submit='tag(tag_name)')
+            form(ng-submit='tag(tag_name.text || tag_name)')
               .modal-body
                 .form-group
                   label Tag name
-                  input.form-control(
+                  input#tag-input.form-control.typahead(
                     placeholder='eg. Civil Disobedience'
+                    options='tagSuggestOptions'
+                    datasets='tagSuggestDataset'
                     ng-model='tag_name'
+                    sf-typeahead
                   )
               .modal-footer
                 button.btn.btn-block.btn-primary(type='submit')
