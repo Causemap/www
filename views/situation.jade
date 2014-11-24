@@ -93,19 +93,19 @@ block content
                 | This situation doesn't have any tags
 
             .modal-footer
-              button.btn.btn-block.btn-primary(
-                ng-if='!session.userCtx.name',
-                data-toggle='modal',
-                data-dismiss='modal',
-                data-target='#login-signup-modal',
-                ng-click='auth.login_next={message: "Login or Sign-up first", click: "#add-tag-button"}'
-              ) Tag this situation
-              button#add-tag-button.btn.btn-block.btn-primary(
-                ng-if='session.userCtx.name',
-                data-toggle='modal',
-                data-target='#tag',
-                data-dismiss='modal'
-              ) Tag this situation
+              form(ng-submit='tag(tag_name.text || tag_name)')
+                input#tag-input.form-control.typahead(
+                  placeholder='Tag this situation'
+                  options='tagSuggestOptions'
+                  datasets='tagSuggestDataset'
+                  ng-model='tag_name'
+                  sf-typeahead
+                )
+                button#add-tag-button.btn.btn-primary(
+                  style='display: none;'
+                  ng-if='session.userCtx.name',
+                  type='submit'
+                ) Tag
 
     #confirm-untag.modal.fade
       .modal-dialog.modal-sm
@@ -116,26 +116,6 @@ block content
                 | Yes, remove the tag
               button.btn.btn-block.btn-default(data-dismiss='modal')
                 | No, don't remove the tag
-
-    #tag.modal.fade
-      .modal-dialog.modal-sm
-          .modal-content
-            form(ng-submit='tag(tag_name.text || tag_name)')
-              .modal-body
-                .form-group
-                  label Tag name
-                  input#tag-input.form-control.typahead(
-                    placeholder='eg. Civil Disobedience'
-                    options='tagSuggestOptions'
-                    datasets='tagSuggestDataset'
-                    ng-model='tag_name'
-                    sf-typeahead
-                  )
-              .modal-footer
-                button.btn.btn-block.btn-primary(type='submit')
-                  | Add tag
-                button.btn.btn-block.btn-default(data-dismiss='modal')
-                  | Cancel
 
     #edit-name.modal.fade
       .modal-dialog

@@ -439,7 +439,7 @@ causemap.controller('SituationCtrl', [
         }
       }).success(function(response){
         toastr.success('Tagged: '+ tag_name)
-        $('.modal').modal('hide');
+        $scope.tag_name = undefined;
 
         if (!$scope.situation.hasOwnProperty('tags')) $scope.situation.tags = [];
         $scope.situation.tags.push(tag_name)

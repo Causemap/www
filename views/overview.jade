@@ -17,12 +17,6 @@ block situation-content
           time.created.from-now(datetime=(new Date(situation.creation_date)))
         | &nbsp;
 
-      .toolbar-text.pull-left.subdued(ng-cloak)
-        a#tags-button(data-toggle='modal', data-target='#tags', title='view tags')
-          em(ng-if='!situation.tags.length') No tags
-          em(ng-if='situation.tags.length == 1') {{ situation.tags.length }} tag
-          em(ng-if='situation.tags.length > 1') {{ situation.tags.length }} tags
-
       .btn-group.pull-right(
         ng-cloak,
         ng-if='!session.userCtx.name'
@@ -39,7 +33,7 @@ block situation-content
         ng-cloak,
         ng-if='session.userCtx.name'
       )
-        button.btn.btn-link.dropdown-toggle(
+        button#edit-situation-button.btn.btn-link.dropdown-toggle(
           data-toggle='dropdown'
         )
           span.cm-edit-3
@@ -57,6 +51,8 @@ block situation-content
             a(data-toggle='modal', data-target='#edit-description') Description
           li
             a(data-toggle='modal', data-target='#edit-display-image') Display Image
+          li
+            a(data-toggle='modal', data-target='#tags') Tags
           li(ng-if='!situation.marked_for_deletion')
             a(data-toggle='modal', data-target='#mark-for-deletion') Mark for Deletion
           li(ng-if='situation.marked_for_deletion')
