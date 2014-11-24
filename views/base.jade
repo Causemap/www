@@ -229,7 +229,14 @@ html(lang='en')
 
       $('.modal').on('shown.bs.modal', function(event){
         // focus on the first input
-        $('input, textarea', event.currentTarget).first().focus().select();
+        if ($('#tag-input', event.currentTarget).length){
+          $('#tag-input', event.currentTarget).first().focus().select()
+        } else {
+          $(
+            'textarea.form-control, input.form-control',
+            event.currentTarget
+          ).first().focus().select();
+        }
       })
 
       $('[data-toggle=tooltip]').tooltip();
