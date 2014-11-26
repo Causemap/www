@@ -102,7 +102,7 @@ block content
                   sf-typeahead
                 )
                 button#add-tag-button.btn.btn-primary(
-                  style='display: none;'
+                  style="position: absolute; left: -9999px; width: 1px; height: 1px;",
                   ng-if='session.userCtx.name',
                   type='submit'
                 ) Tag
