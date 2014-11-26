@@ -312,6 +312,26 @@ ol.situations {
   line-height: 30px;
   margin: @padding-large-horizontal 0;
   padding-bottom: @padding-large-horizontal;
+
+  a {
+    color: darken(@brand-primary, 20);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  blockquote {
+    font-size: inherit;
+    font-style: italic;
+  }
+
+  strong {
+    font-weight: 400;
+  }
+
+  h1, h2, h3 {
+    .h3;
+    font-size: 20px;
+    font-weight: 400;
+  }
 }
 
 @media (max-width: @screen-sm-min){
