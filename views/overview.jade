@@ -68,7 +68,7 @@ block situation-content
     .row
       .col-md-12
         if situation.causes.length == 0
-          h3.subdued No Causes
+          h3.subdued No Causes have been added
           p.subdued Do you know what caused this?
         else
           h2 This situation was caused by
@@ -99,7 +99,7 @@ block situation-content
             | View #{ situation.total_causes } causes
 
         if situation.effects.length == 0
-          h3.subdued No Effects
+          h3.subdued No effects have been added
           p.subdued
             | How has this situation effected things?
         else
