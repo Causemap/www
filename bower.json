@@ -25,6 +25,7 @@
     "lazysizes": "https://github.com/aFarkas/lazysizes.git#~0.1.4",
     "typeahead.js": "~0.10.5",
     "angular-typeahead": "https://github.com/Causemap/angular-typeahead.git#0.2.2",
-    "bootstrap-social": "~4.8.0"
+    "bootstrap-social": "~4.8.0",
+    "angular-facebook": "~0.2.3"
   }
 }

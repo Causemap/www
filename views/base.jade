@@ -32,6 +32,7 @@ html(lang='en')
 
     script(src='/lib/moment/min/moment.min.js')
     script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js')
+    script(src='/lib/angular-facebook/lib/angular-facebook.js')
     script(
       src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
     script(src='/lib/typeahead.js/dist/typeahead.bundle.min.js')
@@ -166,7 +167,7 @@ html(lang='en')
                     ) {{ auth.login_next.message }}
                     .form-group
                       a.btn.btn-block.btn-social.btn-facebook(
-                        href='https://www.facebook.com/dialog/oauth?client_id=1496421943957262&scope=user_about_me&redirect_uri=http:%2F%2Fapi.causemap.org:5984%2F_fb'
+                        ng-click='fbLogin()'
                       )
                         i.cm-social-facebook
                         | Login with facebook

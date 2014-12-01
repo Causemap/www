@@ -1,13 +1,21 @@
-var causemap = angular.module('causemap', ['siyfion.sfTypeahead']);
+var causemap = angular.module('causemap', ['siyfion.sfTypeahead', 'facebook']);
+
+causemap.config(function(FacebookProvider){
+  // Set your appId through the setAppId method or
+  // use the shortcut in the initialize method directly.
+  FacebookProvider.init('1496421943957262');
+})
 
 causemap.controller('AuthCtrl', [
   '$rootScope',
   '$scope',
   '$http',
+  'Facebook',
   function(
     $rootScope,
     $scope,
-    $http
+    $http,
+    Facebook
   ){
     $rootScope.auth = {
       login_next: null,
@@ -81,6 +89,31 @@ causemap.controller('AuthCtrl', [
         toastr.error('There was an error')
         return console.error(error)
       })
+    }
+
+    $rootScope.fbLogin = function(){
+      Facebook.login(function(response) {
+        console.log(response);
+        $http({
+          url: 'http://api.causemap.org:5984/_fb?accessToken='+ response.authResponse.accessToken, 
+          withCredentials: true,
+          method: 'GET'
+        }).success(function(){
+          toastr.success('logged in')
+          mixpanel.track("logged in");
+
+          // close the authentication modal
+          $('.modal').modal('hide');
+          return $rootScope.getSession();
+        }).error(function(){
+          toastr.success('logged in')
+          mixpanel.track("logged in");
+
+          // close the authentication modal
+          $('.modal').modal('hide');
+          return $rootScope.getSession();
+        })
+      });
     }
 
     $rootScope.logout = function(){
