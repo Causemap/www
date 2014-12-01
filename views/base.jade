@@ -151,59 +151,69 @@ html(lang='en')
     #login-signup-modal.modal.fade
       .modal-dialog.modal-sm
         .modal-content
-          form(ng-submit='loginSignup()')
-            .modal-body
-              .alert.alert-info(
-                ng-if='auth.login_next && auth.login_next.message'
-              ) {{ auth.login_next.message }}
-              .form-group
-                input.form-control(
-                  type='text',
-                  placeholder='Username',
-                  ng-model='auth.username'
-                )
+          div(role='tabpanel')
+            ul.nav.nav-tabs(role='tablist')
+              li.active(role='presentation')
+                a(href='#login-panel', aria-controls='login-panel', role='tab', data-toggle='tab') Login
+              li(role='presentation')
+                a(href='#signup-panel', aria-controls='signup-panel', role='tab', data-toggle='tab') Sign up
+            .tab-content
+              #login-panel.tab-pane.active(role='tabpanel')
+                form(ng-submit='loginSignup()')
+                  .modal-body
+                    .alert.alert-info(
+                      ng-if='auth.login_next && auth.login_next.message'
+                    ) {{ auth.login_next.message }}
+                    .form-group
+                      input.form-control(
+                        type='text',
+                        placeholder='Username',
+                        ng-model='auth.username'
+                      )
 
-              .form-group
-                input.form-control(
-                  type='password',
-                  placeholder='Password',
-                  ng-model='auth.password'
-                )
+                    .form-group
+                      input.form-control(
+                        type='password',
+                        placeholder='Password',
+                        ng-model='auth.password'
+                      )
 
-              .form-group
-                .radio
-                  label
-                    input#returning-user(
-                      type='radio',
-                      name='user_has_account',
-                      ng-value='true',
-                      ng-model='auth.user_has_account'
-                    )
-                    | I am a returning user
-                .radio
-                  label
-                    input#new-user(
-                      type='radio',
-                      name='user_has_account',
-                      ng-value='false',
-                      ng-model='auth.user_has_account'
-                    )
-                    | I am a new user
+                  .modal-footer
+                    button.btn.btn-primary.btn-block(
+                      type='submit',
+                      ng-click='auth.user_has_account = true'
+                      ng-if='auth.user_has_account',
+                      data-loading-text='Logging in'
+                    ) Login
+                    button.btn.btn-default.btn-block(
+                      data-dismiss='modal'
+                    ) Cancel
+              #signup-panel.tab-pane(role='tabpanel')
+                form(ng-submit='loginSignup()')
+                  .modal-body
+                    .form-group
+                      input.form-control(
+                        type='text',
+                        placeholder='Choose a Username',
+                        ng-model='auth.username'
+                      )
 
-            .modal-footer
-              button.btn.btn-primary.btn-block(
-                type='submit',
-                ng-if='auth.user_has_account',
-                data-loading-text='Logging in'
-              ) Login
-              button.btn.btn-primary.btn-block(
-                type='submit',
-                data-loading-text='Signing up'
-                ng-if='!auth.user_has_account',
-              ) Sign up
-              button.btn.btn-default.btn-block(
-                data-dismiss='modal'
-              ) Cancel
+                    .form-group
+                      input.form-control(
+                        type='password',
+                        placeholder='Choose a Password',
+                        ng-model='auth.password'
+                      )
+
+                  .modal-footer
+                    button.btn.btn-primary.btn-block(
+                      type='submit',
+                      ng-click='auth.user_has_account = false'
+                      data-loading-text='Signing up'
+                    ) Sign up
+                    button.btn.btn-default.btn-block(
+                      data-dismiss='modal'
+                    ) Cancel
 
     // jQuery (necessary for Bootstrap's JavaScript plugins)
     script(src='http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js')
