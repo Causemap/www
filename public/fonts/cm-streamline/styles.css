@@ -56,3 +56,6 @@
 .cm-causes:before {
   content: "e";
 }
+.cm-social-facebook:before {
+  content: "h";
+}

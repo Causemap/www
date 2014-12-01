@@ -165,6 +165,12 @@ html(lang='en')
                       ng-if='auth.login_next && auth.login_next.message'
                     ) {{ auth.login_next.message }}
                     .form-group
+                      a.btn.btn-block.btn-social.btn-facebook(
+                        href='https://www.facebook.com/dialog/oauth?client_id=1496421943957262&scope=user_about_me&redirect_uri=http:%2F%2Fapi.causemap.org:5984%2F_fb'
+                      )
+                        i.cm-social-facebook
+                        | Login with facebook
+                    .form-group
                       input.form-control(
                         type='text',
                         placeholder='Username',
