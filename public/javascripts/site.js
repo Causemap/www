@@ -144,7 +144,7 @@ causemap.controller('AuthCtrl', [
           $rootScope.$apply();
         }
       }).error(function(error){
-        return console.error(err);
+        return console.error(error);
       })
     }
 
