@@ -481,7 +481,7 @@ causemap.controller('SituationCtrl', [
           return $scope.$apply();
         }
       }).error(function(error){
-        return console.error(error)
+        toastr.error(error.reason)
       })
     }
 
