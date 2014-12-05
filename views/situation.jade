@@ -82,7 +82,7 @@ block content
                 li.tag(ng-repeat='tag in situation.tags')
                   .btn-group
                     a.btn.btn-link(
-                      href='/?search={{ tag.replace(" ", "+") }}'
+                      ng-href='/?search={{ tag | encodeURIComponent }}'
                     ) {{ tag }}
                     a.btn.btn-link(
                       data-toggle='tooltip',

@@ -1,5 +1,9 @@
 var causemap = angular.module('causemap', ['siyfion.sfTypeahead', 'facebook']);
 
+causemap.filter('encodeURIComponent', function() {
+  return window.encodeURIComponent;
+});
+
 causemap.config(function(FacebookProvider){
   // Set your appId through the setAppId method or
   // use the shortcut in the initialize method directly.
@@ -95,7 +99,7 @@ causemap.controller('AuthCtrl', [
       Facebook.login(function(response) {
         console.log(response);
         $http({
-          url: 'http://api.causemap.org:5984/_fb?accessToken='+ response.authResponse.accessToken, 
+          url: 'http://api.causemap.org:5984/_fb?accessToken='+ response.authResponse.accessToken,
           withCredentials: true,
           method: 'GET'
         }).success(function(){
