@@ -1,8 +1,29 @@
 #!/usr/bin/env node
 var debug = require('debug')('causemap-web');
 var app = require('../app');
+var program = require('commander');
 
-app.set('port', process.env.PORT || 3000);
+program
+  .version('0.0.1')
+  .description('Run the Causemap.org web app')
+  .option('-p, --port [port]', 'Listen for http connections on port [port]', 3000)
+  .option('-d, --db-host [url]', 'CouchDB host [url]', 'http://api.causemap.org/db')
+  .option('-n, --db-name [name]', 'CouchDB database name [name]', 'causemap')
+  .option('-s, --search-host [url]', 'Elasticsearch host [url]', 'http://api.causemap.org/search')
+  .option('-x, --parse-host [url]', 'Parsing host [url]', 'http://api.causemap.org/parse')
+  .option('-i, --img-host [url]', 'Image server host [url]', 'http://api.causemap.org/img')
+
+program.parse(process.argv);
+
+app.set('port', process.env.PORT || program.port);
+
+process.site_env = {
+  db_host: program.dbHost,
+  db_name: program.dbName,
+  search_host: program.searchHost,
+  parse_host: program.parseHost,
+  img_host: program.imgHost
+}
 
 var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
