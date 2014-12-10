@@ -3,7 +3,7 @@ include ./situation
 mixin relationship_item(relationship, hide_type, size)
   - var situation = hide_type == 'cause' ? relationship.effect : relationship.cause
   if situation.display_image
-    - var img_url = 'http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
+    - var img_url = ENV.db_host +'/'+ ENV.db_name +'/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
 
     if !size || size == 'lg'
       a.display-image(
@@ -14,16 +14,16 @@ mixin relationship_item(relationship, hide_type, size)
     else if size == 'md'
       a.display-image(
         href='/'+ (situation.alias || situation._id),
-        style='background-image: url("http://api.causemap.org:8008/690x10000/'+ img_url +'");'
+        style='background-image: url("'+ ENV.img_host +'/690x10000/'+ img_url +'");'
       )
-        img.img-responsive(src='http://api.causemap.org:8008/690x10000/'+ img_url)
+        img.img-responsive(src=ENV.img_host +'/690x10000/'+ img_url)
 
     else if size == 'sm'
       a.display-image(
         href='/'+ (situation.alias || situation._id),
-        style='background-image: url("http://api.causemap.org:8008/224/'+ img_url +'");'
+        style='background-image: url("'+ ENV.img_host +'/224/'+ img_url +'");'
       )
-        img.img-responsive(src='http://api.causemap.org:8008/224/'+ img_url)
+        img.img-responsive(src=ENV.img_host +'/224/'+ img_url)
   else
     a.empty.display-image(
       href='/'+ (situation.alias || situation._id)

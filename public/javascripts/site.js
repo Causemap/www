@@ -31,7 +31,7 @@ causemap.controller('AuthCtrl', [
 
       if ($rootScope.auth.user_has_account){
         return $http({
-          url: 'http://api.causemap.org:5984/_session',
+          url: ENV.db_host +'/_session',
           method: 'POST',
           withCredentials: true,
           data: {
@@ -53,7 +53,7 @@ causemap.controller('AuthCtrl', [
 
       // signup
       return $http({
-        url: 'http://api.causemap.org:5984/_users/'+ [
+        url: ENV.db_host +'/_users/'+ [
           'org.couchdb.user',
           encodeURIComponent($rootScope.auth.username)
         ].join(':'),
@@ -71,7 +71,7 @@ causemap.controller('AuthCtrl', [
         }
       }).success(function(result){
         $http({
-          url: 'http://api.causemap.org:5984/_session',
+          url: ENV.db_host +'/_session',
           method: 'POST',
           withCredentials: true,
           data: {
@@ -99,7 +99,7 @@ causemap.controller('AuthCtrl', [
       Facebook.login(function(response) {
         console.log(response);
         $http({
-          url: 'http://api.causemap.org:5984/_fb?accessToken='+ response.authResponse.accessToken,
+          url: ENV.db_host +'/_fb?accessToken='+ response.authResponse.accessToken,
           withCredentials: true,
           method: 'GET'
         }).success(function(){
@@ -122,7 +122,7 @@ causemap.controller('AuthCtrl', [
 
     $rootScope.logout = function(){
       $http({
-        url: 'http://api.causemap.org:5984/_session',
+        url: ENV.db_host +'/_session',
         method: 'DELETE',
         withCredentials: true
       }).success(function(){
@@ -134,7 +134,7 @@ causemap.controller('AuthCtrl', [
     $rootScope.session = null;
     $rootScope.getSession = function(){
       $http({
-        url: 'http://api.causemap.org:5984/_session',
+        url: ENV.db_host +'/_session',
         withCredentials: true,
         method: 'GET'
       }).success(function(response){
@@ -188,7 +188,7 @@ causemap.controller('AuthCtrl', [
         var type = $this.attr('data-bookmarkable-type');
 
         $http({
-          url: 'http://api.causemap.org:5984/causemap/_design/bookmark/_show/has_bookmark/'+ $rootScope.session.userCtx.name +'.bookmarked.'+ type +':'+ id,
+          url: ENV.db_host +'/'+ ENV.db_name +'/_design/bookmark/_show/has_bookmark/'+ $rootScope.session.userCtx.name +'.bookmarked.'+ type +':'+ id,
           method: 'GET',
           withCredentials: true
         }).success(function(response){
@@ -201,7 +201,7 @@ causemap.controller('AuthCtrl', [
 
     $rootScope.unbookmark = function(id, type){
       $http({
-        url: 'http://api.causemap.org:5984/causemap/_design/bookmark/_update/unbookmark/'+ $rootScope.session.userCtx.name +'.bookmarked.'+ type +':'+ id,
+        url: ENV.db_host +'/'+ ENV.db_name +'/_design/bookmark/_update/unbookmark/'+ $rootScope.session.userCtx.name +'.bookmarked.'+ type +':'+ id,
         method: 'POST',
         withCredentials: true
       }).success(function(response){
@@ -213,7 +213,7 @@ causemap.controller('AuthCtrl', [
 
     $rootScope.bookmark = function(id, type){
       $http({
-        url: 'http://api.causemap.org:5984/causemap/_design/bookmark/_update/bookmark/'+ $rootScope.session.userCtx.name +'.bookmarked.'+ type +':'+ id,
+        url: ENV.db_host +'/'+ ENV.db_name +'/_design/bookmark/_update/bookmark/'+ $rootScope.session.userCtx.name +'.bookmarked.'+ type +':'+ id,
         method: 'POST',
         withCredentials: true
       }).success(function(response){
@@ -225,7 +225,7 @@ causemap.controller('AuthCtrl', [
 
     $rootScope.toggleBookmark = function(id, type){
       $http({
-        url: 'http://api.causemap.org:5984/causemap/_design/bookmark/_show/has_bookmark/'+ $rootScope.session.userCtx.name +'.bookmarked.'+ type +':'+ id,
+        url: ENV.db_host +'/'+ ENV.db_name +'/_design/bookmark/_show/has_bookmark/'+ $rootScope.session.userCtx.name +'.bookmarked.'+ type +':'+ id,
         method: 'GET',
         withCredentials: true
       }).success(function(response){
@@ -253,7 +253,7 @@ causemap.controller('SituationsCtrl', [
       mixpanel.track("new situation submitted");
 
       $http({
-        url: 'http://api.causemap.org:5984/causemap/_design/situation/_update/create',
+        url: ENV.db_host +'/'+ ENV.db_name +'/_design/situation/_update/create',
         method: 'POST',
         withCredentials: true
       }).success(function(result){
@@ -263,7 +263,7 @@ causemap.controller('SituationsCtrl', [
         var situation_id = result.id;
 
         $http({
-          url: 'http://api.causemap.org:5984/causemap/_design/change/_update/create/'+ situation_id,
+          url: ENV.db_host +'/'+ ENV.db_name +'/_design/change/_update/create/'+ situation_id,
           method: 'POST',
           withCredentials: true,
           data: {
@@ -338,7 +338,7 @@ causemap.controller('SituationCtrl', [
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote:{
-        url: "http://api.causemap.org:9200/situations/_suggest",
+        url: ENV.search_host +"/situations/_suggest",
         replace: function(url, query){
           return url + "#" + query;
         },
@@ -380,7 +380,7 @@ causemap.controller('SituationCtrl', [
       ].join('')
 
       $http({
-        url: 'http://api.causemap.org:5984/causemap/_design/adjustment/_show/adjustment/'+ doc_id,
+        url: ENV.db_host +'/'+ ENV.db_name +'/_design/adjustment/_show/adjustment/'+ doc_id,
         method: 'GET',
         withCredentials: true,
       }).success(function(result){
@@ -409,7 +409,7 @@ causemap.controller('SituationCtrl', [
 
       typing_timeout = $timeout(function(){
         $http({
-          url: 'http://api.causemap.org:1337/',
+          url: ENV.parse_host,
           method: 'POST',
           data: { period: period_string }
         }).success(function(data, status){
@@ -438,7 +438,7 @@ causemap.controller('SituationCtrl', [
     $scope.untag = function(tag_name){
       $http({
         url: [
-          'http://api.causemap.org:5984/causemap/_design/action/_update/untag/',
+          ENV.db_host +'/'+ ENV.db_name +'/_design/action/_update/untag/',
           $scope.situation_id
         ].join(''),
         method: "POST",
@@ -466,7 +466,7 @@ causemap.controller('SituationCtrl', [
     $scope.tag = function(tag_name){
       $http({
         url: [
-          'http://api.causemap.org:5984/causemap/_design/action/_update/tag/',
+          ENV.db_host +'/'+ ENV.db_name +'/_design/action/_update/tag/',
           $scope.situation_id
         ].join(''),
         method: "POST",
@@ -515,7 +515,7 @@ causemap.controller('SituationCtrl', [
       function put_update(new_field){
         $http({
           url: [
-            'http://api.causemap.org:5984/causemap/_design/change/_update/create/',
+            ENV.db_host +'/'+ ENV.db_name +'/_design/change/_update/create/',
             id || $scope.situation_id
           ].join(''),
           method: 'POST',
@@ -699,7 +699,7 @@ causemap.controller('SituationCtrl', [
     $scope.markForDeletion = function(id){
       $http({
         withCredentials: true,
-        url: 'http://api.causemap.org:5984/causemap/_design/action/_update/mark_for_deletion/'+ id,
+        url: ENV.db_host +'/'+ ENV.db_name +'/_design/action/_update/mark_for_deletion/'+ id,
         method: 'POST'
       }).success(function(result){
         toastr.success('Marked for deletion')
@@ -716,7 +716,7 @@ causemap.controller('SituationCtrl', [
     $scope.unmarkForDeletion = function(id){
       $http({
         withCredentials: true,
-        url: 'http://api.causemap.org:5984/causemap/_design/action/_update/unmark_for_deletion/'+ id,
+        url: ENV.db_host +'/'+ ENV.db_name +'/_design/action/_update/unmark_for_deletion/'+ id,
         method: 'POST'
       }).success(function(result){
         toastr.success('Unmarked for deletion')
@@ -744,7 +744,7 @@ causemap.controller('SituationCtrl', [
 
       $http({
         withCredentials: true,
-        url: 'http://api.causemap.org:5984/causemap/_design/adjustment/_update/'+ direction +'vote_relationship/'+ adj_id,
+        url: ENV.db_host +'/'+ ENV.db_name +'/_design/adjustment/_update/'+ direction +'vote_relationship/'+ adj_id,
         method: 'POST'
       }).success(function(result){
         $('[data-id="'+ id +'"] .strength')
@@ -810,7 +810,7 @@ causemap.controller('RelationshipCtrl', [
 
       $http({
         method: 'POST',
-        url: 'http://api.causemap.org:9200/situations/situation/_search?size=3',
+        url: ENV.search_host +'/situations/situation/_search?size=3',
         data: query
       }).success(function(data, status){
         $scope.situationSuggestions = data;
@@ -826,14 +826,14 @@ causemap.controller('RelationshipCtrl', [
       $http({
         withCredentials: true,
         method: 'POST',
-        url: 'http://api.causemap.org:5984/causemap/_design/situation/_update/create'
+        url: ENV.db_host +'/'+ ENV.db_name +'/_design/situation/_update/create'
       }).success(function(response){
         var situation_id = response.id;
 
         $http({
           withCredentials: true,
           method: 'POST',
-          url: 'http://api.causemap.org:5984/causemap/_design/change/_update/create/'+ situation_id,
+          url: ENV.db_host +'/'+ ENV.db_name +'/_design/change/_update/create/'+ situation_id,
           data: {
             field_name: 'name',
             field_value: name
@@ -864,7 +864,7 @@ causemap.controller('RelationshipCtrl', [
       $http({
         method: 'POST',
         withCredentials: true,
-        url: 'http://api.causemap.org:5984/causemap/_design/relationship/_update/create',
+        url: ENV.db_host +'/'+ ENV.db_name +'/_design/relationship/_update/create',
         data: body
       }).success(function(response){
         $timeout(function(){
@@ -879,7 +879,7 @@ causemap.controller('RelationshipCtrl', [
           // already exists
           var id = [ body.cause_id, 'caused', body.effect_id ].join(':');
           return $http({
-            url: 'http://api.causemap.org:9200/relationships/relationship/'+ id,
+            url: ENV.search_host +'/relationships/relationship/'+ id,
             method: 'GET'
           }).success(function(result){
             if (result._source.marked_for_deletion){

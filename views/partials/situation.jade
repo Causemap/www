@@ -1,6 +1,6 @@
 mixin situation_item(situation, size)
   if situation.display_image
-    - var img_url = 'http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
+    - var img_url = ENV.db_host +'/'+ ENV.db_name +'/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
 
     if size == 'lg'
       a.loading.display-image(
@@ -11,15 +11,15 @@ mixin situation_item(situation, size)
     else if size == 'md' && situation.display_image.width > 690
       a.loading.display-image(
         href='/'+ (situation.alias || situation._id),
-        style='background-image: url("http://api.causemap.org:8008/690x10000/'+ img_url +'");'
+        style='background-image: url("'+ ENV.img_host +'/690x10000/'+ img_url +'");'
       )
-        img.img-responsive(src='http://api.causemap.org:8008/690x10000/'+ img_url)
+        img.img-responsive(src=ENV.img_host +'/690x10000/'+ img_url)
     else if size == 'sm' && situation.display_image.width > 224
       a.loading.display-image(
         href='/'+ (situation.alias || situation._id),
-        style='background-image: url("http://api.causemap.org:8008/224/'+ img_url +'");'
+        style='background-image: url("'+ ENV.img_host +'/224/'+ img_url +'");'
       )
-        img.img-responsive(src='http://api.causemap.org:8008/224/'+ img_url)
+        img.img-responsive(src=ENV.img_host +'/224/'+ img_url)
     else
       a.loading.display-image(
         href='/'+ (situation.alias || situation._id),
@@ -49,13 +49,13 @@ mixin situation_item(situation, size)
 
 
 mixin situation_display_image(situation, width, height)
-  - var img_url = 'http://api.causemap.org:5984/causemap/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
+  - var img_url = ENV.db_host +'/'+ ENV.db_name +'/'+ situation.display_image.change_id +'/'+ situation.display_image.filename
   if situation.display_image.height >= situation.display_image.width
     - var cropped_height = (width/situation.display_image.width) * situation.display_image.height
     - cropped_height = Math.ceil(cropped_height)
     img.img-responsive.lazyload(
-      data-srcset='//api.causemap.org:8008/?scale='+ width*2 +','+ cropped_height*2 +'&crop='+ width*2 +','+ height*2 +'&url='+ encodeURIComponent(img_url) +' 2x',
-      src='//api.causemap.org:8008/?scale='+ width +','+ cropped_height +'&crop='+ width +','+ height +'&url='+ encodeURIComponent(img_url),
+      data-srcset=ENV.img_host +'/?scale='+ width*2 +','+ cropped_height*2 +'&crop='+ width*2 +','+ height*2 +'&url='+ encodeURIComponent(img_url) +' 2x',
+      src=ENV.img_host +'/?scale='+ width +','+ cropped_height +'&crop='+ width +','+ height +'&url='+ encodeURIComponent(img_url),
       title='('+ width +' / '+ situation.display_image.width +') * '+ situation.display_image.height
     )
   if situation.display_image.width > situation.display_image.height
@@ -66,14 +66,14 @@ mixin situation_display_image(situation, width, height)
       - var cropped_height = (width/situation.display_image.width) * situation.display_image.height
       - cropped_height = Math.ceil(cropped_height)
       img.img-responsive.lazyload(
-        data-srcset='//api.causemap.org:8008/?scale='+ width*2 +','+ cropped_height*2 +'&crop='+ width*2 +','+ height*2 +'&url='+ encodeURIComponent(img_url),
-        src='//api.causemap.org:8008/?scale='+ width +','+ cropped_height +'&crop='+ width +','+ height +'&url='+ encodeURIComponent(img_url),
+        data-srcset=ENV.img_host +'/?scale='+ width*2 +','+ cropped_height*2 +'&crop='+ width*2 +','+ height*2 +'&url='+ encodeURIComponent(img_url),
+        src=ENV.img_host +'/?scale='+ width +','+ cropped_height +'&crop='+ width +','+ height +'&url='+ encodeURIComponent(img_url),
         title='('+ width +' / '+ situation.display_image.width +') * '+ situation.display_image.height
       )
     else
       img.img-responsive.lazyload(
-        data-srcset='//api.causemap.org:8008/?scale='+ cropped_width*2 +','+ height*2 +'&crop='+ width*2 +','+ height*2 +'&url='+ encodeURIComponent(img_url),
-        src='//api.causemap.org:8008/?scale='+ cropped_width +','+ height +'&crop='+ width +','+ height +'&url='+ encodeURIComponent(img_url)
+        data-srcset=ENV.img_host +'/?scale='+ cropped_width*2 +','+ height*2 +'&crop='+ width*2 +','+ height*2 +'&url='+ encodeURIComponent(img_url),
+        src=ENV.img_host +'/?scale='+ cropped_width +','+ height +'&crop='+ width +','+ height +'&url='+ encodeURIComponent(img_url)
         title=situation.display_image.caption
       )
 

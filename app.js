@@ -20,6 +20,23 @@ app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.use(function(req, res, next){
+  // make the environment available to the view
+  app.set('site_env', {
+    db_host: 'http://api.causemap.org/db',
+    db_name: 'causemap',
+    search_host: 'http://api.causemap.org/search',
+    parse_host: 'http://api.causemap.org/parse',
+    img_host: 'http://api.causemap.org/img'
+  })
+
+  res.locals.site_env = JSON.stringify(app.get('site_env'));
+  res.locals.ENV = app.get('site_env');
+
+  return next()
+})
+
 app.all(/.*/, function(req, res, next) {
   var host = req.header("host");
   if (host.match(/^www\..*/i) || app.get('env') === 'development') {
