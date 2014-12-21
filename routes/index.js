@@ -5,7 +5,7 @@ var router = express.Router();
 var elasticsearch = require('elasticsearch');
 var marked = require('marked');
 
-var ES_URL = 'http://api.causemap.org:9200';
+var ES_URL = process.site_env.search_host;
 var elasticsearch_client = new elasticsearch.Client({
   host: ES_URL,
   sniffOnConnectionFault: true
@@ -14,7 +14,7 @@ var elasticsearch_client = new elasticsearch.Client({
 
 var get_situation = function(req, res, next){
   elasticsearch_client.get({
-    index: 'situations',
+    index: process.site_env.search_index,
     type: 'situation',
     id: req.params.situation_id
   }).then(function(result){
@@ -30,7 +30,7 @@ var get_aliased_situation = function(req, res, next){
 
   // search for the situation with this alias
   elasticsearch_client.search({
-    index: 'changes',
+    index: process.site_env.search_index,
     type: 'situation.alias.change',
     size: 1,
     body: {
@@ -57,7 +57,7 @@ var get_aliased_situation = function(req, res, next){
     var change = result.hits.hits[0]._source;
 
     elasticsearch_client.get({
-      index: 'situations',
+      index: process.site_env.search_index,
       type: 'situation',
       id: change.changed.doc._id
     }).then(function(hit){
@@ -149,7 +149,7 @@ var get_similar_situations = function(req, res, next){
   }
 
   elasticsearch_client.search({
-    index: 'situations',
+    index: process.site_env.search_index,
     type: 'situation',
     body: similar_query
   }).then(function(result){
@@ -216,7 +216,7 @@ router.get('/', function(req, res) {
   }
 
   return elasticsearch_client.search({
-    index: 'situations',
+    index: process.site_env.search_index,
     type: 'situation',
     size: req.query.size || 24,
     from: req.query.from || 0,
@@ -255,7 +255,7 @@ router.get(
     // get the first 3 causes and effects
     async.map(['cause', 'effect'], function(rel_type, map_cb){
       var q = {
-        index: 'relationships',
+        index: process.site_env.search_index,
         type: 'relationship',
         size: 3,
         body: {
@@ -369,7 +369,7 @@ router.get(
 
     var situation = req.situation;
     var q = {
-      index: 'relationships',
+      index: process.site_env.search_index,
       type: 'relationship',
       size: 100,
       body: {

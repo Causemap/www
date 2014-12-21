@@ -338,7 +338,7 @@ causemap.controller('SituationCtrl', [
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote:{
-        url: ENV.search_host +"/situations/_suggest",
+        url: ENV.search_host +"/"+ ENV.search_index +"/_suggest",
         replace: function(url, query){
           return url + "#" + query;
         },
@@ -810,7 +810,7 @@ causemap.controller('RelationshipCtrl', [
 
       $http({
         method: 'POST',
-        url: ENV.search_host +'/situations/situation/_search?size=3',
+        url: ENV.search_host +'/'+ ENV.search_index +'/situation/_search?size=3',
         data: query
       }).success(function(data, status){
         $scope.situationSuggestions = data;
@@ -879,7 +879,7 @@ causemap.controller('RelationshipCtrl', [
           // already exists
           var id = [ body.cause_id, 'caused', body.effect_id ].join(':');
           return $http({
-            url: ENV.search_host +'/relationships/relationship/'+ id,
+            url: ENV.search_host +'/'+ ENV.search_index +'/relationship/'+ id,
             method: 'GET'
           }).success(function(result){
             if (result._source.marked_for_deletion){
