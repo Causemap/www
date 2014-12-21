@@ -36,7 +36,7 @@ mixin situation_item(situation, size)
       .meta.subdued
         if situation.location
           span.location
-            | #{ situation.location }
+            | #{ situation.location.text }
 
         if situation.period
           span.period
@@ -92,7 +92,7 @@ mixin situation_landscape(situation, bookmarkable)
     if situation.location
       .meta.subdued
         span.location
-          | #{ situation.location }
+          | #{ situation.location.text }
         if situation.period
           if situation.period.ended
             time.from-now.ended(datetime=(new Date(situation.period.ended)))

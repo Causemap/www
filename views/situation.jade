@@ -30,11 +30,11 @@ block content
 
         h1#situation-header
           if situation.location
-            small.location(ng-bind='situation.location')= situation.location
+            small.location(ng-bind='situation.location.text')= situation.location.text
           else
             small.location(
               ng-if='situation.location',
-              ng-bind='situation.location'
+              ng-bind='situation.location.text'
             )
             small.location.default.subdued(
               ng-if='!situation.location'
@@ -154,7 +154,10 @@ block content
               .modal-body
                 .form-group
                   label Location
-                  input.form-control(placeholder='eg. Montreal, Quebec', ng-model='situation_draft.location')
+                  input.form-control(
+                    placeholder='eg. Montreal, Quebec',
+                    ng-model='situation_draft.location.text'
+                  )
               .modal-footer
                 a.btn.btn-default(data-dismiss='modal') Cancel
                 button.btn.btn-primary(type='submit', data-loading-text='Saving...') Save
@@ -234,7 +237,7 @@ block content
                   h4.situation-name
                     small.location(
                       ng-if='situation.location',
-                      ng-bind='situation.location'
+                      ng-bind='situation.location.text'
                     )
                     small.location.default.subdued(
                       ng-if='!situation.location'

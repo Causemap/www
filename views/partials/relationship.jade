@@ -33,7 +33,7 @@ mixin relationship_item(relationship, hide_type, size)
     .meta.subdued
       if situation.location
         span.location
-          | #{ situation.location }
+          | #{ situation.location.text }
 
       if situation.period
         span.period
